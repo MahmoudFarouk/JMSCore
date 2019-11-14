@@ -8,7 +8,7 @@ namespace JMS.BLL.Interfaces
 {
     interface ICheckpointService
     {
-        public ServiceResponse<List<Checkpoint>> GetCheckpoints(string lat, string lng);
+        public ServiceResponse<List<Checkpoint>> GetCheckpoints(string startLat, string startLng, string endLat, string endLng);
 
         public ServiceResponse AddCheckpoint(Checkpoint checkpoint);
 

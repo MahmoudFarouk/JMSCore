@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JMS.DAL.Models
 {
@@ -9,7 +10,8 @@ namespace JMS.DAL.Models
         public int? QuestionId { get; set; }
         public bool? IsYes { get; set; }
         public string Comment { get; set; }
-        public string SubmittedBy { get; set; }
+        [ForeignKey("User")]
+        public Guid SubmittedBy { get; set; }
         public int? VehicleId { get; set; }
         public int? JourneyUpdateId { get; set; }
 

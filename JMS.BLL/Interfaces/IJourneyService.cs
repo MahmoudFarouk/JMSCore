@@ -16,7 +16,7 @@ namespace JMS.BLL.Interfaces
 
         public ServiceResponse<List<Journey>> GetJourneys(DateTime date);
 
-        public ServiceResponse AssignJourneyDriverVehicle(int journeyId, string driverId, string vehcileId);
+        public ServiceResponse AssignJourneyDriverVehicle(int journeyId, string driverId, string vehcileNo);
 
         public ServiceResponse ApproveJourney(int journeyId);
 
