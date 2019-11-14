@@ -1,0 +1,21 @@
+<div>
+  <h1>Welcome to Admin project</h1>
+</div>
+<br/>
+
+<div class="row">
+  <div class="col-3">
+    <div class="nav flex-column nav-pills"  role="tablist" aria-orientation="vertical">
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{exact:true}" role="tab"  >Admin Dashboard</a>
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/UsersManagement" role="tab"  >Users Management</a>
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/TeamManagement" role="tab"  >Team Management</a>
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/WorkforceManagement" role="tab"  >Workforce Management</a>
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/CheckpointManagement" role="tab"  >Checkpoint Management</a>
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/Reports" role="tab"  >Reports</a>
+    </div>
+  </div>
+  <div  class="col-3">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+

@@ -1,0 +1,11 @@
+{
+  "Buttons": {
+    "test": "test"
+  },
+  "Names": {
+    "test": "test"
+  },
+  "Labels": {
+    "test": "test"
+  }
+}

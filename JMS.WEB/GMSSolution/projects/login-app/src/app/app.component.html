@@ -1,0 +1,17 @@
+<div>
+  <h1>Welcome to Login project</h1>
+</div>
+<br/>
+
+<div class="row">
+  <div class="col-3">
+    <div class="nav flex-column nav-pills"  role="tablist" aria-orientation="vertical">
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{exact:true}" role="tab"  >Login</a>
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/Register" role="tab"  >Register</a>
+    </div>
+  </div>
+  <div  class="col-3">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+

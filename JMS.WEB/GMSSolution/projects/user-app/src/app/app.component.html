@@ -1,0 +1,22 @@
+<div>
+  <h1>Welcome to User project</h1>
+</div>
+<br/>
+
+<div class="row">
+  <div class="col-3">
+    <div class="nav flex-column nav-pills"  role="tablist" aria-orientation="vertical">
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{exact:true}" role="tab"  >Initiate Journey</a>
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/DriverSelection" role="tab"  >Driver Selection</a>
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/JourneyApproval" role="tab"  >Journey Approval</a>
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/JourneyPreparation" role="tab"  >Journey Preparation</a>
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/JourneyStartingAndMonitoring" role="tab"  >Journey Monitoring</a>
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/CheckpointAssessment" role="tab"  >Checkpoint Assessment</a>
+      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/JourneyClosure" role="tab"  >Journey Closure</a>
+    </div>
+  </div>
+  <div  class="col-3">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
