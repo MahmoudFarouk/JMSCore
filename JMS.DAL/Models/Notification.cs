@@ -8,7 +8,7 @@ namespace JMS.DAL.Models
     {
         public int Id { get; set; }
         public string Text { get; set; }
-        public bool? IsRead { get; set; }
+        public bool IsRead { get; set; }
         public DateTime CreationTime { get; set; }
         public Guid UserId { get; set; }
         public virtual User User { get; set; }

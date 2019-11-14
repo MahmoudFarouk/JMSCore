@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JMS.DAL.Common.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace JMS.DAL.Models
@@ -12,9 +13,9 @@ namespace JMS.DAL.Models
 
         public int Id { get; set; }
         public string Question { get; set; }
-        public int? Category { get; set; }
+        public QuestionCategory Category { get; set; }
         public int? Weight { get; set; }
-        public bool? IsThirdParty { get; set; }
+        public bool IsThirdParty { get; set; }
         public int? CheckpointId { get; set; }
 
         public virtual Checkpoint Checkpoint { get; set; }

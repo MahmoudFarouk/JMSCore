@@ -3,6 +3,7 @@ using JMS.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using JMS.DAL.Common.Enums;
 
 namespace JMS.BLL.Interfaces
 {
@@ -22,7 +23,7 @@ namespace JMS.BLL.Interfaces
 
         public ServiceResponse CloseJourney(int journeyId);
 
-        public ServiceResponse UpdateJourneyCheckpoint(int journeyUpdateId, Enums.JourneyStatus status);
+        public ServiceResponse UpdateJourneyCheckpoint(int journeyUpdateId, JourneyStatus status);
 
         public ServiceResponse StopJourney(int journeyId);
 

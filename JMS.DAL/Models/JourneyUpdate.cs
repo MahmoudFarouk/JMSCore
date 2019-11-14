@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JMS.DAL.Common.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace JMS.DAL.Models
@@ -13,16 +14,16 @@ namespace JMS.DAL.Models
         public int Id { get; set; }
         public DateTime? Date { get; set; }
         public int? JourneyId { get; set; }
-        public int? Status { get; set; }
-        public int? VehicleId { get; set; }
+        public JourneyStatus JourneyStatus { get; set; }
+        public int? VehicleNo { get; set; }
         public string DriverId { get; set; }
-        public bool? IsJourneyCheckpoint { get; set; }
+        public bool IsJourneyCheckpoint { get; set; }
         public int? CheckpointId { get; set; }
-        public int? RiskLevel { get; set; }
+        public Level RiskLevel { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
-        public bool? IsDriverStatus { get; set; }
-        public bool? IsAlert { get; set; }
+        public bool IsDriverStatus { get; set; }
+        public bool IsAlert { get; set; }
         public string StatusMessage { get; set; }
 
 
