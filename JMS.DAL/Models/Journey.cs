@@ -7,7 +7,6 @@ namespace JMS.DAL.Models
     {
         public Journey()
         {
-            DriverStatusUpdate = new HashSet<DriverStatusUpdate>();
             JourneyUpdate = new HashSet<JourneyUpdate>();
         }
 
@@ -27,8 +26,7 @@ namespace JMS.DAL.Models
         public string CargoType { get; set; }
         public string DispatcherId { get; set; }
 
-        public virtual AspNetUsers Dispatcher { get; set; }
-        public virtual ICollection<DriverStatusUpdate> DriverStatusUpdate { get; set; }
+        public virtual User Dispatcher { get; set; }
         public virtual ICollection<JourneyUpdate> JourneyUpdate { get; set; }
     }
 }

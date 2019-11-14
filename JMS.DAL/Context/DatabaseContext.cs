@@ -6,8 +6,10 @@ using System.Text;
 
 namespace JMS.DAL.Context
 {
-    public class DatabaseContext:DbContext
+    public class DatabaseContext : DbContext
     {
+        public DatabaseContext() { }
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
@@ -15,6 +17,14 @@ namespace JMS.DAL.Context
         public DbSet<UserWorkForce> UserWorkForces { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<AssessmentQuestion> AssessmentQuestion { get; set; }
+        public virtual DbSet<AssessmentResult> AssessmentResult { get; set; }
+        public virtual DbSet<Checkpoint> Checkpoint { get; set; }
+        public virtual DbSet<CodeException> CodeException { get; set; }
+        public virtual DbSet<Journey> Journey { get; set; }
+        public virtual DbSet<JourneyUpdate> JourneyUpdate { get; set; }
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"server=localhost;database=JMSDB;User ID=sa;password=P@ssw0rd;", b => b.MigrationsAssembly("JMS.API"));

@@ -14,6 +14,8 @@ namespace JMS.DAL.Models
         public string Name { get; set; }
         public string Lat { get; set; }
         public string Lng { get; set; }
+        public bool? IsThirdParty { get; set; }
+
 
         public virtual ICollection<JourneyUpdate> JourneyUpdate { get; set; }
     }

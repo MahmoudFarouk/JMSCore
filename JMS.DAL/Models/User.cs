@@ -23,8 +23,10 @@ namespace JMS.DAL.Models
         public byte[] PasswordSalt { get; set; }
         public virtual UserGroup UserGroup { get; set; }
         public virtual UserWorkForce UserWorkForce { get; set; }
-       
+
         public virtual List<UserRole> UserRoles { get; set; }
+        public virtual List<Notification> Notifications { get; set; }
+
 
     }
 }

@@ -15,6 +15,6 @@ namespace JMS.DAL.Models
 
         public virtual JourneyUpdate JourneyUpdate { get; set; }
         public virtual AssessmentQuestion Question { get; set; }
-        public virtual AspNetUsers SubmittedByNavigation { get; set; }
+        public virtual User SubmittedByNavigation { get; set; }
     }
 }

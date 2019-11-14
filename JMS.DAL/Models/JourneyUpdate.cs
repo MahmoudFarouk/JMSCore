@@ -16,10 +16,15 @@ namespace JMS.DAL.Models
         public int? Status { get; set; }
         public int? VehicleId { get; set; }
         public string DriverId { get; set; }
+        public bool? IsJourneyCheckpoint { get; set; }
         public int? CheckpointId { get; set; }
         public int? RiskLevel { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
+        public bool? IsDriverStatus { get; set; }
+        public bool? IsAlert { get; set; }
+        public string StatusMessage { get; set; }
+
 
         public virtual Checkpoint Checkpoint { get; set; }
         public virtual Journey Journey { get; set; }

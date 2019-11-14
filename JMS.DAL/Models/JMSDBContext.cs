@@ -16,11 +16,9 @@ namespace JMS.DAL.Models
         {
         }
 
-        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
-        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<User> User { get; set; }
         public virtual DbSet<AssessmentQuestion> AssessmentQuestion { get; set; }
         public virtual DbSet<AssessmentResult> AssessmentResult { get; set; }
         public virtual DbSet<Checkpoint> Checkpoint { get; set; }
@@ -48,40 +46,6 @@ namespace JMS.DAL.Models
                     .HasMaxLength(256);
             });
 
-            modelBuilder.Entity<AspNetUserClaims>(entity =>
-            {
-                entity.HasIndex(e => e.UserId)
-                    .HasName("IX_UserId");
-
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(128);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserClaims)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId");
-            });
-
-            modelBuilder.Entity<AspNetUserLogins>(entity =>
-            {
-                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey, e.UserId })
-                    .HasName("PK_dbo.AspNetUserLogins");
-
-                entity.HasIndex(e => e.UserId)
-                    .HasName("IX_UserId");
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.ProviderKey).HasMaxLength(128);
-
-                entity.Property(e => e.UserId).HasMaxLength(128);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserLogins)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId");
-            });
 
             modelBuilder.Entity<AspNetUserRoles>(entity =>
             {
@@ -109,7 +73,7 @@ namespace JMS.DAL.Models
                     .HasConstraintName("FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId");
             });
 
-            modelBuilder.Entity<AspNetUsers>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.UserName)
                     .HasName("UserNameIndex")
