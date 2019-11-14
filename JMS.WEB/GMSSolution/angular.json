@@ -24,7 +24,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           },
@@ -142,7 +143,8 @@
               "projects/login-app/src/assets"
             ],
             "styles": [
-              "projects/login-app/src/styles.css"
+              "projects/login-app/src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           },
@@ -260,7 +262,8 @@
               "projects/user-app/src/assets"
             ],
             "styles": [
-              "projects/user-app/src/styles.css"
+              "projects/user-app/src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           },
@@ -378,7 +381,8 @@
               "projects/admin-app/src/assets"
             ],
             "styles": [
-              "projects/admin-app/src/styles.css"
+              "projects/admin-app/src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           },
@@ -475,5 +479,5 @@
         }
       }
     }},
-  "defaultProject": "GMSSolution"
+  "defaultProject": "login-app"
 }
