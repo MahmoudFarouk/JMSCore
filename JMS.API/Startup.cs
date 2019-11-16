@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -45,7 +46,6 @@ namespace JMS.API
             //});
 
             services.AddDbContext<DatabaseContext>(item => item.UseSqlServer(Configuration.GetConnectionString("JMSConnection")));
-            services.AddAutoMapper(typeof(Startup));
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -67,11 +67,12 @@ namespace JMS.API
                         var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
                         var userId = Guid.Parse(context.Principal.Identity.Name);
                         var user = userService.GetById(userId);
-                        if (user == null)
+                        if (user == null||!user.IsAdctive)
                         {
                             // return unauthorized if user no longer exists
                             context.Fail("Unauthorized");
                         }
+                        
                         return Task.CompletedTask;
                     }
                 };
@@ -88,8 +89,10 @@ namespace JMS.API
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IJourneyService, JourneyService>();
+
         }
-        
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

@@ -4,18 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using JMS.DAL.Common.Enums;
+using JMS.BLL.Models;
 
 namespace JMS.BLL.Interfaces
 {
-    interface IJourneyService
+    public interface IJourneyService
     {
         public ServiceResponse InitiateJourney(Journey journey);
 
         public ServiceResponse UpdateJourney(Journey journey);
 
-        public ServiceResponse<Journey> GetJourneyDetails(int journeyId);
+        public ServiceResponse<JourneyDetailsModel> GetJourneyDetails(int journeyId);
 
-        public ServiceResponse<List<Journey>> GetJourneys(DateTime date);
+        public ServiceResponse<PageResult<Journey>> GetJourneys(DateTime? date, PagingProperties pagingProperties);
 
         public ServiceResponse AssignJourneyDriverVehicle(int journeyId, string driverId, string vehcileNo);
 
@@ -28,6 +29,9 @@ namespace JMS.BLL.Interfaces
         public ServiceResponse StopJourney(int journeyId);
 
         public ServiceResponse CompleteJourney(int journeyId);
+
+        public ServiceResponse AddJourneyUpdate(JourneyUpdate JourneyUpdate);
+
 
 
     }

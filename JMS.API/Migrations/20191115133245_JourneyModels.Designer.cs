@@ -4,14 +4,16 @@ using JMS.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JMS.API.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20191115133245_JourneyModels")]
+    partial class JourneyModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,7 +69,10 @@ namespace JMS.API.Migrations
                     b.Property<int?>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("SubmittedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("SubmittedByUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("VehicleNo")
@@ -79,7 +84,7 @@ namespace JMS.API.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("SubmittedByUserId");
 
                     b.ToTable("AssessmentResult");
                 });
@@ -255,8 +260,8 @@ namespace JMS.API.Migrations
                     b.Property<string>("StatusMessage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("VehicleNo")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("VehicleNo")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -430,11 +435,9 @@ namespace JMS.API.Migrations
                         .WithMany("AssessmentResult")
                         .HasForeignKey("QuestionId");
 
-                    b.HasOne("JMS.DAL.Models.User", "User")
+                    b.HasOne("JMS.DAL.Models.User", "SubmittedByUser")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SubmittedByUserId");
                 });
 
             modelBuilder.Entity("JMS.DAL.Models.Journey", b =>

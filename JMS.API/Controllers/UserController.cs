@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using JMS.API.Constants;
 using JMS.API.Models;
+using JMS.BLL.Common;
 using JMS.BLL.Helper;
 using JMS.BLL.Interfaces;
 using JMS.DAL.Models;
@@ -38,7 +39,7 @@ namespace JMS.API.Controllers
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
-        [Authorize(Roles =ConstRole.Dispatcher)]
+        [Authorize(Roles = ConstRole.Dispatcher)]
         [Route("test")]
         [HttpPost("test")]
         public IActionResult test()
@@ -46,12 +47,12 @@ namespace JMS.API.Controllers
             var extrarole = "";
             if (User.IsInRole(ConstRole.PL))
                 extrarole = ConstRole.PL;
-            return Ok(new { User.Identity.Name,extrarole });
+            return Ok(new { User.Identity.Name, extrarole });
         }
         [AllowAnonymous]
         [Route("authenticate")]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate(UserModel model)
+        public IActionResult Authenticate(AuthenticateModel model)
         {
             var user = _userService.Authenticate(model.Username, model.Password);
 
@@ -65,10 +66,12 @@ namespace JMS.API.Controllers
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 };
             var userRoles = user.UserRoles;
-            for(int i = 0; i < userRoles.Count; i++)
+            var _roles = new List<RoleModel>();
+            for (int i = 0; i < userRoles.Count; i++)
             {
                 var role = _userService.GetRoleById(userRoles[i].Id);
                 claims.Add(new Claim(ClaimTypes.Role, role.Name));
+                _roles.Add(new RoleModel {Id=role.Id,Name=role.Name });
             }
 
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -81,19 +84,21 @@ namespace JMS.API.Controllers
             var tokenString = tokenHandler.WriteToken(token);
 
             // return basic user info (without password) and token to store client side
-            return Ok(new
+            var result = new UserModel
             {
-                user.Id,
-                user.Username,
-                user.FullName,
-                Token = tokenString
-            });
+                Id = user.Id,
+                Username = user.Username,
+                FullName = user.FullName,
+                Token = tokenString,
+                Roles = _roles
+            };
+            return Ok(new ServiceResponse<UserModel> {Data=result,Status=DAL.Common.Enums.ResponseStatus.Success }) ;
         }
 
         [AllowAnonymous]
         [Route("register")]
         [HttpPost("register")]
-        public IActionResult Register(UserModel model)
+        public IActionResult Register(RegisterModel model)
         {
             // map dto to entity
             var user = new User
@@ -110,41 +115,61 @@ namespace JMS.API.Controllers
             {
                 // save 
                 _userService.Create(user, model.Password);
-                return Ok(user);
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.Success });
             }
             catch (AppException ex)
             {
+                ex.LogException();
                 // return error message if there was an exception
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError, Message = ex.Message });
             }
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(string keywordfilter, PagingProperties pagingProperties)
         {
-            var users = _userService.GetAll();
-            var userDtos = _mapper.Map<IList<UserModel>>(users);
-            return Ok(userDtos);
+            try
+            {
+                var users = _userService.GetAll(keywordfilter, pagingProperties);
+                var result = new ServiceResponse<PageResult<User>> { Data = users, Status = DAL.Common.Enums.ResponseStatus.Success };
+                return Ok(result);
+            }
+            catch (AppException ex)
+            {
+                ex.LogException();
+                // return error message if there was an exception
+                return BadRequest(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError, Message = ex.Message });
+            }
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
         {
-            var user = _userService.GetById(id);
-            var model = new UserModel
+            try
             {
-                FullName = user.FullName,
-                GatePassStatus = user.GatePassStatus,
-                LicenseExpiryDate = user.LicenseExpiryDate,
-                LicenseNo = user.LicenseNo,
-                TrainingDetails = user.TrainingDetails,
-                Username = user.Username
-            };
-            return Ok(model);
+                var user = _userService.GetById(id);
+                var model = new UserModel
+                {
+                    FullName = user.FullName,
+                    GatePassStatus = user.GatePassStatus,
+                    LicenseExpiryDate = user.LicenseExpiryDate,
+                    LicenseNo = user.LicenseNo,
+                    TrainingDetails = user.TrainingDetails,
+                    Username = user.Username
+                };
+                var result = new ServiceResponse<UserModel> { Data = model, Status = DAL.Common.Enums.ResponseStatus.Success };
+                return Ok(result);
+            }
+            catch (AppException ex)
+            {
+                ex.LogException();
+                // return error message if there was an exception
+                return BadRequest(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError, Message = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(Guid id, UserModel model)
+        public IActionResult Update(Guid id, RegisterModel model)
         {
             var user = new User
             {
@@ -161,20 +186,86 @@ namespace JMS.API.Controllers
             {
                 // save 
                 _userService.Update(user, model.Password);
-                return Ok();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.Success });
             }
             catch (AppException ex)
             {
+                ex.LogException();
                 // return error message if there was an exception
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError, Message = ex.Message });
             }
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            _userService.Delete(id);
-            return Ok();
+            try
+            {
+                _userService.Delete(id);
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.Success });
+            }
+            catch (AppException ex)
+            {
+                ex.LogException();
+                // return error message if there was an exception
+                return BadRequest(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError, Message = ex.Message });
+            }
+
+        }
+        [HttpPost()]
+        [Route("ActivateDisActivate")]
+        public IActionResult ActivateDisActivate(Guid id, bool isActive)
+        {
+            try
+            {
+                _userService.ActivateDisactvate(id, isActive);
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.Success });
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+            }
+
+        }
+        [HttpPost()]
+        [Route("ChangePassword")]
+        public IActionResult ChangePassword(ChangePasswordModel model)
+        {
+            try
+            {
+                var userid = Guid.Parse(User.Identity.Name);
+                var result=_userService.ChangePassword(userid, model.OldPassword, model.NewPassword);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+            }
+
+        }
+        [HttpPost()]
+        [Route("ResetPassword")]
+        public IActionResult ResetPassword(Guid userid)
+        {
+            
+            try
+            {
+               
+                var password = General.CreatePassword(8);
+                _userService.ResetPassword(userid, password);
+                return Ok(new ServiceResponse<string> { Data = password, Status = DAL.Common.Enums.ResponseStatus.Success });
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+            }
+
         }
     }
 }

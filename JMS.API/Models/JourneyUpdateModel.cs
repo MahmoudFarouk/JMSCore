@@ -1,16 +1,13 @@
 ﻿using JMS.DAL.Common.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace JMS.DAL.Models
+namespace JMS.API.Models
 {
-    public partial class JourneyUpdate
+    public class JourneyUpdateModel
     {
-        public JourneyUpdate()
-        {
-            AssessmentResult = new HashSet<AssessmentResult>();
-        }
-
         public int Id { get; set; }
         public DateTime? Date { get; set; }
         public int? JourneyId { get; set; }
@@ -25,10 +22,5 @@ namespace JMS.DAL.Models
         public bool IsDriverStatus { get; set; }
         public bool IsAlert { get; set; }
         public string StatusMessage { get; set; }
-
-
-        public virtual Checkpoint Checkpoint { get; set; }
-        public virtual Journey Journey { get; set; }
-        public virtual ICollection<AssessmentResult> AssessmentResult { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using JMS.DAL;
+﻿
+using JMS.DAL;
 using JMS.DAL.Context;
 using JMS.DAL.Models;
 using System;
@@ -11,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace JMS.BLL.Common
 {
-    public class ExceptionLogger
+    public static class ExceptionLogger
     {
-        public static void LogException(Exception ex)
+        public static void LogException(this Exception ex)
         {
             // Get the stack trace from the given exception
             StackTrace st = new StackTrace(ex);
@@ -33,7 +34,13 @@ namespace JMS.BLL.Common
             CodeException codeEx = new CodeException();
             codeEx.MachineName = Environment.MachineName;
             codeEx.ExceptionTime = DateTime.Now;
-            codeEx.UserId = System.Threading.Thread.CurrentPrincipal.Identity.Name;
+            //codeEx.UserId = System.Threading.Thread.CurrentPrincipal.Identity.Name;
+
+           
+
+
+
+
             if (nOffset >= 0)
             {
                 // get the current frame

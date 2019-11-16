@@ -1,16 +1,13 @@
 ﻿using JMS.DAL.Common.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace JMS.DAL.Models
+namespace JMS.API.Models
 {
-    public  class Journey
+    public class JourneyModel
     {
-        public Journey()
-        {
-            JourneyUpdate = new HashSet<JourneyUpdate>();
-        }
-
         public int Id { get; set; }
         public string Title { get; set; }
         public bool IsTruckTransport { get; set; }
@@ -29,9 +26,5 @@ namespace JMS.DAL.Models
         public string CargoType { get; set; }
         public Guid UserId { get; set; }
         public bool IsThirdParty { get; set; }
-
-
-        public virtual User User { get; set; }
-        public virtual ICollection<JourneyUpdate> JourneyUpdate { get; set; }
     }
 }

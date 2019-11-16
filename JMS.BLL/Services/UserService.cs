@@ -7,6 +7,7 @@ using System.Text;
 using System.Linq;
 using JMS.BLL.Helper;
 using Microsoft.EntityFrameworkCore;
+using JMS.BLL.Common;
 
 namespace JMS.BLL.Services
 {
@@ -24,7 +25,7 @@ namespace JMS.BLL.Services
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;
 
-            var user = _context.Users.Include(x=>x.UserRoles).SingleOrDefault(x => x.Username == username);
+            var user = _context.Users.Include(x => x.UserRoles).SingleOrDefault(x => x.Username == username);
 
             // check if username exists
             if (user == null)
@@ -38,9 +39,15 @@ namespace JMS.BLL.Services
             return user;
         }
 
-        public IEnumerable<User> GetAll()
+        public PageResult<User> GetAll(string keywordfilter, PagingProperties pagingProperties)
         {
-            return _context.Users;
+            var skip = (pagingProperties.PageNo - 1) * pagingProperties.PageSize;
+            IQueryable<User> items= _context.Users;
+            var totalItems = items.Count();
+            if (!string.IsNullOrEmpty(keywordfilter))
+                items = items.Where(x => x.FullName.Contains(keywordfilter)||x.Username.Contains(keywordfilter));
+            items = items.Skip(skip).Take(pagingProperties.PageSize);
+            return new PageResult<User> {PageItems=items.ToList(),TotalItems=totalItems };
         }
 
         public User GetById(Guid id)
@@ -148,6 +155,44 @@ namespace JMS.BLL.Services
             }
 
             return true;
+        }
+
+        public void ActivateDisactvate(Guid userId, bool isActive)
+        {
+            var user = _context.Users.Find(userId);
+            user.IsAdctive = isActive;
+            _context.SaveChanges();
+            
+        }
+
+        public ServiceResponse ChangePassword(Guid userId, string oldPassword, string newPassword)
+        {
+            var user = _context.Users.Find(userId);
+            if (VerifyPasswordHash(oldPassword, user.PasswordHash, user.PasswordSalt))
+            {
+                byte[] passwordHash, passwordSalt;
+                CreatePasswordHash(newPassword, out passwordHash, out passwordSalt);
+
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+                return new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.Success };
+
+            }
+            else
+            {
+                return new ServiceResponse {Status=DAL.Common.Enums.ResponseStatus.OldPasswordWrong };
+            }
+
+        }
+
+        public void ResetPassword(Guid userId, string randomPassword)
+        {
+            var user = _context.Users.Find(userId);
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(randomPassword, out passwordHash, out passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
         }
     }
 }
