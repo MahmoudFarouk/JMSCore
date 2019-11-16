@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JMS.BLL.Interfaces
 {
-    interface ICheckpointService
+    public interface ICheckpointService
     {
         public ServiceResponse<List<Checkpoint>> GetCheckpoints(string startLat, string startLng, string endLat, string endLng, bool isThirdParty);
 

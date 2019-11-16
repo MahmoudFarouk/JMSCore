@@ -9,5 +9,7 @@ namespace JMS.API.Constants
     {
         public const string PL = "PL";
         public const string Dispatcher = "Dispatcher";
+        public const string Driver = "Driver";
+
     }
 }

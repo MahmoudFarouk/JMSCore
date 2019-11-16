@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace JMS.BLL.Services
 {
-    class CheckpointService : ICheckpointService
+    public class CheckpointService : ICheckpointService
     {
         private DatabaseContext _context;
 

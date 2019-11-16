@@ -7,7 +7,7 @@ using JMS.DAL.Common.Enums;
 
 namespace JMS.BLL.Interfaces
 {
-    interface IJourneyService
+    public interface IJourneyService
     {
         public ServiceResponse InitiateJourney(Journey journey);
 

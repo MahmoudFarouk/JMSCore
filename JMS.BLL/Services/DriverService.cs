@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JMS.BLL.Services
 {
-    class DriverService : IDriverService
+    public class DriverService : IDriverService
     {
         private DatabaseContext _context;
 
