@@ -143,10 +143,20 @@
               "projects/login-app/src/assets"
             ],
             "styles": [
-              "projects/login-app/src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "projects/user-app/src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/css/vendors/normalize.css",
+              "src/css/vendors/materialize.css",
+              "src/css/vendors/bootstrap.min.css",
+              "src/css/main.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/js/jquery-3.4.1.min.js",
+              "src/js/materialize.min.js",
+              "src/js/popper.min.js",
+              "src/js/bootstrap.min.js",
+              "src/js/main.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -258,14 +268,24 @@
             "tsConfig": "projects/user-app/tsconfig.app.json",
             "aot": false,
             "assets": [
-              "projects/user-app/src/favicon.ico",
+              "projects/user-app/src/trackingSystemLogo.svg",
               "projects/user-app/src/assets"
             ],
             "styles": [
               "projects/user-app/src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/css/vendors/normalize.css",
+              "src/css/vendors/materialize.css",
+              "src/css/vendors/bootstrap.min.css",
+              "src/css/main.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/js/jquery-3.4.1.min.js",
+              "src/js/materialize.min.js",
+              "src/js/popper.min.js",
+              "src/js/bootstrap.min.js",
+              "src/js/main.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -381,10 +401,20 @@
               "projects/admin-app/src/assets"
             ],
             "styles": [
-              "projects/admin-app/src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "projects/user-app/src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/css/vendors/normalize.css",
+              "src/css/vendors/materialize.css",
+              "src/css/vendors/bootstrap.min.css",
+              "src/css/main.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/js/jquery-3.4.1.min.js",
+              "src/js/materialize.min.js",
+              "src/js/popper.min.js",
+              "src/js/bootstrap.min.js",
+              "src/js/main.js"
+            ]
           },
           "configurations": {
             "production": {

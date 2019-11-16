@@ -1,1 +1,175 @@
-<div>driver-selection component</div>
+<div>
+    <ng-template #customLoadingTemplate></ng-template>
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+    </div>
+<div *ngIf="loading==false"></div>
+<!--start navbar-->
+<nav class="menuAndNotificationNav">
+    <div class="mobileContainer d-flex justify-content-between align-items-center">
+        <a href="#" data-target="slide-out" class="sidenav-trigger">
+            <img src="assets/images/Jms_assets/ic_menu.svg">
+        </a>
+        <h2>
+            Driver Selection
+        </h2>
+        <a class="notificationsNumberNavIcon">
+            <img src="assets/images/Jms_assets/ic_notifications-button.svg">
+            <span class="notificationsNumber">
+                <span>5</span>
+            </span>
+        </a>
+    </div>
+</nav>
+<!--end navbar-->
+
+<!--start aside menu-->
+<aside id="slide-out" class="sidenav">
+    <div class="userInfo">
+        <img src="assets/images/Jms_assets/user.svg">
+        <h2>Amar Omar</h2>
+        <button>
+            Product Line
+        </button>
+    </div>
+    <ul>
+        <li>
+            <img src="assets/images/Jms_assets/ic_plus_black.svg">
+            <h3>Initiate Journy</h3>
+        </li>
+        <li>
+            <img src="assets/images/Jms_assets/ic_calendar.svg">
+            <h3>Journey Calendar</h3>
+        </li>
+        <li class="selected">
+            <img src="assets/images/Jms_assets/ic_pending_black.svg">
+            <h3>Pending Journey</h3>
+        </li>
+        <li>
+            <img src="assets/images/Jms_assets/ic_trip_black.svg">
+            <h3>My Requests</h3>
+        </li>
+    </ul>
+</aside>
+<!--end aside menu-->
+
+<!--start title section-->
+<div class="mobileContainer">
+    <section id="titleHere">
+        <h3>Title Here</h3>
+        <ul>
+            <li>
+                <img src="assets/images/Jms_assets/ic_pin.svg">
+                <span>Destination From: Alex</span>
+            </li>
+            <li>
+                <img src="assets/images/Jms_assets/ic_pin.svg">
+                <span>Destination To: Cairo</span>
+            </li>
+            <li>
+                <img src="assets/images/Jms_assets/ic_calendar.svg">
+                <span>Date Of Delivery: 20/12/2020</span>
+            </li>
+        </ul>
+    </section>
+</div>
+<!--end title section-->
+
+<!--start search for drivers section-->
+<section id="searchInDrivers">
+    <div class="mobileContainer">
+        <div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <img src="assets/images/Jms_assets/ic_search.svg">
+                    </div>
+                </div>
+                <input type="text" class="form-control" id="inlineFormInputGroupUsername"
+                    placeholder="Search Driver">
+            </div>
+        </div>
+    </div>
+</section>
+<!--end search for drivers section-->
+
+<!--start drivers Selections Cards-->
+<section id="driversSelectionsCards">
+    <div class="mobileContainer">
+        <div class="row">
+            <!--driver Card (take it from here)-->
+            <div class="col-6">
+                <div class="driverCard">
+                    <img src="assets/images/Jms_assets/user.svg" class="driverImg">
+                    <h4 class="driverName">Ahmed Driver</h4>
+                    <p class="totalHours">Total driving hours : 17</p>
+                    <div class="d-flex justify-content-between isTraining">
+                        <p class="status">Training</p>
+                        <p class="statusDate">27 Apr 2018</p>
+                    </div>
+                    <div class="d-flex justify-content-between licenseInfo">
+                        <p class="license">License</p>
+                        <p class="licenseNumber">1239900</p>
+                    </div>
+                    <div class="d-flex justify-content-between vehicles">
+                        <p class="vehicleType">Vehicle.N</p>
+                        <p class="vehicleNumber">NH9000</p>
+                    </div>
+                    <p class="gateStauts">Status of gate pass</p>
+                    <button class="driverStatus">
+                        Pending
+                    </button>
+                </div>
+            </div>
+            <!--driver Card (till here)-->
+
+            <div class="col-6">
+                <div class="driverCard">
+                    <img src="assets/images/Jms_assets/user.svg" class="driverImg">
+                    <h4 class="driverName">Ahmed Driver</h4>
+                    <p class="totalHours">Total driving hours : 17</p>
+                    <div class="d-flex justify-content-between isTraining">
+                        <p class="status">Training</p>
+                        <p class="statusDate">27 Apr 2018</p>
+                    </div>
+                    <div class="d-flex justify-content-between licenseInfo">
+                        <p class="license">License</p>
+                        <p class="licenseNumber">1239900</p>
+                    </div>
+                    <div class="d-flex justify-content-between vehicles">
+                        <p class="vehicleType">Vehicle.N</p>
+                        <p class="vehicleNumber">NH9000</p>
+                    </div>
+                    <p class="gateStauts">Status of gate pass</p>
+                    <button class="driverStatus">
+                        Pending
+                    </button>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="driverCard">
+                    <img src="assets/images/Jms_assets/user.svg" class="driverImg">
+                    <h4 class="driverName">Ahmed Driver</h4>
+                    <p class="totalHours">Total driving hours : 17</p>
+                    <div class="d-flex justify-content-between isTraining">
+                        <p class="status">Training</p>
+                        <p class="statusDate">27 Apr 2018</p>
+                    </div>
+                    <div class="d-flex justify-content-between licenseInfo">
+                        <p class="license">License</p>
+                        <p class="licenseNumber">1239900</p>
+                    </div>
+                    <div class="d-flex justify-content-between vehicles">
+                        <p class="vehicleType">Vehicle.N</p>
+                        <p class="vehicleNumber">NH9000</p>
+                    </div>
+                    <p class="gateStauts">Status of gate pass</p>
+                    <button class="driverStatus">
+                        Pending
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

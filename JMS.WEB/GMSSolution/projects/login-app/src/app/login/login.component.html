@@ -1,1 +1,43 @@
-<div>login component</div>
+<div>
+    <ng-template #customLoadingTemplate></ng-template>
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+    </div>
+
+<!--start navbar-->
+<div *ngIf="loading==false">
+<nav class="logoNav">
+    <img src="assets/images/Jms_assets/trackingSystemLogo.svg">
+</nav>
+<!--start navbar-->
+<!--start Login Form Section-->
+<section id="loginFormSection" >
+    <section class="formWrapper">
+        <h2>Login</h2>
+        <form action="" class="loginForm">
+            <div class="input-group mainInputComp">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <img src="assets/images/Jms_assets/ic_user.svg">
+                    </span>
+                </div>
+                <input type="email" class="form-control" placeholder="Email Address" aria-label="EmailAddress">
+            </div>
+            <div class="input-group mainInputComp">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <img src="assets/images/Jms_assets/ic_pass.svg">
+                    </span>
+                </div>
+                <input type="password" class="form-control" placeholder="Password" aria-label="password">
+            </div>
+            <div class="resetPassword">
+                <a href="forgotPassword.html">Forgot Password ?</a>
+            </div>
+            <button type="submit">
+                Sign In
+            </button>
+        </form>
+    </section>
+</section>
+</div>
+<!--end Login Form Section-->

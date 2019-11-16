@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription,Observable,timer } from 'rxjs';
 
 @Component({
   selector: 'app-driver-selection',
@@ -6,22 +7,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./driver-selection.component.css']
 })
 export class DriverSelectionComponent implements OnInit {
-
-loading = false;
-isSuccessMode = false;
-isErrorMode = true;
-language : string;
-
+  loading:boolean = false;
+  isCustomComponent:boolean = false;
+  isCurrentPage:boolean;
+  subscription: Subscription;
+  timer: Observable<any>;
   constructor() {
-    this.language = window.location.href.indexOf('/ar/') > -1 ? 'ar' : 'en';
+    
   }
   ngOnInit() {
-    this.loading = true;
+    this.isCustomComponent=false;
+    this.setTimer();
  }
-setErrorFlags() {
-  this.loading = false;
-  this.isSuccessMode = false;
-  this.isErrorMode = true;
+public setTimer(){
+  this.loading   = true;
+  this.timer = timer(500);
+  this.subscription = this.timer.subscribe(() => {
+      this.loading = false;
+  });
 }
 
 }

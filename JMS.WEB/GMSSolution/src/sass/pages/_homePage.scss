@@ -1,0 +1,34 @@
+
+#homePage .sectionHeader{
+    margin: 50px 0 20px 0;
+    color: #3D3B3B ;
+    font-size: 24px;
+}
+#homePage .homePageAction{
+    background-color: #ddd;
+    margin-top: 25px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+#homePage .homePageAction.initJourney{
+    background-color: #19BC9C;
+}
+#homePage .homePageAction.driverSelection{
+    background-color: #00447D;
+}
+#homePage .homePageAction.pendingJourney{
+    background-color: #F5A622;
+}
+#homePage .homePageAction.journeyTrip{
+    background-color:   #549DDF;
+}
+#homePage .homePageAction img{
+    margin: 20px 0;
+}
+#homePage .homePageAction h2{
+    font-size: 22px;
+    padding:0 12px 20px 12px ;
+    color:#FFF;
+    font-family: Quicksand;
+    font-weight: bold;
+}
