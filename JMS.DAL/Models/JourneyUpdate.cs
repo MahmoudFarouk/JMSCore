@@ -1,6 +1,7 @@
 ﻿using JMS.DAL.Common.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JMS.DAL.Models
 {
@@ -16,6 +17,7 @@ namespace JMS.DAL.Models
         public int? JourneyId { get; set; }
         public JourneyStatus JourneyStatus { get; set; }
         public int? VehicleNo { get; set; }
+        [ForeignKey("User")]
         public string DriverId { get; set; }
         public bool IsJourneyCheckpoint { get; set; }
         public int? CheckpointId { get; set; }
@@ -30,5 +32,6 @@ namespace JMS.DAL.Models
         public virtual Checkpoint Checkpoint { get; set; }
         public virtual Journey Journey { get; set; }
         public virtual ICollection<AssessmentResult> AssessmentResult { get; set; }
+        public virtual User User { get; set; }
     }
 }

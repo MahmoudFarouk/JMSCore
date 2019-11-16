@@ -26,6 +26,9 @@ namespace JMS.DAL.Models
 
         public virtual List<UserRole> UserRoles { get; set; }
         public virtual List<Notification> Notifications { get; set; }
+        public virtual List<Journey> Journeys { get; set; }
+        public virtual List<JourneyUpdate> JourneyUpdates { get; set; }
+
 
 
     }
