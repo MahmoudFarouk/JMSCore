@@ -6,7 +6,6 @@ using JMS.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Device.Location;
 using System.Linq;
 
 namespace JMS.BLL.Services
@@ -26,15 +25,12 @@ namespace JMS.BLL.Services
 
             try
             {
-                var sCoOrd = new GeoCoordinate(double.Parse(startLat), double.Parse(startLat));
-                var eCoOrd = new GeoCoordinate(double.Parse(endLat), double.Parse(endLng));
-
                 var x = _context.Checkpoint
                     .Where(c => isThirdParty ? true : !c.IsThirdParty)
                     .Select(c => new
                     {
-                        StartDistance = sCoOrd.GetDistanceTo(new GeoCoordinate(double.Parse(c.Lat), double.Parse(c.Lng))) / 1000,
-                        EndDistance = eCoOrd.GetDistanceTo(new GeoCoordinate(double.Parse(c.Lat), double.Parse(c.Lng))) / 1000,
+                        StartDistance = LocationHandler.CalculateDistance(double.Parse(startLat), double.Parse(startLng), double.Parse(c.Lat), double.Parse(c.Lng)),
+                        EndDistance = LocationHandler.CalculateDistance(double.Parse(endLat), double.Parse(endLng), double.Parse(c.Lat), double.Parse(c.Lng)),
                         c.Id,
                         c.Name,
                         c.Lat,
