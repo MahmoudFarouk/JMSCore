@@ -1,22 +1,91 @@
-<div>
-  <h1>Welcome to User project</h1>
-</div>
-<br/>
-
-<div class="row">
-  <div class="col-3">
-    <div class="nav flex-column nav-pills"  role="tablist" aria-orientation="vertical">
-      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{exact:true}" role="tab"  >Initiate Journey</a>
-      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/DriverSelection" role="tab"  >Driver Selection</a>
-      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/JourneyApproval" role="tab"  >Journey Approval</a>
-      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/JourneyPreparation" role="tab"  >Journey Preparation</a>
-      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/JourneyStartingAndMonitoring" role="tab"  >Journey Monitoring</a>
-      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/CheckpointAssessment" role="tab"  >Checkpoint Assessment</a>
-      <a class="nav-link"  data-toggle="pill" routerLinkActive="active" routerLink="/JourneyClosure" role="tab"  >Journey Closure</a>
-    </div>
+    <!--start navbar-->
+  <nav class="menuAndNotificationNav">
+      <div class="mobileContainer d-flex justify-content-between align-items-center">
+          <a href="#" data-target="slide-out" class="sidenav-trigger">
+              <img src="assets/images/Jms_assets/ic_menu.svg">
+          </a>
+          <a>
+              <img src="assets/images/Jms_assets/trackingSystemLogo.svg">
+          </a>
+          <a class="notificationsNumberNavIcon">
+              <img src="assets/images/Jms_assets/ic_notifications-button.svg">
+              <span class="notificationsNumber">
+                  <span>5</span>
+              </span>
+          </a>
+      </div>
+  </nav>
+  <!--end navbar-->
+  <!--start aside menu-->
+  <aside id="slide-out" class="sidenav">
+      <div class="userInfo">
+          <img src="assets/images/Jms_assets/user.svg">
+          <h2>Amar Omar</h2>
+          <button>
+              Product Line
+          </button>
+      </div>
+      <ul>
+          <li>
+              <img src="assets/images/Jms_assets/ic_plus_black.svg">
+              <h3>Initiate Journy</h3>
+          </li>
+          <li>
+              <img src="assets/images/Jms_assets/ic_calendar.svg">
+              <h3>Journey Calendar</h3>
+          </li>
+          <li class="selected">
+              <img src="assets/images/Jms_assets/ic_pending_black.svg">
+              <h3>Pending Journey</h3>
+          </li>
+          <li>
+              <img src="assets/images/Jms_assets/ic_trip_black.svg">
+              <h3>My Requests</h3>
+          </li>
+      </ul>
+  </aside>
+  <!--end aside menu-->
+  <!--start home page actions-->
+  <div>
+  <ng-template #customLoadingTemplate></ng-template>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
   </div>
-  <div  class="col-3">
-    <router-outlet></router-outlet>
+  <div *ngIf="isCustomComponent==false && isCurrentPage==false && loading==false">
+    <section id="homePage" class="text-center" >
+        <div class="mobileContainer" >
+            <h2 class="sectionHeader">Welcome <strong>Product Line</strong></h2>
+            <div class="row">
+                <div class="col-6">
+                    <div id="Init_Jou_0" class="homePageAction initJourney" routerLinkActive="active" routerLink="/InitiateJourney" (click)="navigateToCustomPage($event)">
+                        <img src="assets/images/Jms_assets/ic_plus.svg">
+                        <h2>Initiate Journy</h2>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div id="Driver_Sel_0" class="homePageAction driverSelection" routerLinkActive="active" routerLink="/DriverSelection" (click)="navigateToCustomPage($event)">
+                        <img src="assets/images/Jms_assets/ic_driver.svg">
+                        <h2>Driver Selection</h2>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div id="Pending_Jou_0" class="homePageAction pendingJourney" routerLinkActive="active" routerLink="/JourneyStartingAndMonitoring" (click)="navigateToCustomPage($event)">
+                        <img src="assets/images/Jms_assets/ic_pending.svg">
+                        <h2>Pending Journey</h2>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div id="Jou_Trip_0" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/JourneyApproval" (click)="navigateToCustomPage($event)">
+                        <img src="assets/images/Jms_assets/ic_trip.svg">
+                        <h2>Journey Trip</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
   </div>
-</div>
+  <router-outlet *ngIf="isCustomComponent==true && isCurrentPage==true && loading==false"></router-outlet>
+  <!--end home page actions-->
 
+
+
+ 

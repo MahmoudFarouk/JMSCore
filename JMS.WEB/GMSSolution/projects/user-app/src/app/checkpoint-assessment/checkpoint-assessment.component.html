@@ -1,1 +1,6 @@
-<div>checkpoint-assessment.component</div>
+<div>
+    <ng-template #customLoadingTemplate></ng-template>
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+    </div>
+<div *ngIf="loading==false">checkpoint-assessment.component</div>
+

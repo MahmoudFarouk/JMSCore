@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JMS.BLL.Interfaces
 {
-    interface IDriverService
+    public interface IDriverService
     {
         public ServiceResponse<List<User>> GetDrivers();
 

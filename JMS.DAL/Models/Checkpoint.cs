@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace JMS.DAL.Models
@@ -18,5 +19,6 @@ namespace JMS.DAL.Models
 
 
         public virtual ICollection<JourneyUpdate> JourneyUpdate { get; set; }
+
     }
 }

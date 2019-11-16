@@ -26,6 +26,14 @@ namespace JMS.DAL.Common.Enums
 
     }
 
+    public enum UserRoles
+    {
+        ProductLine = 0,
+        Dispatcher = 1,
+        JMC = 2,
+        Driver = 3
+    }
+
     public enum Level
     {
         Low = 0,

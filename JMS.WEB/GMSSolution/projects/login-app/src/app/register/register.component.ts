@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Subscription,Observable,timer } from 'rxjs';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
-loading = false;
-isSuccessMode = false;
-isErrorMode = true;
-language : string;
+  loading:boolean = false;
+  isCustomComponent:boolean = false;
+  isCurrentPage:boolean = false;
+  subscription: Subscription;
+  timer: Observable<any>;
 
   constructor() {
-    this.language = window.location.href.indexOf('/ar/') > -1 ? 'ar' : 'en';
   }
   ngOnInit() {
-    this.loading = true;
+    this.setTimer();
  }
-setErrorFlags() {
-  this.loading = false;
-  this.isSuccessMode = false;
-  this.isErrorMode = true;
-}
-
+ public setTimer(){
+  this.loading   = true;
+  this.timer = timer(3000);
+  this.subscription = this.timer.subscribe(() => {
+      this.loading = false;
+  });
+ }
 }

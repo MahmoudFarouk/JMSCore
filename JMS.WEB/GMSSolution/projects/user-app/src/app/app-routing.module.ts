@@ -7,10 +7,12 @@ import { InitiateJourneyComponent } from './initiate-journey/initiate-journey.co
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { JourneyClosureComponent } from './journey-closure/journey-closure.component';
+import { AppComponent } from './app.component';
 
 
 const routes: Routes = [
-  {path:'',component:InitiateJourneyComponent},
+  {path:'',component:AppComponent},
+  {path:'InitiateJourney',component:InitiateJourneyComponent},
   {path:'DriverSelection',component:DriverSelectionComponent},
   {path:'JourneyApproval',component:JourneyApprovalComponent},
   {path:'JourneyPreparation',component:JourneyPreparationComponent},

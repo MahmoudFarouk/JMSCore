@@ -6,15 +6,15 @@ using System.Text;
 
 namespace JMS.BLL.Interfaces
 {
-    interface ICheckpointService
+    public interface ICheckpointService
     {
-        public ServiceResponse<List<Checkpoint>> GetCheckpoints(string startLat, string startLng, string endLat, string endLng);
+        public ServiceResponse<List<Checkpoint>> GetCheckpoints(string startLat, string startLng, string endLat, string endLng, bool isThirdParty);
 
         public ServiceResponse AddCheckpoint(Checkpoint checkpoint);
 
         public ServiceResponse UpdateCheckpoint(Checkpoint checkpoint);
 
-        public ServiceResponse DeleteCheckpoint(Checkpoint checkpoint);
+        public ServiceResponse DeleteCheckpoint(int checkpointId);
 
 
 

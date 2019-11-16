@@ -89,6 +89,8 @@ namespace JMS.API
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IDriverService, DriverService>();
+            services.AddScoped<ICheckpointService, CheckpointService>();
             services.AddScoped<IJourneyService, JourneyService>();
 
         }
