@@ -20,7 +20,7 @@ namespace JMS.BLL.Services
             _context = context;
         }
 
-        public ServiceResponse<List<User>> GetDrivers(string driverName)
+        public ServiceResponse<List<User>> GetDrivers()
         {
             ServiceResponse<List<User>> response = new ServiceResponse<List<User>>();
 
@@ -29,7 +29,7 @@ namespace JMS.BLL.Services
                 response.Data = (from user in _context.Users
                                  where
                                      user.UserRoles.Any(ur => ur.Role.Name == UserRoles.Driver.ToString()) &
-                                     user.FullName.Contains(driverName) &
+                                     /*user.FullName.Contains(driverName) &*/
                                      EF.Functions.DateDiffHour(DateTime.Now, user.JourneyUpdates.LastOrDefault().Date) < 14
                                  select user).ToList();
 
