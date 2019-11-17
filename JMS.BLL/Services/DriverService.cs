@@ -29,8 +29,8 @@ namespace JMS.BLL.Services
                 response.Data = (from user in _context.Users
                                  where
                                      user.UserRoles.Any(ur => ur.Role.Name == UserRoles.Driver.ToString()) &
-                                     /*user.FullName.Contains(driverName) &*/
-                                     EF.Functions.DateDiffHour(DateTime.Now, user.JourneyUpdates.LastOrDefault().Date) < 14
+                                     (!string.IsNullOrEmpty(driverName) && user.FullName.Contains(driverName)) &
+                                     (user.JourneyUpdates.LastOrDefault() != null && user.JourneyUpdates.LastOrDefault().Date.HasValue && EF.Functions.DateDiffHour(DateTime.Now, user.JourneyUpdates.LastOrDefault().Date) < 14)
                                  select user).ToList();
 
                 response.Status = ResponseStatus.Success;
