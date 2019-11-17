@@ -39,7 +39,7 @@ namespace JMS.API.Controllers
 
         [HttpGet("{startLat, startLng, endLat, endLng, isThirdParty}")]
         [Route("getcheckpoints")]
-        public IActionResult GetDrivers(string startLat, string startLng, string endLat, string endLng, bool isThirdParty = false)
+        public IActionResult GetCheckpoints(string startLat, string startLng, string endLat, string endLng, bool isThirdParty = false)
         {
             return Ok(_checkpointService.GetCheckpoints(startLat, startLng, endLat, endLng, isThirdParty));
         }
