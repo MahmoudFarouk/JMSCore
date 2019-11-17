@@ -54,7 +54,7 @@ namespace JMS.API.Controllers
         [Route("marknotificationread")]
         public IActionResult MarkNotificationAsRead(int notificationId)
         {
-            return Ok(_notificationService.MarkNotificationAsRead(notificationId);
+            return Ok(_notificationService.MarkNotificationAsRead(notificationId));
         }
 
     }
