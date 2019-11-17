@@ -8,7 +8,7 @@ namespace JMS.BLL.Interfaces
 {
     public interface IDriverService
     {
-        public ServiceResponse<List<User>> GetDrivers();
+        public ServiceResponse<List<User>> GetDrivers(string driverName);
 
         public ServiceResponse SubmitAssessment(List<AssessmentResult> assessmentResult);
 

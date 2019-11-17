@@ -22,7 +22,7 @@ namespace JMS.API.Controllers
 
     [Authorize]
     [ApiController]
-    [Route("api/driver")]
+    [Route("api/checkpoint")]
     public class CheckpointController : ControllerBase
     {
         private ICheckpointService _checkpointService;
@@ -35,5 +35,37 @@ namespace JMS.API.Controllers
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
+
+
+        [HttpGet("{startLat, startLng, endLat, endLng, isThirdParty}")]
+        [Route("getcheckpoints")]
+        public IActionResult GetDrivers(string startLat, string startLng, string endLat, string endLng, bool isThirdParty = false)
+        {
+            return Ok(_checkpointService.GetCheckpoints(startLat, startLng, endLat, endLng, isThirdParty));
+        }
+
+        [HttpPost]
+        [Route("addcheckpoint")]
+        public IActionResult AddCheckpoint(Checkpoint checkpoint)
+        {
+            return Ok(_checkpointService.AddCheckpoint(checkpoint));
+        }
+
+        [HttpPost]
+        [Route("updatecheckpoint")]
+        public IActionResult UpdateCheckpoint(Checkpoint checkpoint)
+        {
+            return Ok(_checkpointService.UpdateCheckpoint(checkpoint));
+        }
+
+        [HttpPost]
+        [Route("deletecheckpoint")]
+        public IActionResult DeleteCheckpoint(int checkpointId)
+        {
+            return Ok(_checkpointService.DeleteCheckpoint(checkpointId));
+        }
     }
+
+
+
 }

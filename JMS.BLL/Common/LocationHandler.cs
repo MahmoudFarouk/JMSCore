@@ -4,6 +4,9 @@ using System.Text;
 
 namespace JMS.BLL.Common
 {
+    //Check this site for more info
+    //https://www.geodatasource.com/developers/c-sharp
+
     public static class LocationHandler
     {
         /// <summary>
@@ -28,6 +31,7 @@ namespace JMS.BLL.Common
                 dist = rad2deg(dist);
                 dist = dist * 60 * 1.1515;
 
+                //Converting distance from miles to kilometers
                 dist = dist * 1.609344;
 
                 return dist;

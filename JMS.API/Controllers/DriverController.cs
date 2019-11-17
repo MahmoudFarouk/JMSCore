@@ -35,5 +35,28 @@ namespace JMS.API.Controllers
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
+
+        [HttpGet("{drivername}")]
+        [Route("getdrivers")]
+        public IActionResult GetDrivers(string driverName)
+        {
+            return Ok(_driverService.GetDrivers(driverName));
+        }
+
+        [HttpPost]
+        [Route("submitassessment")]
+        public IActionResult SubmitAssessment(List<AssessmentResult> assessmentResult)
+        {
+            return Ok(_driverService.SubmitAssessment(assessmentResult));
+        }
+
+
+        [HttpPost]
+        [Route("submitassessment")]
+        public IActionResult SubmitAssessment(JourneyUpdate status)
+        {
+            return Ok(_driverService.SubmitStatus(status));
+        }
+
     }
 }
