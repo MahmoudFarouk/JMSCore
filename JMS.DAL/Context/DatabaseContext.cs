@@ -23,6 +23,7 @@ namespace JMS.DAL.Context
         public virtual DbSet<CodeException> CodeException { get; set; }
         public virtual DbSet<Journey> Journey { get; set; }
         public virtual DbSet<JourneyUpdate> JourneyUpdate { get; set; }
+        public virtual DbSet<Notification> Notification { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
