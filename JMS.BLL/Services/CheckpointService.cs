@@ -19,30 +19,30 @@ namespace JMS.BLL.Services
             _context = context;
         }
 
-        public ServiceResponse<List<Checkpoint>> GetCheckpoints(string startLat, string startLng, string endLat, string endLng, bool isThirdParty)
+        public ServiceResponse<List<Checkpoint>> GetCheckpoints(double startLat, double startLng, double endLat, double endLng, bool isThirdParty)
         {
             ServiceResponse<List<Checkpoint>> response = new ServiceResponse<List<Checkpoint>>();
 
             try
             {
                 response.Data = _context.Checkpoint
-                     .Where(c => isThirdParty ? true : !c.IsThirdParty)
+                     .Where(c => c.IsThirdParty == isThirdParty).ToList()
                      .Select(c => new
                      {
-                         StartDistance = LocationHandler.CalculateDistance(double.Parse(startLat), double.Parse(startLng), double.Parse(c.Lat), double.Parse(c.Lng)),
-                         EndDistance = LocationHandler.CalculateDistance(double.Parse(endLat), double.Parse(endLng), double.Parse(c.Lat), double.Parse(c.Lng)),
+                         StartDistance = LocationHandler.CalculateDistance(startLat, startLng, c.Latitude.Value, c.Longitude.Value),
+                         EndDistance = LocationHandler.CalculateDistance(endLat, endLng, c.Latitude.Value, c.Longitude.Value),
                          c.Id,
                          c.Name,
-                         c.Lat,
-                         c.Lng
-                     })
-                     .Where(c => c.StartDistance <= 100 && c.EndDistance <= 100)
+                         c.Latitude,
+                         c.Longitude
+                     }).ToList()
+                     .Where(c => c.StartDistance <= 100 || c.EndDistance <= 100)
                      .Select(c => new Checkpoint
                      {
                          Id = c.Id,
                          Name = c.Name,
-                         Lat = c.Lat,
-                         Lng = c.Lng
+                         Latitude = c.Latitude,
+                         Longitude = c.Longitude
                      }).ToList();
 
                 response.Status = ResponseStatus.Success;
@@ -65,6 +65,7 @@ namespace JMS.BLL.Services
             try
             {
                 _context.Checkpoint.Add(checkpoint);
+                _context.SaveChanges();
                 response.Status = ResponseStatus.Success;
             }
             catch (Exception ex)
@@ -85,6 +86,7 @@ namespace JMS.BLL.Services
             try
             {
                 _context.Checkpoint.Update(checkpoint);
+                _context.SaveChanges();
                 response.Status = ResponseStatus.Success;
             }
             catch (Exception ex)
@@ -105,6 +107,7 @@ namespace JMS.BLL.Services
             try
             {
                 _context.Checkpoint.Remove(_context.Checkpoint.Find(checkpointId));
+                _context.SaveChanges();
                 response.Status = ResponseStatus.Success;
             }
             catch (Exception ex)

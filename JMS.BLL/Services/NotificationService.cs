@@ -19,26 +19,6 @@ namespace JMS.BLL.Services
             _context = context;
         }
 
-        public ServiceResponse DeleteCheckpoint(int checkpointId)
-        {
-            ServiceResponse response = new ServiceResponse();
-
-            try
-            {
-                _context.Checkpoint.Remove(_context.Checkpoint.Find(checkpointId));
-                response.Status = ResponseStatus.Success;
-            }
-            catch (Exception ex)
-            {
-                response.Message = ex.Message;
-                response.Status = ResponseStatus.ServerError;
-
-                ExceptionLogger.LogException(ex);
-            }
-
-            return response;
-        }
-
         public ServiceResponse<List<Notification>> GetUserNotifications(Guid userId)
         {
             ServiceResponse<List<Notification>> response = new ServiceResponse<List<Notification>>();
@@ -67,6 +47,8 @@ namespace JMS.BLL.Services
             try
             {
                 _context.Notification.Add(notification);
+                _context.SaveChanges();
+
                 response.Status = ResponseStatus.Success;
             }
             catch (Exception ex)

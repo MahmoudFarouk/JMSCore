@@ -67,8 +67,8 @@ namespace JMS.BLL.Services
                     {
                         Id = journeyUpdate.Checkpoint.Id,
                         IsThirdParty = journeyUpdate.Checkpoint.IsThirdParty,
-                        Lat = journeyUpdate.Checkpoint.Lat,
-                        Lng = journeyUpdate.Checkpoint.Lng,
+                        Lat = journeyUpdate.Checkpoint.Latitude.Value,
+                        Lng = journeyUpdate.Checkpoint.Longitude.Value,
                         Name = journeyUpdate.Checkpoint.Name
                     });
                 }
@@ -129,8 +129,8 @@ namespace JMS.BLL.Services
                     IsJourneyCheckpoint = journeyUpdate.IsJourneyCheckpoint,
                     JourneyId = journeyUpdate.JourneyId,
                     JourneyStatus = journeyUpdate.JourneyStatus,
-                    Latitude = journeyUpdate.Latitude,
-                    Longitude = journeyUpdate.Longitude,
+                    Latitude = journeyUpdate.Latitude.Value,
+                    Longitude = journeyUpdate.Longitude.Value,
                     RiskLevel = journeyUpdate.RiskLevel,
                     StatusMessage = journeyUpdate.StatusMessage,
                     VehicleNo = journeyUpdate.VehicleNo,
@@ -147,8 +147,8 @@ namespace JMS.BLL.Services
                 CargoWeight = journey.CargoWeight,
                 DeliveryDate = journey.DeliveryDate,
                 FromDestination = journey.FromDestination,
-                FromLat = journey.FromLat,
-                FromLng = journey.FromLng,
+                FromLat = journey.FromLat.Value,
+                FromLng = journey.FromLng.Value,
                 Id = journey.Id,
                 IsThirdParty = journey.IsThirdParty,
                 IsTruckTransport = journey.IsTruckTransport,
@@ -156,8 +156,8 @@ namespace JMS.BLL.Services
                 StartDate = journey.StartDate,
                 Title = journey.Title,
                 ToDistination = journey.ToDistination,
-                ToLat = journey.ToLat,
-                ToLng = journey.ToLng,
+                ToLat = journey.ToLat.Value,
+                ToLng = journey.ToLng.Value,
                 UserId = journey.UserId,
                 UserFullname = journey.UserId != null ? _context.Users.Find(journey.UserId).FullName : "",
                 JourneyUpdates = _journeyUpdates,

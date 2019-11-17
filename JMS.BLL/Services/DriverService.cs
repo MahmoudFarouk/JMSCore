@@ -53,6 +53,7 @@ namespace JMS.BLL.Services
             try
             {
                 _context.AssessmentResult.AddRange(assessmentResult);
+                _context.SaveChanges();
 
                 response.Status = ResponseStatus.Success;
             }
@@ -74,6 +75,7 @@ namespace JMS.BLL.Services
             try
             {
                 _context.JourneyUpdate.Add(journeyUpdate);
+                _context.SaveChanges();
 
                 response.Status = ResponseStatus.Success;
             }

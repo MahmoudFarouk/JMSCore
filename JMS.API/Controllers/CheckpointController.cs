@@ -20,7 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace JMS.API.Controllers
 {
 
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/checkpoint")]
     public class CheckpointController : ControllerBase
@@ -29,17 +29,16 @@ namespace JMS.API.Controllers
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
 
-        public CheckpointController(ICheckpointService checkpointService, IMapper mapper, IOptions<AppSettings> appSettings)
+        public CheckpointController(ICheckpointService checkpointService, IOptions<AppSettings> appSettings)
         {
             _checkpointService = checkpointService;
-            _mapper = mapper;
             _appSettings = appSettings.Value;
         }
 
 
         [HttpGet("{startLat, startLng, endLat, endLng, isThirdParty}")]
         [Route("getcheckpoints")]
-        public IActionResult GetCheckpoints(string startLat, string startLng, string endLat, string endLng, bool isThirdParty = false)
+        public IActionResult GetCheckpoints(double startLat, double startLng, double endLat, double endLng, bool isThirdParty = false)
         {
             return Ok(_checkpointService.GetCheckpoints(startLat, startLng, endLat, endLng, isThirdParty));
         }
