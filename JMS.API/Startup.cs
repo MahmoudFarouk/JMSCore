@@ -92,7 +92,7 @@ namespace JMS.API
             services.AddScoped<IDriverService, DriverService>();
             services.AddScoped<ICheckpointService, CheckpointService>();
             services.AddScoped<IJourneyService, JourneyService>();
-
+            services.AddScoped<INotificationService, NotificationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
