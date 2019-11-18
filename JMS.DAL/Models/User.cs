@@ -21,7 +21,7 @@ namespace JMS.DAL.Models
         public string GatePassStatus { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-        public bool IsAdctive { get; set; }
+        public bool IsActive { get; set; }
         public virtual UserGroup UserGroup { get; set; }
         public virtual UserWorkForce UserWorkForce { get; set; }
 

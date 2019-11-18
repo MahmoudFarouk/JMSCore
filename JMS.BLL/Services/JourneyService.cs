@@ -121,8 +121,8 @@ namespace JMS.BLL.Services
                 {
                     CheckpointId = journeyUpdate.CheckpointId,
                     Date = journeyUpdate.Date,
-                    DriverId = journeyUpdate.DriverId,
-                    Drivername = journeyUpdate.DriverId != null ? _context.Users.Find(journeyUpdate.DriverId).FullName : "",
+                    DriverId = journeyUpdate.UserId.ToString(),
+                    Drivername = journeyUpdate.UserId != null ? _context.Users.Find(journeyUpdate.UserId).FullName : "",
                     Id = journeyUpdate.Id,
                     IsAlert = journeyUpdate.IsAlert,
                     IsDriverStatus = journeyUpdate.IsDriverStatus,
@@ -182,9 +182,9 @@ namespace JMS.BLL.Services
             return new ServiceResponse<PageResult<Journey>> { Data=model,Status=ResponseStatus.Success };
            
         }
-        public ServiceResponse AssignJourneyDriverVehicle(int journeyId, string driverId, string vehcileNo)
+        public ServiceResponse AssignJourneyDriverVehicle(int journeyId, Guid driverId, string vehcileNo)
         {
-            var journeyupdate = _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journeyId && x.DriverId==driverId);
+            var journeyupdate = _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journeyId && x.UserId==driverId);
             journeyupdate.VehicleNo = vehcileNo;
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };

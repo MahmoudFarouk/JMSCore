@@ -140,7 +140,7 @@ namespace JMS.API.Migrations
                     JourneyId = table.Column<int>(nullable: true),
                     JourneyStatus = table.Column<int>(nullable: false),
                     VehicleNo = table.Column<int>(nullable: true),
-                    DriverId = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true),
                     IsJourneyCheckpoint = table.Column<bool>(nullable: false),
                     CheckpointId = table.Column<int>(nullable: true),
                     RiskLevel = table.Column<int>(nullable: false),

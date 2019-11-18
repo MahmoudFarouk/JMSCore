@@ -160,7 +160,7 @@ namespace JMS.BLL.Services
         public void ActivateDisactvate(Guid userId, bool isActive)
         {
             var user = _context.Users.Find(userId);
-            user.IsAdctive = isActive;
+            user.IsActive = isActive;
             _context.SaveChanges();
             
         }

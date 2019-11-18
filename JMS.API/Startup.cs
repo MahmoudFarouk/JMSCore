@@ -67,7 +67,7 @@ namespace JMS.API
                         var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
                         var userId = Guid.Parse(context.Principal.Identity.Name);
                         var user = userService.GetById(userId);
-                        if (user == null||!user.IsAdctive)
+                        if (user == null||!user.IsActive)
                         {
                             // return unauthorized if user no longer exists
                             context.Fail("Unauthorized");

@@ -92,7 +92,7 @@ namespace JMS.API.Controllers
         }
         [HttpPost]
         [Route("assignJourneyDriverVehicle")]
-        public IActionResult AssignJourneyDriverVehicle(int journeyId, string driverId, string vehcileNo)
+        public IActionResult AssignJourneyDriverVehicle(int journeyId, Guid driverId, string vehcileNo)
         {
             try
             {

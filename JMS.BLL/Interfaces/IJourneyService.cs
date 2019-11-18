@@ -18,7 +18,7 @@ namespace JMS.BLL.Interfaces
 
         public ServiceResponse<PageResult<Journey>> GetJourneys(DateTime? date, PagingProperties pagingProperties);
 
-        public ServiceResponse AssignJourneyDriverVehicle(int journeyId, string driverId, string vehcileNo);
+        public ServiceResponse AssignJourneyDriverVehicle(int journeyId, Guid driverId, string vehcileNo);
 
         public ServiceResponse ApproveJourney(int journeyId);
 
