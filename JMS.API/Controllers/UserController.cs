@@ -45,8 +45,8 @@ namespace JMS.API.Controllers
         public IActionResult test()
         {
             var extrarole = "";
-            if (User.IsInRole(ConstRole.PL))
-                extrarole = ConstRole.PL;
+            if (User.IsInRole(ConstRole.ProductLine))
+                extrarole = ConstRole.ProductLine;
             return Ok(new { User.Identity.Name, extrarole });
         }
         [AllowAnonymous]
@@ -69,9 +69,9 @@ namespace JMS.API.Controllers
             var _roles = new List<RoleModel>();
             for (int i = 0; i < userRoles.Count; i++)
             {
-                var role = _userService.GetRoleById(userRoles[i].Id);
+                var role = _userService.GetRoleById(userRoles[i].RoleId);
                 claims.Add(new Claim(ClaimTypes.Role, role.Name));
-                _roles.Add(new RoleModel {Id=role.Id,Name=role.Name });
+                _roles.Add(new RoleModel { Id = role.Id, Name = role.Name });
             }
 
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -92,7 +92,7 @@ namespace JMS.API.Controllers
                 Token = tokenString,
                 Roles = _roles
             };
-            return Ok(new ServiceResponse<UserModel> {Data=result,Status=DAL.Common.Enums.ResponseStatus.Success }) ;
+            return Ok(new ServiceResponse<UserModel> { Data = result, Status = DAL.Common.Enums.ResponseStatus.Success });
         }
 
         [AllowAnonymous]
@@ -236,7 +236,7 @@ namespace JMS.API.Controllers
             try
             {
                 var userid = Guid.Parse(User.Identity.Name);
-                var result=_userService.ChangePassword(userid, model.OldPassword, model.NewPassword);
+                var result = _userService.ChangePassword(userid, model.OldPassword, model.NewPassword);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -251,10 +251,10 @@ namespace JMS.API.Controllers
         [Route("ResetPassword")]
         public IActionResult ResetPassword(Guid userid)
         {
-            
+
             try
             {
-               
+
                 var password = General.CreatePassword(8);
                 _userService.ResetPassword(userid, password);
                 return Ok(new ServiceResponse<string> { Data = password, Status = DAL.Common.Enums.ResponseStatus.Success });

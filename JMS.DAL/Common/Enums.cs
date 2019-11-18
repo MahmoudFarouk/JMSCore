@@ -14,7 +14,7 @@ namespace JMS.DAL.Common.Enums
         Failed = 2,
         Unauthorized = 3,
         Expired = 4,
-        OldPasswordWrong=5
+        OldPasswordWrong = 5
     }
 
     public enum QuestionCategory
@@ -31,7 +31,10 @@ namespace JMS.DAL.Common.Enums
         ProductLine = 0,
         Dispatcher = 1,
         JMC = 2,
-        Driver = 3
+        Driver = 3,
+        QHSE = 4,
+        GBM = 5,
+        OperationManager = 6
     }
 
     public enum Level

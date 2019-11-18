@@ -20,18 +20,16 @@ namespace JMS.BLL.Services
             _context = context;
         }
 
-        public ServiceResponse<List<User>> GetDrivers()
+        public ServiceResponse<List<User>> GetDrivers(string driverName = "")
         {
             ServiceResponse<List<User>> response = new ServiceResponse<List<User>>();
 
             try
             {
-                response.Data = (from user in _context.Users
-                                 where
-                                     user.UserRoles.Any(ur => ur.Role.Name == UserRoles.Driver.ToString()) &
-                                     (!string.IsNullOrEmpty(driverName) && user.FullName.Contains(driverName)) &
-                                     (user.JourneyUpdates.LastOrDefault() != null && user.JourneyUpdates.LastOrDefault().Date.HasValue && EF.Functions.DateDiffHour(DateTime.Now, user.JourneyUpdates.LastOrDefault().Date) < 14)
-                                 select user).ToList();
+
+                response.Data = _context.Users.Where(u => u.UserRoles.Any(ur => ur.Role.Name == UserRoles.Driver.ToString()))
+                                              .Where(u => string.IsNullOrEmpty(driverName) ? true : u.FullName.Contains(driverName)).ToList()
+                                              .Where(u => ((u.JourneyUpdates != null && u.JourneyUpdates.Count > 0) ? u.JourneyUpdates.Last().Date.HasValue && EF.Functions.DateDiffHour(DateTime.Now, u.JourneyUpdates.Last().Date) > 14 : true)).ToList();
 
                 response.Status = ResponseStatus.Success;
             }

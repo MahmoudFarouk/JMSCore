@@ -38,6 +38,9 @@ namespace JMS.API
         {
             services.AddCors();
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
+
+
             services.AddMvc(option => option.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             //services.AddSwaggerGen(c =>

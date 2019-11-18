@@ -36,8 +36,8 @@ namespace JMS.API.Controllers
             _appSettings = appSettings.Value;
         }
 
-        [HttpGet("{userid}")]
-        [Route("getusernotifications")]
+        [HttpGet()]
+        [Route("getusernotifications/{userid}")]
         public IActionResult GetUserNotifications(Guid userId)
         {
             return Ok(_notificationService.GetUserNotifications(userId));

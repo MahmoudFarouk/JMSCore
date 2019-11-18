@@ -17,7 +17,7 @@ namespace JMS.DAL.Models
         public int? JourneyId { get; set; }
         public JourneyStatus JourneyStatus { get; set; }
         public string VehicleNo { get; set; }
-        public Guid UserId { get; set; }
+        public Guid? DriverId { get; set; }
         public bool IsJourneyCheckpoint { get; set; }
         public int? CheckpointId { get; set; }
         public Level RiskLevel { get; set; }

@@ -60,15 +60,15 @@ namespace JMS.BLL.Services
             for (int i = 0; i < journeyUpdates.Count(); i++)
             {
                 var journeyUpdate = journeyUpdates[i];
-               
+
                 if (journeyUpdate.CheckpointId != null)
                 {
                     _checkpoints.Add(new CheckPointModel
                     {
                         Id = journeyUpdate.Checkpoint.Id,
                         IsThirdParty = journeyUpdate.Checkpoint.IsThirdParty,
-                        Lat = journeyUpdate.Checkpoint.Latitude.HasValue? journeyUpdate.Checkpoint.Latitude.Value: default(double?),
-                        Lng = journeyUpdate.Checkpoint.Longitude.HasValue? journeyUpdate.Checkpoint.Longitude.Value : default(double?),
+                        Lat = journeyUpdate.Checkpoint.Latitude.HasValue ? journeyUpdate.Checkpoint.Latitude.Value : default(double?),
+                        Lng = journeyUpdate.Checkpoint.Longitude.HasValue ? journeyUpdate.Checkpoint.Longitude.Value : default(double?),
                         Name = journeyUpdate.Checkpoint.Name
                     });
                 }
@@ -80,15 +80,16 @@ namespace JMS.BLL.Services
                     var _question = _assessmentQuestion.Where(x => x.Id == assessmentResult.QuestionId).FirstOrDefault();
                     if (_question != null)
                     {
-                        _question.AssessmentResults.Add(new AssessmentResultModel { 
-                        Comment= assessmentResult.Comment,
-                        Id=assessmentResult.Id,
-                        IsYes=assessmentResult.IsYes,
-                        JourneyUpdateId=assessmentResult.JourneyUpdateId,
-                        QuestionId=assessmentResult.QuestionId,
-                        SubmittedBy=assessmentResult.UserId,
-                        SubmittedByname= assessmentResult.UserId != null?_context.Users.Find(assessmentResult.UserId).FullName:"",
-                        VehicleNo=assessmentResult.VehicleNo
+                        _question.AssessmentResults.Add(new AssessmentResultModel
+                        {
+                            Comment = assessmentResult.Comment,
+                            Id = assessmentResult.Id,
+                            IsYes = assessmentResult.IsYes,
+                            JourneyUpdateId = assessmentResult.JourneyUpdateId,
+                            QuestionId = assessmentResult.QuestionId,
+                            SubmittedBy = assessmentResult.UserId,
+                            SubmittedByname = assessmentResult.UserId != null ? _context.Users.Find(assessmentResult.UserId).FullName : "",
+                            VehicleNo = assessmentResult.VehicleNo
                         });
                     }
                     else
@@ -121,21 +122,21 @@ namespace JMS.BLL.Services
                 {
                     CheckpointId = journeyUpdate.CheckpointId,
                     Date = journeyUpdate.Date,
-                    DriverId = journeyUpdate.UserId.ToString(),
-                    Drivername = journeyUpdate.UserId != null ? _context.Users.Find(journeyUpdate.UserId).FullName : "",
+                    DriverId = journeyUpdate.DriverId.ToString(),
+                    Drivername = journeyUpdate.DriverId != null ? _context.Users.Find(journeyUpdate.DriverId).FullName : "",
                     Id = journeyUpdate.Id,
                     IsAlert = journeyUpdate.IsAlert,
                     IsDriverStatus = journeyUpdate.IsDriverStatus,
                     IsJourneyCheckpoint = journeyUpdate.IsJourneyCheckpoint,
                     JourneyId = journeyUpdate.JourneyId,
                     JourneyStatus = journeyUpdate.JourneyStatus,
-                    Latitude = journeyUpdate.Latitude.HasValue? journeyUpdate.Latitude.Value:default(double?),
-                    Longitude = journeyUpdate.Longitude.HasValue? journeyUpdate.Longitude.Value : default(double?),
+                    Latitude = journeyUpdate.Latitude.HasValue ? journeyUpdate.Latitude.Value : default(double?),
+                    Longitude = journeyUpdate.Longitude.HasValue ? journeyUpdate.Longitude.Value : default(double?),
                     RiskLevel = journeyUpdate.RiskLevel,
                     StatusMessage = journeyUpdate.StatusMessage,
                     VehicleNo = journeyUpdate.VehicleNo,
                     AssessmentQuestions = _assessmentQuestion,
-                    
+
                 });
 
 
@@ -157,8 +158,8 @@ namespace JMS.BLL.Services
                 StartDate = journey.StartDate,
                 Title = journey.Title,
                 ToDistination = journey.ToDistination,
-                ToLat = journey.ToLat.HasValue? journey.ToLat.Value:default(double?),
-                ToLng = journey.ToLng.HasValue? journey.ToLng.Value : default(double?),
+                ToLat = journey.ToLat.HasValue ? journey.ToLat.Value : default(double?),
+                ToLng = journey.ToLng.HasValue ? journey.ToLng.Value : default(double?),
                 UserId = journey.UserId,
                 UserFullname = journey.UserId != null ? _context.Users.Find(journey.UserId).FullName : "",
                 JourneyUpdates = _journeyUpdates,
@@ -166,7 +167,7 @@ namespace JMS.BLL.Services
 
 
             };
-            return new ServiceResponse<JourneyDetailsModel> {Data=details,Status=ResponseStatus.Success };
+            return new ServiceResponse<JourneyDetailsModel> { Data = details, Status = ResponseStatus.Success };
         }
         public ServiceResponse<PageResult<Journey>> GetJourneys(DateTime? date, PagingProperties pagingProperties)
         {
@@ -176,16 +177,16 @@ namespace JMS.BLL.Services
             if (date.HasValue)
             {
                 var _date = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day);
-                items = items.Where(x => x.StartDate >_date&& x.StartDate<_date.AddHours(24));
+                items = items.Where(x => x.StartDate > _date && x.StartDate < _date.AddHours(24));
             }
             items = items.Skip(skip).Take(pagingProperties.PageSize);
-            var model=new  PageResult<Journey> { PageItems = items.ToList(), TotalItems = totalItems };
-            return new ServiceResponse<PageResult<Journey>> { Data=model,Status=ResponseStatus.Success };
-           
+            var model = new PageResult<Journey> { PageItems = items.ToList(), TotalItems = totalItems };
+            return new ServiceResponse<PageResult<Journey>> { Data = model, Status = ResponseStatus.Success };
+
         }
         public ServiceResponse AssignJourneyDriverVehicle(int journeyId, Guid driverId, string vehcileNo)
         {
-            var journeyupdate = _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journeyId && x.UserId==driverId);
+            var journeyupdate = _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journeyId && x.DriverId == driverId);
             journeyupdate.VehicleNo = vehcileNo;
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
@@ -218,7 +219,7 @@ namespace JMS.BLL.Services
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
 
-        
+
 
 
 
@@ -240,7 +241,7 @@ namespace JMS.BLL.Services
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
 
-       
+
 
         public ServiceResponse AddJourneyUpdate(JourneyUpdate JourneyUpdate)
         {
