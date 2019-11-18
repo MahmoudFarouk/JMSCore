@@ -67,8 +67,8 @@ namespace JMS.BLL.Services
                     {
                         Id = journeyUpdate.Checkpoint.Id,
                         IsThirdParty = journeyUpdate.Checkpoint.IsThirdParty,
-                        Lat = journeyUpdate.Checkpoint.Latitude.Value,
-                        Lng = journeyUpdate.Checkpoint.Longitude.Value,
+                        Lat = journeyUpdate.Checkpoint.Latitude.HasValue? journeyUpdate.Checkpoint.Latitude.Value: default(double?),
+                        Lng = journeyUpdate.Checkpoint.Longitude.HasValue? journeyUpdate.Checkpoint.Longitude.Value : default(double?),
                         Name = journeyUpdate.Checkpoint.Name
                     });
                 }
@@ -129,12 +129,13 @@ namespace JMS.BLL.Services
                     IsJourneyCheckpoint = journeyUpdate.IsJourneyCheckpoint,
                     JourneyId = journeyUpdate.JourneyId,
                     JourneyStatus = journeyUpdate.JourneyStatus,
-                    Latitude = journeyUpdate.Latitude.Value,
-                    Longitude = journeyUpdate.Longitude.Value,
+                    Latitude = journeyUpdate.Latitude.HasValue? journeyUpdate.Latitude.Value:default(double?),
+                    Longitude = journeyUpdate.Longitude.HasValue? journeyUpdate.Longitude.Value : default(double?),
                     RiskLevel = journeyUpdate.RiskLevel,
                     StatusMessage = journeyUpdate.StatusMessage,
                     VehicleNo = journeyUpdate.VehicleNo,
-                    AssessmentQuestions = _assessmentQuestion
+                    AssessmentQuestions = _assessmentQuestion,
+                    
                 });
 
 
@@ -156,8 +157,8 @@ namespace JMS.BLL.Services
                 StartDate = journey.StartDate,
                 Title = journey.Title,
                 ToDistination = journey.ToDistination,
-                ToLat = journey.ToLat.Value,
-                ToLng = journey.ToLng.Value,
+                ToLat = journey.ToLat.HasValue? journey.ToLat.Value:default(double?),
+                ToLng = journey.ToLng.HasValue? journey.ToLng.Value : default(double?),
                 UserId = journey.UserId,
                 UserFullname = journey.UserId != null ? _context.Users.Find(journey.UserId).FullName : "",
                 JourneyUpdates = _journeyUpdates,

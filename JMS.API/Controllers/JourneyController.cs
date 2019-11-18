@@ -199,6 +199,7 @@ namespace JMS.API.Controllers
                 });
                 IMapper iMapper = config.CreateMapper();
                 var journeyUpdate = iMapper.Map<JourneyUpdateModel, JourneyUpdate>(model);
+                journeyUpdate.UserId =Guid.Parse( User.Identity.Name);
                 var result = _journeyService.AddJourneyUpdate(journeyUpdate);
                 return Ok(result);
             }

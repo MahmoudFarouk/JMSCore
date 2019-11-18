@@ -13,11 +13,11 @@ namespace JMS.API.Models
         public bool IsTruckTransport { get; set; }
         public JourneyStatus JourneyStatus { get; set; }
         public string FromDestination { get; set; }
-        public string FromLat { get; set; }
-        public string FromLng { get; set; }
+        public double? FromLat { get; set; }
+        public double? FromLng { get; set; }
         public string ToDistination { get; set; }
-        public string ToLat { get; set; }
-        public string ToLng { get; set; }
+        public double? ToLat { get; set; }
+        public double? ToLng { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? DeliveryDate { get; set; }
         public double? CargoWeight { get; set; }

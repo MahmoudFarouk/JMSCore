@@ -17,8 +17,8 @@ namespace JMS.API.Models
         public bool IsJourneyCheckpoint { get; set; }
         public int? CheckpointId { get; set; }
         public Level RiskLevel { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
         public bool IsDriverStatus { get; set; }
         public bool IsAlert { get; set; }
         public string StatusMessage { get; set; }

@@ -20,7 +20,7 @@ namespace JMS.BLL.Services
             _context = context;
         }
 
-        public ServiceResponse<List<User>> GetDrivers(string driverName)
+        public ServiceResponse<List<User>> GetDrivers()
         {
             ServiceResponse<List<User>> response = new ServiceResponse<List<User>>();
 

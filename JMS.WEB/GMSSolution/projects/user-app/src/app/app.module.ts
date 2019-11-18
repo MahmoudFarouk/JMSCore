@@ -10,7 +10,7 @@ import { JourneyApprovalComponent } from './journey-approval/journey-approval.co
 import { JourneyClosureComponent } from './journey-closure/journey-closure.component';
 import { JourneyPreparationComponent } from './journey-preparation/journey-preparation.component';
 import { JourneyStartingAndMonitoringComponent} from './journey-starting-and-monitoring/journey-starting-and-monitoring.component';
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,CheckpointAssessmentComponent,
@@ -21,6 +21,7 @@ import { JourneyStartingAndMonitoringComponent} from './journey-starting-and-mon
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     NgxLoadingModule.forRoot({
       animationType: ngxLoadingAnimationTypes.cubeGrid,
       backdropBackgroundColour: 'rgba(0,0,0,0.1)', 

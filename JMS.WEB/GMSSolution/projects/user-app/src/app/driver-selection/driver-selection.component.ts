@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription,Observable,timer } from 'rxjs';
+import { DriverService } from '../Services/DriverService';
+import { Driver } from '../Models/Driver';
 
 @Component({
   selector: 'app-driver-selection',
@@ -12,12 +14,22 @@ export class DriverSelectionComponent implements OnInit {
   isCurrentPage:boolean;
   subscription: Subscription;
   timer: Observable<any>;
-  constructor() {
+  Drivers:Driver[];
+  constructor(private DriverService:DriverService) {
     
   }
-  ngOnInit() {
+   ngOnInit() {
     this.isCustomComponent=false;
     this.setTimer();
+    this.loading=true;
+     this.DriverService.GetDrivers().toPromise().then((data)=>{
+       console.log(data);
+       this.Drivers=data;
+       this.loading=false;
+     },(error)=>{
+      this.loading=false;       
+     });
+    
  }
 public setTimer(){
   this.loading   = true;

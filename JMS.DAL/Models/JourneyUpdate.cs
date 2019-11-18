@@ -26,7 +26,7 @@ namespace JMS.DAL.Models
         public bool IsDriverStatus { get; set; }
         public bool IsAlert { get; set; }
         public string StatusMessage { get; set; }
-
+        public Guid? UserId { get; set; }
 
         public virtual Checkpoint Checkpoint { get; set; }
         public virtual Journey Journey { get; set; }

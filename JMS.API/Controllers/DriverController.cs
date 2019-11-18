@@ -26,21 +26,18 @@ namespace JMS.API.Controllers
     public class DriverController : ControllerBase
     {
         private IDriverService _driverService;
-        private IMapper _mapper;
-        private readonly AppSettings _appSettings;
+       
 
-        public DriverController(IDriverService driverService, IMapper mapper, IOptions<AppSettings> appSettings)
+        public DriverController(IDriverService driverService)
         {
             _driverService = driverService;
-            _mapper = mapper;
-            _appSettings = appSettings.Value;
         }
 
         [HttpGet("{drivername}")]
         [Route("getdrivers")]
         public IActionResult GetDrivers(string driverName)
         {
-            return Ok(_driverService.GetDrivers(driverName));
+            return Ok(_driverService.GetDrivers());
         }
 
         [HttpPost]
