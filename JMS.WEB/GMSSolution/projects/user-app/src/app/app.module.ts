@@ -11,6 +11,10 @@ import { JourneyClosureComponent } from './journey-closure/journey-closure.compo
 import { JourneyPreparationComponent } from './journey-preparation/journey-preparation.component';
 import { JourneyStartingAndMonitoringComponent} from './journey-starting-and-monitoring/journey-starting-and-monitoring.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AgmCoreModule } from '@agm/core';
+
+
 @NgModule({
   declarations: [
     AppComponent,CheckpointAssessmentComponent,
@@ -22,6 +26,12 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyD1mqYsV0ShwvvIaKU3MOr9CJelaCdAb7I",
+      libraries: ["places"]
+    }),
+    ReactiveFormsModule,
     NgxLoadingModule.forRoot({
       animationType: ngxLoadingAnimationTypes.cubeGrid,
       backdropBackgroundColour: 'rgba(0,0,0,0.1)', 

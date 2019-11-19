@@ -27,6 +27,7 @@ button:focus,
 button:active,
 button:focus-within {
   background-color: transparent;
+  outline: none;
 }
 
 a,
@@ -266,6 +267,56 @@ a:visited {
   line-height: 18px;
 }
 
+ul.collapsible {
+  border: 0;
+  margin: 20px 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+ul.collapsible:first-of-type {
+  margin-top: 40px;
+}
+
+ul.collapsible > li {
+  margin: 20px 0;
+  border: 0;
+  -webkit-box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+          box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+}
+
+ul.collapsible .collapsible-header {
+  background-color: #006FAD !important;
+  color: #FFF !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border: 0;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+ul.collapsible .collapsible-header p {
+  font-size: 15px;
+  letter-spacing: -0.36px;
+  line-height: 18px;
+}
+
+ul.collapsible .collapsible-header img {
+  background-color: #FFF;
+  padding: 8px 5px 5px 5px;
+}
+
+ul.collapsible .collapsible-body {
+  padding: 0 20px;
+  background-color: #FFF;
+  border: 0;
+  display: block;
+}
+
 body {
   background-color: #EDFCFF;
   font-size: 14px;
@@ -474,5 +525,209 @@ body {
   padding: 5px 10px;
   font-size: 9px;
   border: 0;
+}
+
+.initiateJourney ul.collapsible .collapsible-body {
+  color: #979797;
+}
+
+.initiateJourney ul.collapsible .collapsible-body {
+  padding: 15px 20px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .mainInputComp {
+  margin: 15px 0;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .mainInputComp:first-of-type {
+  margin: 0;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .mainInputComp .input-group-prepend .input-group-text {
+  padding: 0;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .mainInputComp input::-webkit-input-placeholder,
+.initiateJourney ul.collapsible .collapsible-body .radioButtonsGroup label {
+  font-size: 14px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .mainInputComp input:-ms-input-placeholder,
+.initiateJourney ul.collapsible .collapsible-body .radioButtonsGroup label {
+  font-size: 14px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .mainInputComp input::-ms-input-placeholder,
+.initiateJourney ul.collapsible .collapsible-body .radioButtonsGroup label {
+  font-size: 14px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .mainInputComp input::placeholder,
+.initiateJourney ul.collapsible .collapsible-body .radioButtonsGroup label {
+  font-size: 14px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .radioButtonsGroup > p {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body form {
+  margin: 15px 0;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .radioButtonsGroup form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .submitAssessment {
+  background-color: #5BABFF;
+  width: 100%;
+  border: 0;
+  border-radius: 7px;
+  padding: 10px 0;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .submitAssessment img {
+  height: 23px;
+  width: 23px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .submitAssessment span {
+  font-size: 15px;
+  color: #FFF;
+  margin: 0 10px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .addAssessment {
+  margin: 10px 0 25px 0;
+  color: #828282;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .addAssessment .questionCont {
+  padding-right: 0;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .addAssessment .question {
+  background-color: #f3f3f3;
+  height: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .addAssessment .actions {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  text-align: center;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .addAssessment .actions li {
+  background-color: #f3f3f3;
+  padding: 5px 0;
+  border-radius: 5px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .addAssessment .actions li img {
+  width: 10px;
+  height: 14px;
+}
+
+.initiateJourney [type="radio"]:not(:checked) + span, .initiateJourney [type="radio"]:checked + span {
+  padding-left: 25px;
+}
+
+.initiateJourney .sumbitToInitiate {
+  width: 100%;
+  text-align: center;
+  background-color: #17BC9B;
+  border: 0;
+  color: #FFF;
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 900;
+  padding: 15px 0;
+  margin-bottom: 20px;
+  border-radius: 7px;
+}
+
+#notifications {
+  margin: 25px 0;
+}
+
+#notifications .notification {
+  background-color: #FFF;
+  border: 1px solid #ededed;
+  padding: 15px 0;
+}
+
+#notifications .notification.notRead {
+  background-color: #D2F7FF;
+}
+
+#notifications .notification:first-of-type {
+  margin: 15px 0;
+}
+
+#notifications .mobileContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#notifications .notification .notContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#notifications .notification .notContainer .notificationIcon {
+  width: 19px;
+  height: 19px;
+  margin-right: 15px;
+}
+
+#notifications .notification .notContainer .notificationDesc .notificationName {
+  color: #424242;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+#notifications .notification .notContainer .notificationDesc .notificationDestination {
+  color: #828282;
+  font-size: 12px;
+}
+
+#notifications .notification .notificationDate {
+  font-size: 12px;
+  color: #C0C0C0;
+  font-weight: bold;
+}
+
+#notifications .notification.notRead .notificationDate {
+  color: #6AC6D9;
 }
 /*# sourceMappingURL=main.css.map */
