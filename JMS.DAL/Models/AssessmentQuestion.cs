@@ -17,8 +17,10 @@ namespace JMS.DAL.Models
         public int? Weight { get; set; }
         public bool IsThirdParty { get; set; }
         public int? CheckpointId { get; set; }
+        public int? JourneyId { get; set; }
 
         public virtual Checkpoint Checkpoint { get; set; }
+        public virtual Journey Journey { get; set; }
 
         public virtual ICollection<AssessmentResult> AssessmentResult { get; set; }
     }
