@@ -20,7 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace JMS.API.Controllers
 {
 
-    //[Authorize(Roles = ConstRole.Driver)]
+    //[Authorize]
     [ApiController]
     [Route("api/driver")]
     public class DriverController : ControllerBase
