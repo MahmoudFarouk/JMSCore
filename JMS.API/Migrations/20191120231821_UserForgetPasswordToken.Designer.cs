@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JMS.API.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20191117050039_UpdateLatLng")]
-    partial class UpdateLatLng
+    [Migration("20191120231821_UserForgetPasswordToken")]
+    partial class UserForgetPasswordToken
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,9 @@ namespace JMS.API.Migrations
                     b.Property<bool>("IsThirdParty")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("JourneyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Question")
                         .HasColumnType("nvarchar(max)");
 
@@ -46,6 +49,8 @@ namespace JMS.API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CheckpointId");
+
+                    b.HasIndex("JourneyId");
 
                     b.ToTable("AssessmentQuestion");
                 });
@@ -227,8 +232,8 @@ namespace JMS.API.Migrations
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DriverId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("DriverId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsAlert")
                         .HasColumnType("bit");
@@ -321,6 +326,9 @@ namespace JMS.API.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ChangePasswordToken")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(256)")
@@ -425,6 +433,10 @@ namespace JMS.API.Migrations
                     b.HasOne("JMS.DAL.Models.Checkpoint", "Checkpoint")
                         .WithMany()
                         .HasForeignKey("CheckpointId");
+
+                    b.HasOne("JMS.DAL.Models.Journey", "Journey")
+                        .WithMany("AssessmentQuestion")
+                        .HasForeignKey("JourneyId");
                 });
 
             modelBuilder.Entity("JMS.DAL.Models.AssessmentResult", b =>
