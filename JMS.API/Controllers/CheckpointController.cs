@@ -37,7 +37,7 @@ namespace JMS.API.Controllers
 
 
         [HttpGet("{startLat, startLng, endLat, endLng, isThirdParty}")]
-        [Authorize(Roles = "Dispatcher,JMC")]
+        [Authorize(Roles = ConstRole.Dispatcher + "," + ConstRole.JMC)]
         [Route("getcheckpoints")]
         public IActionResult GetCheckpoints(double startLat, double startLng, double endLat, double endLng, bool isThirdParty = false)
         {
@@ -46,14 +46,14 @@ namespace JMS.API.Controllers
 
         [HttpPost]
         [Route("addcheckpoint")]
-        [Authorize(Roles = "JMCAdmin")]
+        [Authorize(Roles = ConstRole.JMSAdmin)]
         public IActionResult AddCheckpoint(Checkpoint checkpoint)
         {
             return Ok(_checkpointService.AddCheckpoint(checkpoint));
         }
 
         [HttpPost]
-        [Authorize(Roles = "JMCAdmin")]
+        [Authorize(Roles = ConstRole.JMSAdmin)]
         [Route("updatecheckpoint")]
         public IActionResult UpdateCheckpoint(Checkpoint checkpoint)
         {
@@ -61,7 +61,7 @@ namespace JMS.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "JMCAdmin")]
+        [Authorize(Roles = ConstRole.JMSAdmin)]
         [Route("deletecheckpoint")]
         public IActionResult DeleteCheckpoint(int checkpointId)
         {
