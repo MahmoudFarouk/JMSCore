@@ -14,7 +14,8 @@ namespace JMS.BLL.Interfaces
 
         public ServiceResponse SubmitStatus(JourneyUpdate journeyUpdate);
 
+        public ServiceResponse<List<AssessmentQuestion>> GetJourneyAssessment(int journeyId, bool isPreTrip,bool includeResults);
 
-
+        public ServiceResponse<List<AssessmentQuestion>> GetCheckpointAssessment(int checkpoint, bool includeResults);
     }
 }

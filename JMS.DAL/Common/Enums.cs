@@ -23,7 +23,6 @@ namespace JMS.DAL.Common.Enums
         VehicleChecklist = 1,
         PreTrip = 2,
         PostTrip = 3
-
     }
 
     public enum UserRoles

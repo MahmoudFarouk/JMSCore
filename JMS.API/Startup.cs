@@ -21,6 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
+using Newtonsoft.Json;
 
 namespace JMS.API
 {
@@ -37,7 +38,8 @@ namespace JMS.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
             services.AddAutoMapper(typeof(Startup));
 
 
