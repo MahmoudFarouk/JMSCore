@@ -20,7 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace JMS.API.Controllers
 {
 
-    [Authorize()]
+    //[Authorize]
     [ApiController]
     [Route("api/driver")]
     public class DriverController : ControllerBase
@@ -49,11 +49,55 @@ namespace JMS.API.Controllers
 
 
         [HttpPost]
-        [Route("submitassessment")]
-        public IActionResult SubmitAssessment(JourneyUpdate status)
+        [Route("submitstatus")]
+        public IActionResult SubmitStatus(JourneyUpdate status)
         {
             return Ok(_driverService.SubmitStatus(status));
         }
+
+        [HttpGet()]
+        [Route("getpretripassessment/{journeyid}")]
+        public IActionResult GetPreJourneyAssessment(int journeyId)
+        {
+            return Ok(_driverService.GetJourneyAssessment(journeyId, false, false));
+        }
+
+        [HttpGet()]
+        [Route("getposttripassessment/{journeyid}")]
+        public IActionResult GetPostJourneyAssessment(int journeyId)
+        {
+            return Ok(_driverService.GetJourneyAssessment(journeyId, true, false));
+        }
+
+        [HttpGet()]
+        [Route("getcheckpointassessment/{checkpointid}")]
+        public IActionResult GetJourneyAssessment(int checkpointid)
+        {
+            return Ok(_driverService.GetCheckpointAssessment(checkpointid, false));
+        }
+
+        [HttpGet()]
+        [Route("getpretripassessment/{journeyid}")]
+        public IActionResult GetPreJourneyAssessmentResult(int journeyId)
+        {
+            return Ok(_driverService.GetJourneyAssessment(journeyId, false, true));
+        }
+
+        [HttpGet()]
+        [Route("getposttripassessment/{journeyid}")]
+        public IActionResult GetPostJourneyAssessmentResult(int journeyId)
+        {
+            return Ok(_driverService.GetJourneyAssessment(journeyId, true, true));
+        }
+
+        [HttpGet()]
+        [Route("getcheckpointassessment/{checkpointid}")]
+        public IActionResult GetCheckpointAssessmentResult(int checkpointid)
+        {
+            return Ok(_driverService.GetCheckpointAssessment(checkpointid, true));
+        }
+
+
 
     }
 }

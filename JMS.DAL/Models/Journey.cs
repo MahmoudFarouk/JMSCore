@@ -33,5 +33,7 @@ namespace JMS.DAL.Models
 
         public virtual User User { get; set; }
         public virtual ICollection<JourneyUpdate> JourneyUpdate { get; set; }
+        public virtual ICollection<AssessmentQuestion> AssessmentQuestion { get; set; }
+
     }
 }

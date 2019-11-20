@@ -1,0 +1,139 @@
+.initiateJourney{
+    
+    ul.collapsible .collapsible-body {
+        color: #979797;
+    }
+    ul.collapsible .collapsible-body {
+        padding: 15px 20px;
+    }
+    ul.collapsible .collapsible-body .mainInputComp{
+        margin: 15px 0;
+    }
+    ul.collapsible .collapsible-body .mainInputComp:first-of-type{
+        margin:0;
+    }
+    ul.collapsible .collapsible-body .mainInputComp .input-group-prepend .input-group-text{
+        padding: 0;
+    }
+    ul.collapsible .collapsible-body .mainInputComp input::placeholder,
+    ul.collapsible .collapsible-body .radioButtonsGroup label{
+        font-size: 14px;
+    }
+    ul.collapsible .collapsible-body .radioButtonsGroup> p{
+        font-weight: bold;
+        font-size: 15px;
+    }
+    ul.collapsible .collapsible-body  .initiateJourneyMap{
+        background-color: #4385F5;
+    }
+    ul.collapsible .collapsible-body  .initiateJourneyMap .autoCompLocations{
+        padding: 15px;
+    }
+    ul.collapsible .collapsible-body  .initiateJourneyMap .autoCompLocations .row{
+        margin-top: 10px;
+    }
+    ul.collapsible .collapsible-body  .initiateJourneyMap .autoCompLocations .row:first-of-type{
+        margin-top: 0;
+    }
+    ul.collapsible .collapsible-body  .initiateJourneyMap .inputsIcons{
+        position: relative;
+        text-align: center;
+    }
+    ul.collapsible .collapsible-body  .initiateJourneyMap .inputsIcons > div{
+        position: absolute;
+        top:70%; 
+        left: 40%;
+    }
+    ul.collapsible .collapsible-body  .initiateJourneyMap .inputsSection {
+        padding-left: 0;
+    }
+    
+   
+    ul.collapsible .collapsible-body  .initiateJourneyMap .inputsSection input{
+       border: 0;
+       border-bottom: 1px solid #FFF;  
+       background-color: transparent;
+       width: 100%;
+       color: #fff;
+       font-size: 13px;
+       padding-bottom:2px;
+    }
+
+    ul.collapsible .collapsible-body  .initiateJourneyMap .inputsSection input::placeholder{
+        color: rgba(255,255,255,0.5);
+        font-size: 12px;
+    }
+    ul.collapsible .collapsible-body  .initiateJourneyMap .addNewDestination input{
+        border-bottom: 0
+    }
+    ul.collapsible .collapsible-body form{
+        margin: 15px 0;
+    }
+    ul.collapsible .collapsible-body .radioButtonsGroup  form{
+        display: flex;
+        justify-content: space-between;
+    }
+    ul.collapsible .collapsible-body .submitAssessment{
+        background-color: #5BABFF;
+        width: 100%;
+        border: 0;
+        border-radius: 7px;
+        padding: 10px 0;
+    }
+    ul.collapsible .collapsible-body .submitAssessment img{
+        height: 23px;
+        width:23px;
+    }
+    ul.collapsible .collapsible-body .submitAssessment span{
+        font-size: 15px;
+        color: #FFF;
+        margin: 0 10px;
+    }
+    ul.collapsible .collapsible-body .addAssessment{
+        margin: 10px 0 25px 0;
+        color: #828282;
+    }
+    ul.collapsible .collapsible-body .addAssessment .questionCont{
+        padding-right: 0;
+    }
+    ul.collapsible .collapsible-body .addAssessment .question{
+        background-color: #f3f3f3;
+        height: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+    ul.collapsible .collapsible-body .addAssessment .actions{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: center;
+    }
+    ul.collapsible .collapsible-body .addAssessment .actions li{
+        background-color: #f3f3f3;
+        padding:5px 0;
+        border-radius: 5px;
+    }
+    ul.collapsible .collapsible-body .addAssessment .actions li img{
+        width: 10px;
+        height: 14px;
+    }
+    [type="radio"]:not(:checked) + span, [type="radio"]:checked + span{
+        padding-left: 25px;
+    }
+    
+}
+.sumbitToInitiate{
+    width: 100%;
+    text-align: center;
+    background-color: #17BC9B;
+    border: 0;
+    color:#FFF;
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: 900;
+    padding: 15px 0;
+    margin-bottom: 20px;
+    border-radius: 7px;
+}
