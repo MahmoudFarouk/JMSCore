@@ -243,11 +243,32 @@ namespace JMS.BLL.Services
 
 
 
-        public ServiceResponse AddJourneyUpdate(JourneyUpdate JourneyUpdate)
+        public ServiceResponse<int> AddJourneyUpdate(JourneyUpdate JourneyUpdate)
         {
-            _context.JourneyUpdate.Add(JourneyUpdate);
-            _context.SaveChanges();
-            return new ServiceResponse { Status = ResponseStatus.Success };
+            if(JourneyUpdate.Id>0)
+            {
+                var item = _context.JourneyUpdate.Find(JourneyUpdate.Id);
+                item.VehicleNo = JourneyUpdate.VehicleNo;
+                item.DriverId = JourneyUpdate.DriverId;
+                _context.SaveChanges();
+                return new ServiceResponse<int> { Data = item.Id, Status = ResponseStatus.Success };
+            }
+            else
+            {
+                var item = _context.JourneyUpdate.Add(JourneyUpdate);
+                _context.SaveChanges();
+                return new ServiceResponse<int> { Data = item.Entity.Id, Status = ResponseStatus.Success };
+            }
+          
+        }
+
+        public Journey GetById(int id)
+        {
+           return  _context.Journey.Find(id);
+        }
+        public JourneyUpdate GetJourneyUpdateDriverInfo(int journeyId)
+        {
+            return _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journeyId && x.DriverId != null);
         }
     }
 }

@@ -19,7 +19,7 @@ export class AppComponent {
     if(window.location.href.indexOf('/InitiateJourney') > -1
       || window.location.href.indexOf('/DriverSelection') > -1
       || window.location.href.indexOf('/JourneyStartingAndMonitoring') > -1
-      || window.location.href.indexOf('/JourneyApproval') > -1){
+      || window.location.href.indexOf('/JourneyApproval') > -1|| window.location.href.indexOf('/Notifications') > -1){
         this.isCurrentPage = true;
         this.isCustomComponent = true;
       }

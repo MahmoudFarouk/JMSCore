@@ -19,25 +19,10 @@ namespace JMS.BLL.Services
             _context = context;
         }
 
-        public ServiceResponse<List<Notification>> GetUserNotifications(Guid userId)
+        public IQueryable<Notification> GetUserNotifications(Guid userId)
         {
-            ServiceResponse<List<Notification>> response = new ServiceResponse<List<Notification>>();
-
-            try
-            {
-                response.Data = _context.Notification.Where(n => n.UserId == userId).ToList();
-
-                response.Status = ResponseStatus.Success;
-            }
-            catch (Exception ex)
-            {
-                response.Message = ex.Message;
-                response.Status = ResponseStatus.ServerError;
-
-                ExceptionLogger.LogException(ex);
-            }
-
-            return response;
+            
+                return _context.Notification.Where(n => n.UserId == userId&&!n.IsRead).OrderByDescending(x=>x.CreationTime);
         }
 
         public ServiceResponse AddNotification(Notification notification)

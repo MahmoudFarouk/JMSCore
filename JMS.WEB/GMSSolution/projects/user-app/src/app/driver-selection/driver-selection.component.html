@@ -53,25 +53,7 @@
 <!--end aside menu-->
 
 <!--start title section-->
-<div class="mobileContainer">
-    <section id="titleHere">
-        <h3>Title Here</h3>
-        <ul>
-            <li>
-                <img src="assets/images/Jms_assets/ic_pin.svg">
-                <span>Destination From: Alex</span>
-            </li>
-            <li>
-                <img src="assets/images/Jms_assets/ic_pin.svg">
-                <span>Destination To: Cairo</span>
-            </li>
-            <li>
-                <img src="assets/images/Jms_assets/ic_calendar.svg">
-                <span>Date Of Delivery: 20/12/2020</span>
-            </li>
-        </ul>
-    </section>
-</div>
+<app-journey-info></app-journey-info>
 <!--end title section-->
 
 <!--start search for drivers section-->
@@ -85,7 +67,7 @@
                     </div>
                 </div>
                 <input type="text" class="form-control" id="inlineFormInputGroupUsername"
-                    placeholder="Search Driver">
+                    placeholder="Search Driver" [(ngModel)]="keyword" (ngModelChange)="Search($event)">
             </div>
         </div>
     </div>
@@ -97,77 +79,46 @@
     <div class="mobileContainer">
         <div class="row">
             <!--driver Card (take it from here)-->
-            <div class="col-6">
+            <div *ngFor="let item of Drivers" class="col-6">
                 <div class="driverCard">
                     <img src="assets/images/Jms_assets/user.svg" class="driverImg">
-                    <h4 class="driverName">Ahmed Driver</h4>
+                    <h4 class="driverName">{{item.fullName}}</h4>
                     <p class="totalHours">Total driving hours : 17</p>
                     <div class="d-flex justify-content-between isTraining">
-                        <p class="status">Training</p>
-                        <p class="statusDate">27 Apr 2018</p>
+                        <p class="status">{{item.trainingDetails}}</p>
+                        <!-- <p class="statusDate">27 Apr 2018</p> -->
                     </div>
                     <div class="d-flex justify-content-between licenseInfo">
+                        
                         <p class="license">License</p>
-                        <p class="licenseNumber">1239900</p>
+                        <p class="licenseNumber">{{item.licenseNo}}</p>
+                    </div>
+                    <div class="d-flex justify-content-between licenseInfo">
+                        <p class="license">License Expiry  Date</p>
+                        <p class="licenseNumber">{{item.licenseExpiryDate}}</p>
+                        
                     </div>
                     <div class="d-flex justify-content-between vehicles">
-                        <p class="vehicleType">Vehicle.N</p>
-                        <p class="vehicleNumber">NH9000</p>
+                       
+                        <p class="vehicleNumber"><input [ngStyle]="requireVclNo(item) &&{'border':'red solid 1px'}" placeholder="Vehicle.No" class="form-control" [(ngModel)]="item.VechNo" />
+                        </p>
+                      
                     </div>
-                    <p class="gateStauts">Status of gate pass</p>
-                    <button class="driverStatus">
-                        Pending
+                    <!-- <div class="d-flex justify-content-between vehicles" *ngIf="slectedDriver!==null&&slectedDriver.id===item.id&&(item.VechNo===null||item.VechNo==='')">
+                        <p style="color:red">required</p>    
+                      
+                    </div> -->
+                                       
+                    
+                    <!-- <p class="gateStauts">Status of gate pass</p> -->
+                    <button class="driverStatus" (click)="selectClick(item)">
+                        Select
                     </button>
                 </div>
             </div>
             <!--driver Card (till here)-->
 
-            <div class="col-6">
-                <div class="driverCard">
-                    <img src="assets/images/Jms_assets/user.svg" class="driverImg">
-                    <h4 class="driverName">Ahmed Driver</h4>
-                    <p class="totalHours">Total driving hours : 17</p>
-                    <div class="d-flex justify-content-between isTraining">
-                        <p class="status">Training</p>
-                        <p class="statusDate">27 Apr 2018</p>
-                    </div>
-                    <div class="d-flex justify-content-between licenseInfo">
-                        <p class="license">License</p>
-                        <p class="licenseNumber">1239900</p>
-                    </div>
-                    <div class="d-flex justify-content-between vehicles">
-                        <p class="vehicleType">Vehicle.N</p>
-                        <p class="vehicleNumber">NH9000</p>
-                    </div>
-                    <p class="gateStauts">Status of gate pass</p>
-                    <button class="driverStatus">
-                        Pending
-                    </button>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="driverCard">
-                    <img src="assets/images/Jms_assets/user.svg" class="driverImg">
-                    <h4 class="driverName">Ahmed Driver</h4>
-                    <p class="totalHours">Total driving hours : 17</p>
-                    <div class="d-flex justify-content-between isTraining">
-                        <p class="status">Training</p>
-                        <p class="statusDate">27 Apr 2018</p>
-                    </div>
-                    <div class="d-flex justify-content-between licenseInfo">
-                        <p class="license">License</p>
-                        <p class="licenseNumber">1239900</p>
-                    </div>
-                    <div class="d-flex justify-content-between vehicles">
-                        <p class="vehicleType">Vehicle.N</p>
-                        <p class="vehicleNumber">NH9000</p>
-                    </div>
-                    <p class="gateStauts">Status of gate pass</p>
-                    <button class="driverStatus">
-                        Pending
-                    </button>
-                </div>
-            </div>
+            
         </div>
     </div>
 </section>

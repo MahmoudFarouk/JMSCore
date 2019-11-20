@@ -26,11 +26,21 @@ namespace JMS.BLL.Services
 
             try
             {
+                if (!string.IsNullOrEmpty(driverName))
+                {
+                    response.Data = _context.Users.Where(u => u.UserRoles.Any(ur => ur.Role.Name == UserRoles.Driver.ToString()))
+                                                  //.Where(u => string.IsNullOrEmpty(driverName) ? true : u.FullName.Contains(driverName)).ToList()
+                                                  .Where(u => u.FullName.Contains(driverName)).ToList()
+                                                  .Where(u => ((u.JourneyUpdates != null && u.JourneyUpdates.Count > 0) ? u.JourneyUpdates.Last().Date.HasValue && EF.Functions.DateDiffHour(DateTime.Now, u.JourneyUpdates.Last().Date) > 14 : true)).ToList();
+                }
+                else
+                {
+                    response.Data = _context.Users.Where(u => u.UserRoles.Any(ur => ur.Role.Name == UserRoles.Driver.ToString()))
+                        .Where(u => string.IsNullOrEmpty(driverName) ? true : u.FullName.Contains(driverName)).ToList()
+                                                  .Where(u => ((u.JourneyUpdates != null && u.JourneyUpdates.Count > 0) ? u.JourneyUpdates.Last().Date.HasValue && EF.Functions.DateDiffHour(DateTime.Now, u.JourneyUpdates.Last().Date) > 14 : true)).ToList();
 
-                response.Data = _context.Users.Where(u => u.UserRoles.Any(ur => ur.Role.Name == UserRoles.Driver.ToString()))
-                                              .Where(u => string.IsNullOrEmpty(driverName) ? true : u.FullName.Contains(driverName)).ToList()
-                                              .Where(u => ((u.JourneyUpdates != null && u.JourneyUpdates.Count > 0) ? u.JourneyUpdates.Last().Date.HasValue && EF.Functions.DateDiffHour(DateTime.Now, u.JourneyUpdates.Last().Date) > 14 : true)).ToList();
 
+                }
                 response.Status = ResponseStatus.Success;
             }
             catch (Exception ex)

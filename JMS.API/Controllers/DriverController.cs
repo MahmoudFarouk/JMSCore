@@ -20,7 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace JMS.API.Controllers
 {
 
-    //[Authorize(Roles = ConstRole.Driver)]
+    [Authorize()]
     [ApiController]
     [Route("api/driver")]
     public class DriverController : ControllerBase
@@ -34,7 +34,7 @@ namespace JMS.API.Controllers
         }
 
         [HttpGet()]
-        [Route("getdrivers/{drivername?}")]
+        [Route("getdrivers")]
         public IActionResult GetDrivers(string driverName = "")
         {
             return Ok(_driverService.GetDrivers(driverName));
