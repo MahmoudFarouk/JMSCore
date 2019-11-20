@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { Subscription,Observable,timer } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
-import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 
 @Component({
@@ -21,7 +20,7 @@ export class InitiateJourneyComponent implements OnInit {
   isCurrentPage:boolean;
   subscription: Subscription;
   timer: Observable<any>;
-
+  google: any;
   public latitude: number;
   public longitude: number;
   public searchControl: FormControl;
@@ -67,7 +66,7 @@ export class InitiateJourneyComponent implements OnInit {
   submitJourney(){
     console.log(this.initJourney.value)
   }
-  
+
   ngOnInit() {
     this.isCustomComponent=false;
     this.setTimer();
@@ -75,7 +74,7 @@ export class InitiateJourneyComponent implements OnInit {
     this.zoom = 4;
     this.latitude = 39.8282;
     this.longitude = -98.5795;
-    
+
     this.searchControl = new FormControl();
     this.setCurrentPosition();
 
