@@ -34,7 +34,7 @@ namespace JMS.API.Controllers
         }
 
         [HttpGet()]
-        [Route("getdrivers/{drivername?}")]
+        [Route("getdrivers")]
         public IActionResult GetDrivers(string driverName = "")
         {
             return Ok(_driverService.GetDrivers(driverName));

@@ -79,13 +79,13 @@ export class InitiateJourneyComponent implements OnInit {
     this.setCurrentPosition();
 
     this.mapsAPILoader.load().then(() => {
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+      let autocomplete:any ={};/* new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["address"]
-      });
+      });*/
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
           //get the place result
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          let place:any;// google.maps.places.PlaceResult = autocomplete.getPlace();
 
           //verify result
           if (place.geometry === undefined || place.geometry === null) {
