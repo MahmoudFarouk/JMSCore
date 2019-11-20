@@ -1,4 +1,4 @@
-import { CheckpointAssessmentComponent } from './checkpoint-assessment/checkpoint-assessment.component';
+import { DriverAssessmentComponent } from './driver-assessment/driver-assessment.component';
 import { JourneyStartingAndMonitoringComponent } from './journey-starting-and-monitoring/journey-starting-and-monitoring.component';
 import { JourneyPreparationComponent } from './journey-preparation/journey-preparation.component';
 import { JourneyApprovalComponent } from './journey-approval/journey-approval.component';
@@ -17,7 +17,7 @@ const routes: Routes = [
   {path:'JourneyApproval',component:JourneyApprovalComponent},
   {path:'JourneyPreparation',component:JourneyPreparationComponent},
   {path:'JourneyStartingAndMonitoring',component:JourneyStartingAndMonitoringComponent},
-  {path:'CheckpointAssessment',component:CheckpointAssessmentComponent},
+  {path:'DriverAssessment',component:DriverAssessmentComponent},
   {path:'JourneyClosure',component:JourneyClosureComponent},
   {path:'**',component:InitiateJourneyComponent}
 ];

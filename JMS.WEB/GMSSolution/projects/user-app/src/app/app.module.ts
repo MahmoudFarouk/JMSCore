@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { NgxLoadingModule,ngxLoadingAnimationTypes  } from 'ngx-loading';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CheckpointAssessmentComponent } from './checkpoint-assessment/checkpoint-assessment.component';
+import { DriverAssessmentComponent } from './driver-assessment/driver-assessment.component';
 import { DriverSelectionComponent } from './driver-selection/driver-selection.component';
 import { InitiateJourneyComponent } from './initiate-journey/initiate-journey.component';
 import { JourneyApprovalComponent } from './journey-approval/journey-approval.component';
@@ -17,7 +17,7 @@ import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
-    AppComponent,CheckpointAssessmentComponent,
+    AppComponent,DriverAssessmentComponent,
     DriverSelectionComponent,InitiateJourneyComponent,
     JourneyApprovalComponent,JourneyClosureComponent,
     JourneyPreparationComponent,JourneyStartingAndMonitoringComponent

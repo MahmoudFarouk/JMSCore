@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription,Observable,timer } from 'rxjs';
 
 @Component({
-  selector: 'app-checkpoint-assessment',
-  templateUrl: './checkpoint-assessment.component.html',
-  styleUrls: ['./checkpoint-assessment.component.css']
+  selector: 'app-driver-assessment',
+  templateUrl: './driver-assessment.component.html',
+  styleUrls: ['./driver-assessment.component.css']
 })
-export class CheckpointAssessmentComponent implements OnInit {
+export class DriverAssessmentComponent implements OnInit {
   loading:boolean = false;
   isCustomComponent:boolean = false;
   isCurrentPage:boolean;
