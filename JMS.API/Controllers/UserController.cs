@@ -108,7 +108,8 @@ namespace JMS.API.Controllers
                 LicenseExpiryDate = model.LicenseExpiryDate,
                 LicenseNo = model.LicenseNo,
                 TrainingDetails = model.TrainingDetails,
-                Username = model.Username
+                Username = model.Username,
+                IsActive = true
             };
 
             try
