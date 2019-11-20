@@ -12,20 +12,21 @@ export class AppComponent {
   subscription: Subscription;
   timer: Observable<any>;
   constructor() {
-    
+
   }
   ngOnInit() {
     this.isCustomComponent = false;
     if(window.location.href.indexOf('/InitiateJourney') > -1
       || window.location.href.indexOf('/DriverSelection') > -1
       || window.location.href.indexOf('/JourneyStartingAndMonitoring') > -1
-      || window.location.href.indexOf('/JourneyApproval') > -1){
+      || window.location.href.indexOf('/JourneyApproval') > -1
+      || window.location.href.indexOf('/DriverAssessment') > -1){
         this.isCurrentPage = true;
         this.isCustomComponent = true;
       }
       this.setTimer();
  }
-navigateToCustomPage(event) { 
+navigateToCustomPage(event) {
   this.isCustomComponent = true;
   this.isCurrentPage = true;
 }

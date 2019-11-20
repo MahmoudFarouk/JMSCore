@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  JMSApiURL:'https://jmsapi2019119104239.azurewebsites.net/api'
 };
 
 /*

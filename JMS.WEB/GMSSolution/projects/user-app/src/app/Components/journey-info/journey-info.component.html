@@ -1,0 +1,28 @@
+<div>
+    <ng-template #customLoadingTemplate></ng-template>
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+    </div>
+<div *ngIf="loading==false"></div>
+<div class="mobileContainer">
+    <section id="titleHere">
+        <h3>Journey Info: {{Journey.title}}</h3>
+        <ul>
+            <li>
+                <img src="assets/images/Jms_assets/ic_pin.svg">
+                <span>Destination From: {{Journey.fromDestination}}</span>
+            </li>
+            <li>
+                <img src="assets/images/Jms_assets/ic_pin.svg">
+                <span>Destination To: {{Journey.toDistination}}</span>
+            </li>
+            <li>
+                <img src="assets/images/Jms_assets/ic_calendar.svg">
+                <span>Start Date: {{Journey.startDate | date:'dd/MM/yyyy'}}</span>
+            </li>
+            <li>
+                <img src="assets/images/Jms_assets/ic_calendar.svg">
+                <span>Date Of Delivery: {{Journey.deliveryDate | date:'dd/MM/yyyy'}}</span>
+            </li>
+        </ul>
+    </section>
+</div>

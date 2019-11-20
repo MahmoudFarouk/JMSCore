@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using JMS.API.Constants;
 using JMS.API.Models;
+using JMS.BLL.Common;
 using JMS.BLL.Helper;
 using JMS.BLL.Interfaces;
 using JMS.DAL.Models;
@@ -26,21 +27,44 @@ namespace JMS.API.Controllers
     public class NotificationController : ControllerBase
     {
         private INotificationService _notificationService;
-        private IMapper _mapper;
-        private readonly AppSettings _appSettings;
 
-        public NotificationController(INotificationService notificationService, IMapper mapper, IOptions<AppSettings> appSettings)
+        public NotificationController(INotificationService notificationService)
         {
             _notificationService = notificationService;
-            _mapper = mapper;
-            _appSettings = appSettings.Value;
+
         }
 
         [HttpGet()]
-        [Route("getusernotifications/{userid}")]
-        public IActionResult GetUserNotifications(Guid userId)
+        [Route("getusernotifications")]
+        public IActionResult GetUserNotifications()
         {
-            return Ok(_notificationService.GetUserNotifications(userId));
+            try
+            {
+                var userId = Guid.Parse(User.Identity.Name);
+                var model = _notificationService.GetUserNotifications(userId);
+                var notifications = model.Select(x => new NotificationModel
+                {
+                    CreationTime = x.CreationTime,
+                    Id = x.Id,
+                    IsRead = x.IsRead,
+                    Text = x.Text,
+                    UserId = x.UserId
+                }).ToList();
+                return Ok(new ServiceResponse<List<NotificationModel>>
+                {
+                    Data = notifications,
+                    Status = DAL.Common.Enums.ResponseStatus.Success
+                });
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse
+                {
+                    Status = DAL.Common.Enums.ResponseStatus.ServerError
+                });
+
+            }
         }
 
         [HttpPost]

@@ -1,4 +1,4 @@
-import { CheckpointAssessmentComponent } from './checkpoint-assessment/checkpoint-assessment.component';
+import { DriverAssessmentComponent } from './driver-assessment/driver-assessment.component';
 import { JourneyStartingAndMonitoringComponent } from './journey-starting-and-monitoring/journey-starting-and-monitoring.component';
 import { JourneyPreparationComponent } from './journey-preparation/journey-preparation.component';
 import { JourneyApprovalComponent } from './journey-approval/journey-approval.component';
@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { JourneyClosureComponent } from './journey-closure/journey-closure.component';
 import { AppComponent } from './app.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 
 const routes: Routes = [
@@ -17,8 +18,9 @@ const routes: Routes = [
   {path:'JourneyApproval',component:JourneyApprovalComponent},
   {path:'JourneyPreparation',component:JourneyPreparationComponent},
   {path:'JourneyStartingAndMonitoring',component:JourneyStartingAndMonitoringComponent},
-  {path:'CheckpointAssessment',component:CheckpointAssessmentComponent},
+  {path:'DriverAssessment',component:DriverAssessmentComponent},
   {path:'JourneyClosure',component:JourneyClosureComponent},
+  {path:'Notifications',component:NotificationsComponent},
   {path:'**',component:InitiateJourneyComponent}
 ];
 
