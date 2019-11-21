@@ -1,7 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
-import { Subscription,Observable,timer } from 'rxjs';
+import {} from "googlemaps";
+import { timer, Observable, Subscription } from 'rxjs';
+import { ElementRef, NgZone, OnInit, ViewChild, Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 
 @Component({
@@ -15,21 +15,31 @@ import { MapsAPILoader } from '@agm/core';
   `],
   styleUrls: ['./initiate-journey.component.css']
 })
+
+
 export class InitiateJourneyComponent implements OnInit {
+
+  public latitude: number;
+  public longitude: number;
+  public latitudeTo: number;
+  public longitudeTo: number;
+  public searchControl: FormControl;
+  public zoom: number;
+  public origin: any;
+  public destination: any;
+  
   loading:boolean = false;
   isCustomComponent:boolean = false;
   isCurrentPage:boolean;
   subscription: Subscription;
   timer: Observable<any>;
 
-  public latitude: number;
-  public longitude: number;
-  public searchControl: FormControl;
-  public zoom: number;
 
-  // @ViewChild("search");
+  @ViewChild("destinationFrom",{static:false}) searchElementRef: ElementRef;
+  @ViewChild("destinationTo",{static:false}) searchElementTo: ElementRef;
 
-  public searchElementRef: ElementRef;
+
+
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
@@ -69,6 +79,7 @@ export class InitiateJourneyComponent implements OnInit {
   }
   
   ngOnInit() {
+    console.log(this.searchElementRef)
     this.isCustomComponent=false;
     this.setTimer();
 
@@ -79,14 +90,18 @@ export class InitiateJourneyComponent implements OnInit {
     this.searchControl = new FormControl();
     this.setCurrentPosition();
 
+
     this.mapsAPILoader.load().then(() => {
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+      let distanceFrom = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["address"]
       });
-      autocomplete.addListener("place_changed", () => {
+      let destinationTo = new google.maps.places.Autocomplete(this.searchElementTo.nativeElement, {
+        types: ["address"]
+      });
+      distanceFrom.addListener("place_changed", () => {
         this.ngZone.run(() => {
           //get the place result
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          let place: google.maps.places.PlaceResult = distanceFrom.getPlace();
 
           //verify result
           if (place.geometry === undefined || place.geometry === null) {
@@ -97,11 +112,29 @@ export class InitiateJourneyComponent implements OnInit {
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
           this.zoom = 12;
+          this.origin = { lat: this.latitude, lng: this.longitude };
+          this.destination = { lat: 24.799524, lng: 120.975017 };
         });
+        destinationTo.addListener("place_changed", ()=>{
+          this.ngZone.run(() => {
+            //get the place result
+            let place: google.maps.places.PlaceResult = distanceFrom.getPlace();
+  
+            //verify result
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
+  
+            //set latitude, longitude and zoom
+            this.latitudeTo = place.geometry.location.lat();
+            this.longitudeTo = place.geometry.location.lng();
+            this.destination = { lat: this.latitudeTo, lng: this.longitudeTo };
+          });
+          })
       });
     });
-
  }
+ 
   public setTimer(){
     this.loading   = true;
     this.timer = timer(500);
@@ -119,6 +152,7 @@ export class InitiateJourneyComponent implements OnInit {
       });
     }
   }
+
 
 
 }

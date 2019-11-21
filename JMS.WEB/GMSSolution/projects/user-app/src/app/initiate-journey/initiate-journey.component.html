@@ -2,7 +2,7 @@
     <ng-template #customLoadingTemplate></ng-template>
     <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
     </div>
-<div *ngIf="loading==false">
+<div>
     <form [formGroup]="initJourney" (ngSubmit)="submitJourney()">
             <div class="mobileContainer initiateJourney">
                     <ul class="collapsible expandable">
@@ -17,9 +17,10 @@
                                     <input type="text" class="form-control" placeholder="Title" formControlName="title">
                                 </div>
                                 <div class="input-group mainInputComp">
-                                    <input type="text" class="form-control" placeholder="Destination From"
-                                        #DestinationFrom formControlName="DestinationFrom">
-                                    <div class="input-group-prepend">
+                                    <!-- <input type="text" class="form-control" placeholder="Destination From"
+                                        #DestinationFrom formControlName="DestinationFrom" hidden> -->
+                                        <input  #destinationFrom placeholder="Destination From" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" [formControl]="searchControl">
+                                        <div class="input-group-prepend">
                                         <span class="input-group-text">
                                             <img src="../../assets/images/Jms_assets/ic_pin.svg">
                                         </span>
@@ -27,7 +28,7 @@
                                 </div>
             
                                 <div class="input-group mainInputComp">
-                                    <input type="text" class="form-control" placeholder="Destination To" formControlName="DestinationTo">
+                                    <input #destinationTo type="text" class="form-control" placeholder="Destination To" formControlName="DestinationTo">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
                                             <img src="../../assets/images/Jms_assets/ic_pin.svg">
@@ -38,7 +39,10 @@
                                 <div class="map" style="height: 400px;background-color: #DDD;">
                                     <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
                                         <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-                                    </agm-map>
+                                        <agm-direction [origin]="origin" [destination]="destination">
+                                        </agm-direction>
+                                      
+                                      </agm-map>
                                 </div>
             
                                 <div class="input-group mainInputComp">

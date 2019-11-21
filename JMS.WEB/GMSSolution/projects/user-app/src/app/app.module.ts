@@ -13,6 +13,8 @@ import { JourneyStartingAndMonitoringComponent} from './journey-starting-and-mon
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction';  
+
 
 
 @NgModule({
@@ -32,6 +34,7 @@ import { AgmCoreModule } from '@agm/core';
       libraries: ["places"]
     }),
     ReactiveFormsModule,
+    AgmDirectionModule,
     NgxLoadingModule.forRoot({
       animationType: ngxLoadingAnimationTypes.cubeGrid,
       backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
