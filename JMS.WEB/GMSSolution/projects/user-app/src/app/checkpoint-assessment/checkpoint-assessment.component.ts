@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription,Observable,timer } from 'rxjs';
 
 @Component({
   selector: 'app-checkpoint-assessment',
@@ -7,23 +6,22 @@ import { Subscription,Observable,timer } from 'rxjs';
   styleUrls: ['./checkpoint-assessment.component.css']
 })
 export class CheckpointAssessmentComponent implements OnInit {
-  loading:boolean = false;
-  isCustomComponent:boolean = false;
-  isCurrentPage:boolean;
-  subscription: Subscription;
-  timer: Observable<any>;
+
+loading = false;
+isSuccessMode = false;
+isErrorMode = true;
+language : string;
+
   constructor() {
-    
+    this.language = window.location.href.indexOf('/ar/') > -1 ? 'ar' : 'en';
   }
   ngOnInit() {
-    this.isCustomComponent=false;
-    this.setTimer();
+    this.loading = true;
  }
-public setTimer(){
-  this.loading   = true;
-  this.timer = timer(500);
-  this.subscription = this.timer.subscribe(() => {
-      this.loading = false;
-  });
+setErrorFlags() {
+  this.loading = false;
+  this.isSuccessMode = false;
+  this.isErrorMode = true;
 }
+
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,7 +56,7 @@ namespace JMS.API.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate(AuthenticateModel model)
         {
-            var user = _userService.Authenticate(model.Username, model.Password);
+            var user = _userService.Authenticate(model.Username.ToLower(), model.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -108,7 +110,8 @@ namespace JMS.API.Controllers
                 LicenseExpiryDate = model.LicenseExpiryDate,
                 LicenseNo = model.LicenseNo,
                 TrainingDetails = model.TrainingDetails,
-                Username = model.Username
+                Username = model.Username.ToLower(),
+                IsActive = true
             };
 
             try
@@ -267,5 +270,43 @@ namespace JMS.API.Controllers
             }
 
         }
+
+        [HttpPost()]
+        [AllowAnonymous]
+        [Route("ForgetPassword")]
+        public IActionResult ForgetPassword(string username)
+        {
+
+            try
+            {
+                return Ok(_userService.ForgetPassword(username,_appSettings.Email,_appSettings.Password));
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+            }
+
+        }
+        [HttpPost()]
+        [AllowAnonymous]
+        [Route("ResetForgetPassword")]
+        public IActionResult ResetForgetPassword(string token,string newPassword)
+        {
+            try
+            {
+                return Ok(_userService.ResetForgetPassword(token, newPassword));
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+            }
+
+        }
+
+
+
     }
 }

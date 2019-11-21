@@ -1,0 +1,17 @@
+<!--start notifications section-->
+<section id="notifications">
+        <div class="notification" *ngFor="let item of Notifications" style="margin: 15px 0;">
+            <div class="mobileContainer">
+                <div class="notContainer">
+                    <img class="notificationIcon" src="assets/images/assets_icons/notify.svg">
+                    <div class="notificationDesc">
+                        <h5 class="notificationName">{{item.text}}</h5>
+                        <p class="notificationDestination">{{item.creationTime | date:'dd/MM/yyyy hh:mm a'}}</p>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+<!-- <h3 *ngIf='Notifications.length==0' style="text-align:center">No Notifications</h3> -->
+       
+    </section>

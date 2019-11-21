@@ -26,11 +26,21 @@ namespace JMS.BLL.Services
 
             try
             {
+                if (!string.IsNullOrEmpty(driverName))
+                {
+                    response.Data = _context.Users.Where(u => u.UserRoles.Any(ur => ur.Role.Name == UserRoles.Driver.ToString()))
+                                                  //.Where(u => string.IsNullOrEmpty(driverName) ? true : u.FullName.Contains(driverName)).ToList()
+                                                  .Where(u => u.FullName.Contains(driverName)).ToList()
+                                                  .Where(u => ((u.JourneyUpdates != null && u.JourneyUpdates.Count > 0) ? u.JourneyUpdates.Last().Date.HasValue && EF.Functions.DateDiffHour(DateTime.Now, u.JourneyUpdates.Last().Date) > 14 : true)).ToList();
+                }
+                else
+                {
+                    response.Data = _context.Users.Where(u => u.UserRoles.Any(ur => ur.Role.Name == UserRoles.Driver.ToString()))
+                        .Where(u => string.IsNullOrEmpty(driverName) ? true : u.FullName.Contains(driverName)).ToList()
+                                                  .Where(u => ((u.JourneyUpdates != null && u.JourneyUpdates.Count > 0) ? u.JourneyUpdates.Last().Date.HasValue && EF.Functions.DateDiffHour(DateTime.Now, u.JourneyUpdates.Last().Date) > 14 : true)).ToList();
 
-                response.Data = _context.Users.Where(u => u.UserRoles.Any(ur => ur.Role.Name == UserRoles.Driver.ToString()))
-                                              .Where(u => string.IsNullOrEmpty(driverName) ? true : u.FullName.Contains(driverName)).ToList()
-                                              .Where(u => ((u.JourneyUpdates != null && u.JourneyUpdates.Count > 0) ? u.JourneyUpdates.Last().Date.HasValue && EF.Functions.DateDiffHour(DateTime.Now, u.JourneyUpdates.Last().Date) > 14 : true)).ToList();
 
+                }
                 response.Status = ResponseStatus.Success;
             }
             catch (Exception ex)
@@ -74,6 +84,70 @@ namespace JMS.BLL.Services
             {
                 _context.JourneyUpdate.Add(journeyUpdate);
                 _context.SaveChanges();
+
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+
+            return response;
+        }
+
+        public ServiceResponse<List<AssessmentQuestion>> GetJourneyAssessment(int journeyId, bool isPostTrip = false, bool includeResults = false)
+        {
+            ServiceResponse<List<AssessmentQuestion>> response = new ServiceResponse<List<AssessmentQuestion>>();
+
+            try
+            {
+                if (includeResults)
+                {
+                    if (isPostTrip)
+                        response.Data = _context.AssessmentQuestion.Include(a => a.AssessmentResult).AsNoTracking()
+                            .Where(q => (q.JourneyId == journeyId) && (q.CheckpointId == null) && (q.Category == QuestionCategory.PostTrip || q.Category == QuestionCategory.VehicleChecklist)).ToList();
+                    else
+                        response.Data = _context.AssessmentQuestion.Include(a => a.AssessmentResult).AsNoTracking()
+                              .Where(q => (q.JourneyId == journeyId) && (q.CheckpointId == null) && (q.Category == QuestionCategory.PreTrip || q.Category == QuestionCategory.VehicleChecklist)).ToList();
+                }
+                else
+                {
+                    if (isPostTrip)
+                        response.Data = _context.AssessmentQuestion
+                            .Where(q => (q.JourneyId == journeyId) && (q.CheckpointId == null) && (q.Category == QuestionCategory.PostTrip || q.Category == QuestionCategory.VehicleChecklist)).ToList();
+                    else
+                        response.Data = _context.AssessmentQuestion
+                            .Where(q => (q.JourneyId == journeyId) && (q.CheckpointId == null) && (q.Category == QuestionCategory.PreTrip || q.Category == QuestionCategory.VehicleChecklist)).ToList();
+                }
+
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+
+            return response;
+        }
+
+        public ServiceResponse<List<AssessmentQuestion>> GetCheckpointAssessment(int checkpointId, bool includeResults = false)
+        {
+            ServiceResponse<List<AssessmentQuestion>> response = new ServiceResponse<List<AssessmentQuestion>>();
+
+            try
+            {
+                if (includeResults)
+                    response.Data = _context.AssessmentQuestion.Include(a => a.AssessmentResult).AsNoTracking()
+                        .Where(q => q.Category == QuestionCategory.CheckpointAssessment || q.Category == QuestionCategory.VehicleChecklist && q.CheckpointId == checkpointId).ToList();
+                else
+                    response.Data = _context.AssessmentQuestion
+                            .Where(q => q.Category == QuestionCategory.CheckpointAssessment || q.Category == QuestionCategory.VehicleChecklist && q.CheckpointId == checkpointId).ToList();
 
                 response.Status = ResponseStatus.Success;
             }

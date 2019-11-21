@@ -329,7 +329,7 @@ namespace JMS.API.Migrations
                     b.Property<string>("GatePassStatus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAdctive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LicenseExpiryDate")

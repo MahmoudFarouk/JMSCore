@@ -5,16 +5,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Constants } from '../Constants';
 @Injectable({ providedIn: 'root' })
 export class DriverService{
-    Headers:HttpHeaders;
-    constructor(private http: HttpClient) { 
-        this.Headers=new HttpHeaders();
-        this.Headers.set("Content-Type","application/json");
-        this.Headers.set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJkNGQ1NGUyLTk2NzgtNGQwNi05YzVhLTA4ZDc2N2MzMTAyNCIsInJvbGUiOlsiUEwiLCJEaXNwYXRjaGVyIl0sIm5iZiI6MTU3MzgyNTUyOCwiZXhwIjoxNTc0NDMwMzI4LCJpYXQiOjE1NzM4MjU1Mjh9.Utv9CJdcTtI0NmHix1mLthdepHcyYO8nGtkXM1jZrzs");
-        
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJkNGQ1NGUyLTk2NzgtNGQwNi05YzVhLTA4ZDc2N2MzMTAyNCIsInJvbGUiOlsiUEwiLCJEaXNwYXRjaGVyIiwiRHJpdmVyIl0sIm5iZiI6MTU3NDExMjYyNywiZXhwIjoxNTc0NzE3NDI3LCJpYXQiOjE1NzQxMTI2Mjd9.f-kMqt--kiy9beHNk5wDov7ZLxfgedWcfxpwoa8wN8I"
     }
-     GetDrivers(){
+    constructor(private http: HttpClient) { 
+       
+    }
+     GetDrivers(drivername=""){
 
-        return  this.http.get<Driver[]>(`${Constants.Url}/api/driver/getdrivers`,{headers:this.Headers});
+        return  this.http.get(`${Constants.Url}/api/driver/getdrivers?drivername=${drivername}`,{headers:this.headers});
         
     }
 

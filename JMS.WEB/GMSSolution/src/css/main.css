@@ -314,7 +314,6 @@ ul.collapsible .collapsible-body {
   padding: 0 20px;
   background-color: #FFF;
   border: 0;
-  display: block;
 }
 
 body {
@@ -572,6 +571,71 @@ body {
   font-size: 15px;
 }
 
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap {
+  background-color: #4385F5;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap .autoCompLocations {
+  padding: 15px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap .autoCompLocations .row {
+  margin-top: 10px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap .autoCompLocations .row:first-of-type {
+  margin-top: 0;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap .inputsIcons {
+  position: relative;
+  text-align: center;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap .inputsIcons > div {
+  position: absolute;
+  top: 70%;
+  left: 40%;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap .inputsSection {
+  padding-left: 0;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap .inputsSection input {
+  border: 0;
+  border-bottom: 1px solid #FFF;
+  background-color: transparent;
+  width: 100%;
+  color: #fff;
+  font-size: 13px;
+  padding-bottom: 2px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap .inputsSection input::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap .inputsSection input:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap .inputsSection input::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap .inputsSection input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .initiateJourneyMap .addNewDestination input {
+  border-bottom: 0;
+}
+
 .initiateJourney ul.collapsible .collapsible-body form {
   margin: 15px 0;
 }
@@ -651,7 +715,7 @@ body {
   padding-left: 25px;
 }
 
-.initiateJourney .sumbitToInitiate {
+.sumbitToInitiate {
   width: 100%;
   text-align: center;
   background-color: #17BC9B;
@@ -705,8 +769,8 @@ body {
 }
 
 #notifications .notification .notContainer .notificationIcon {
-  width: 19px;
-  height: 19px;
+  width: 29px;
+  height: 29px;
   margin-right: 15px;
 }
 
@@ -729,5 +793,38 @@ body {
 
 #notifications .notification.notRead .notificationDate {
   color: #6AC6D9;
+}
+
+.assessments ul li {
+  margin-bottom: 40px;
+}
+
+.assessments ul li .collapsible-body {
+  padding: 0;
+}
+
+.assessments ul li .collapsible-body p {
+  color: #979797;
+  font-family: Lato;
+  font-size: 15px;
+  padding: 25px;
+}
+
+.assessments ul li .collapsible-body .answer {
+  text-align: center;
+}
+
+.assessments ul li .collapsible-body .answer button {
+  width: 49.4%;
+  border: 0;
+  background-color: #48CBC3;
+  color: #FFF;
+  font-size: 17px;
+  font-weight: bold;
+  padding: 3px;
+}
+
+.assessments ul li .collapsible-body .answer button:last-of-type {
+  background-color: #CA6C6C;
 }
 /*# sourceMappingURL=main.css.map */

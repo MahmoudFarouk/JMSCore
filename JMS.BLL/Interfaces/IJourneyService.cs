@@ -30,9 +30,10 @@ namespace JMS.BLL.Interfaces
 
         public ServiceResponse CompleteJourney(int journeyId);
 
-        public ServiceResponse AddJourneyUpdate(JourneyUpdate JourneyUpdate);
-
-
+        public ServiceResponse<int> AddJourneyUpdate(JourneyUpdate JourneyUpdate);
+        public Journey GetById(int id);
+        public JourneyUpdate GetJourneyUpdateDriverInfo(int journeyId);
+        
 
     }
 }

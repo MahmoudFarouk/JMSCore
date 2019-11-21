@@ -35,6 +35,9 @@ namespace JMS.API.Migrations
                     b.Property<bool>("IsThirdParty")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("JourneyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Question")
                         .HasColumnType("nvarchar(max)");
 
@@ -44,6 +47,8 @@ namespace JMS.API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CheckpointId");
+
+                    b.HasIndex("JourneyId");
 
                     b.ToTable("AssessmentQuestion");
                 });
@@ -423,6 +428,10 @@ namespace JMS.API.Migrations
                     b.HasOne("JMS.DAL.Models.Checkpoint", "Checkpoint")
                         .WithMany()
                         .HasForeignKey("CheckpointId");
+
+                    b.HasOne("JMS.DAL.Models.Journey", "Journey")
+                        .WithMany("AssessmentQuestion")
+                        .HasForeignKey("JourneyId");
                 });
 
             modelBuilder.Entity("JMS.DAL.Models.AssessmentResult", b =>

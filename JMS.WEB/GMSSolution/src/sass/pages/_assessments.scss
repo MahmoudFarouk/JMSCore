@@ -1,0 +1,33 @@
+.assessments{
+    ul li {
+        margin-bottom: 40px;
+    }
+    ul li .collapsible-body{
+        padding: 0;
+    }
+    ul li .collapsible-body p{
+        color: #979797;	
+        font-family: Lato;	
+        font-size: 15px;
+        padding: 25px;
+    }
+    ul li .collapsible-body .answer{
+        text-align: center;
+        
+    }
+    ul li .collapsible-body .answer button{
+        width: 49.4%;
+        border: 0;
+        background-color: #48CBC3;
+        color: #FFF;
+        font-size: 17px;
+        font-weight: bold;
+        padding: 3px;
+    }
+    ul li .collapsible-body .answer button:last-of-type{
+        background-color: #CA6C6C;
+    }
+}
+
+
+ 

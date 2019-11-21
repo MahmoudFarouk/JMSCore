@@ -166,5 +166,43 @@
     line-height: 18px;
 }
 
+//collapsible sections
+ul.collapsible{
+    border: 0;
+    margin:20px 0 ;
+    box-shadow: none;
+}
+ul.collapsible:first-of-type{
+    margin-top:40px ;
+}
+ul.collapsible > li{
+    margin:20px 0;
+    border: 0;
+    box-shadow: $mainBoxShadow;
+}
+ul.collapsible .collapsible-header{
+    background-color: #006FAD!important;
+    color: #FFF!important;
+    display: flex;
+    justify-content: space-between;
+    border: 0;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+ul.collapsible .collapsible-header p{
+    font-size: 15px;
+    letter-spacing: -0.36px;	
+    line-height: 18px;
+}
+ul.collapsible .collapsible-header img{
+    background-color: #FFF;
+    padding:8px 5px 5px 5px;
+}
+ul.collapsible .collapsible-body{
+    padding: 0 20px;
+    background-color: #FFF;
+    border:0
+}
 
 
