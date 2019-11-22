@@ -1,0 +1,84 @@
+#titleHere{
+    background-color: #FFF;
+    padding: 15px;
+    margin: 25px 0;
+    box-shadow: $mainBoxShadow;
+    border-radius: 5px;
+}
+#titleHere h3{
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #727272;
+}
+#titleHere ul li{
+    margin: 10px 0;
+}
+#titleHere ul li:last-of-type{
+    margin-bottom: 0;
+}
+#titleHere ul li img{
+    height:13px;
+    width: 10px;
+    margin-bottom: 1px;
+    margin-right: 5px;
+}
+#titleHere ul li span{
+    color: #979797;
+    font-size: 13px;
+}
+#searchInDrivers .input-group{
+    border: 2px solid #979797;
+    border-radius: 5px;
+}
+#searchInDrivers .input-group .input-group-text{
+    background-color: transparent;
+    border: 0;
+}
+#searchInDrivers .input-group input{
+    border: 0;
+    background-color: transparent;
+}
+#searchInDrivers .input-group input.form-control::placeholder{
+    font-family: lato;
+    line-height: 32px;
+    font-size: 13px;
+}
+#driversSelectionsCards{
+    margin-top: 10px;
+}
+#driversSelectionsCards .driverCard{
+    background-color: #FFF;
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 11px;
+    color: #828282;
+    box-shadow: $mainBoxShadow;
+    border-radius: 7px;
+    font-weight: 500;
+    margin: 10px 0;
+}
+#driversSelectionsCards .driverCard .driverImg{
+    width: 32px;
+    height: 32px;
+}
+#driversSelectionsCards .driverCard .driverName{
+    font-size: 15px;
+    font-weight: bold;
+    color: #686868;
+}
+#driversSelectionsCards .driverCard .driverName,
+#driversSelectionsCards .driverCard .totalHours,
+#driversSelectionsCards .driverCard .isTraining,
+#driversSelectionsCards .driverCard .licenseInfo,
+#driversSelectionsCards .driverCard .vehicles,
+#driversSelectionsCards .driverCard .gateStauts{
+    margin: 10px 0;
+}
+#driversSelectionsCards .driverCard .driverStatus{
+    color: #FFAB2B;
+    background-color: rgba(#FFAB2B,0.1);
+    padding: 5px 10px;
+    font-size: 9px;
+    border: 0;
+}

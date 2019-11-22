@@ -1,0 +1,208 @@
+@import "../sass/variables";
+
+//navbar with logo 
+.logoNav{
+    text-align: center;
+    padding: 10px;
+    background-color: #FFF;
+    box-shadow: $mainBoxShadow;
+    height: auto;
+}
+.logoNav img{
+    width:157px;
+    height:56px
+}
+
+//navbar with menu and notificaiton
+.menuAndNotificationNav{
+    background-color: #FFF;
+    height: auto;
+    padding: 10px 0;
+    line-height: 1px;;
+    box-shadow: $mainBoxShadow;
+}
+.menuAndNotificationNav a{
+    display: block;
+}
+.menuAndNotificationNav h2{
+    color: #494949;
+    font-size: 20px;
+    font-family: 'lato';
+    margin: 16px 0 ;
+    font-weight: bold;
+}
+.menuAndNotificationNav a.sidenav-trigger{
+    position: static;
+    float: none;
+    height: auto;
+    margin: 0;
+    z-index: auto;
+}
+.menuAndNotificationNav a.sidenav-trigger img{
+    border-radius: 5px;
+
+}
+.notificationsNumberNavIcon {
+    position: relative;
+}
+.notificationsNumberNavIcon .notificationsNumber{
+    position:absolute;
+    bottom: 3px;
+    right: -6px;
+}
+.notificationsNumberNavIcon .notificationsNumber span{
+    border-radius: 50%;
+    background-color: #F5A622;
+    padding:3px 6px ;
+    color:#FFF;
+    font-size: 12px;
+    font-weight: bold;
+    
+}
+
+//side nav config
+.sidenav{
+    width: 282px;
+}
+.sidenav .userInfo{
+    background-color: #19BC9C;
+    height: 282px;
+    text-align: center;
+}
+.sidenav .userInfo img,
+.sidenav .userInfo button{
+    margin: 25px 0;
+}
+.sidenav .userInfo button{
+    border: 1px solid #FFFFFF;	
+    border-radius: 5px;
+    background-color: transparent;
+    font-size: 16px;
+    color:#FFF;
+    padding:5px 15px;
+}
+.sidenav .userInfo h2{
+    color: #FFF;
+    line-height: 32px;
+}
+.sidenav ul li {
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+    display: flex
+}
+.sidenav ul li img{
+    margin: 5px 15px 0 15px;
+    width: 23px;
+    height: 23px;
+}
+.sidenav ul li h3{
+    font-size: 18px;
+    color: #0AA699;
+    letter-spacing: 1px;
+    line-height: 32px;  
+}
+.sidenav ul li.selected h3{
+    color: #575757;
+}
+
+
+//form wrapper 
+.formWrapper{
+    background-color: #FFF;
+    padding: 35px 20px;
+    box-shadow: $mainBoxShadow;
+    border-radius: 2px;
+    text-align: center;
+}
+.formWrapper h2{
+    font-size: 18px;
+    color:#3D3B3B;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.formWrapper button[type='submit']{
+    width: 100%;
+    border:0;
+    padding:10px 0;
+    border-radius: 7px;	
+    background-color: #17BC9B;
+    font-family: lato;
+    color: #FFFFFF;		
+    font-size: 14px;	
+    font-weight: 600;		
+    line-height: 18px;
+    margin-top: 30px;
+}
+
+//login and registration inputs
+.mainInputComp{
+    margin: 20px 0;
+}
+.mainInputComp .input-group-prepend .input-group-text,
+.mainInputComp input.form-control{
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid $greyFontsColor;
+    padding: 0;
+}
+.mainInputComp .input-group-prepend .input-group-text{
+    background-color: transparent;
+    margin: 0;
+    padding-right: 10px;
+}
+.mainInputComp .input-group-prepend .input-group-text img{
+    width: 14px;
+    height: 14px;
+    color:black;
+}
+.mainInputComp input.form-control,
+.mainInputComp input.form-control::-webkit-input-placeholder,
+.mainInputComp input.form-control::placeholder {
+    color: $greyFontsColor;
+    font-family: lato;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.36px;
+    line-height: 18px;
+}
+
+//collapsible sections
+ul.collapsible{
+    border: 0;
+    margin:20px 0 ;
+    box-shadow: none;
+}
+ul.collapsible:first-of-type{
+    margin-top:40px ;
+}
+ul.collapsible > li{
+    margin:20px 0;
+    border: 0;
+    box-shadow: $mainBoxShadow;
+}
+ul.collapsible .collapsible-header{
+    background-color: #006FAD!important;
+    color: #FFF!important;
+    display: flex;
+    justify-content: space-between;
+    border: 0;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+ul.collapsible .collapsible-header p{
+    font-size: 15px;
+    letter-spacing: -0.36px;	
+    line-height: 18px;
+}
+ul.collapsible .collapsible-header img{
+    background-color: #FFF;
+    padding:8px 5px 5px 5px;
+}
+ul.collapsible .collapsible-body{
+    padding: 0 20px;
+    background-color: #FFF;
+    border:0
+}
+
+

@@ -306,7 +306,70 @@ namespace JMS.API.Controllers
 
         }
 
+        [HttpGet()]
+        [Authorize(Roles = ConstRole.JMSAdmin)]
+        [Route("getgroups")]
+        public IActionResult GetUserGroups()
+        {
+            return Ok(_userService.GetUserGroups());
+        }
+
+        [HttpGet()]
+        [Authorize(Roles = ConstRole.JMSAdmin)]
+        [Route("getworkforces")]
+        public IActionResult GetUserWorkForces()
+        {
+            return Ok(_userService.GetUserWorkForces());
+        }
+
+        [HttpPost()]
+        [Authorize(Roles = ConstRole.JMSAdmin)]
+        [Route("addgroup")]
+        public IActionResult AddUserGroup(UserGroup group)
+        {
+            return Ok(_userService.AddUserGroup(group));
+        }
+
+        [HttpPost()]
+        [Authorize(Roles = ConstRole.JMSAdmin)]
+        [Route("updategroup")]
+        public IActionResult EditUserGroup(UserGroup group)
+        {
+            return Ok(_userService.EditUserGroup(group));
+        }
+
+        [HttpPost()]
+        [Authorize(Roles = ConstRole.JMSAdmin)]
+        [Route("addworkforce")]
+        public IActionResult AddUserWorkForce(UserWorkForce workforce)
+        {
+            return Ok(_userService.AddUserWorkForce(workforce));
+        }
+
+        [HttpPost()]
+        [Authorize(Roles = ConstRole.JMSAdmin)]
+        [Route("updateworkforce")]
+        public IActionResult EditUserGroup(UserWorkForce workforce)
+        {
+            return Ok(_userService.EditUserWorkForce(workforce));
+        }
 
 
+        [HttpPost()]
+        [Authorize(Roles = ConstRole.JMSAdmin)]
+        [Route("deletegroup/{groupId}")]
+        public IActionResult DeleteUserGroup(Guid groupId)
+        {
+            return Ok(_userService.DeleteUserGroup(groupId));
+        }
+
+
+        [HttpPost()]
+        [Authorize(Roles = ConstRole.JMSAdmin)]
+        [Route("deleteworkforce/{workforceId}")]
+        public IActionResult DeleteUserWorkForce(Guid workforceId)
+        {
+            return Ok(_userService.DeleteUserWorkForce(workforceId));
+        }
     }
 }
