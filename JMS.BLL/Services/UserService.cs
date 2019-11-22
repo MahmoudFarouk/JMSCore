@@ -9,6 +9,8 @@ using JMS.BLL.Helper;
 using Microsoft.EntityFrameworkCore;
 using JMS.BLL.Common;
 using JMS.DAL.Common.Enums;
+using System.Net.Mail;
+using System.Net;
 
 namespace JMS.BLL.Services
 {

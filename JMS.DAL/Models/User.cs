@@ -22,6 +22,7 @@ namespace JMS.DAL.Models
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public bool IsActive { get; set; }
+        public string ChangePasswordToken { get; set; }
         public virtual UserGroup UserGroup { get; set; }
         public virtual UserWorkForce UserWorkForce { get; set; }
 
