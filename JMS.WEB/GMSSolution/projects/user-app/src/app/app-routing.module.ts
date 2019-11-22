@@ -8,7 +8,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { JourneyClosureComponent } from './journey-closure/journey-closure.component';
 import { AppComponent } from './app.component';
-import { NotificationsComponent } from './notifications/notifications.component';
 
 
 const routes: Routes = [
@@ -20,7 +19,6 @@ const routes: Routes = [
   {path:'JourneyStartingAndMonitoring',component:JourneyStartingAndMonitoringComponent},
   {path:'DriverAssessment',component:DriverAssessmentComponent},
   {path:'JourneyClosure',component:JourneyClosureComponent},
-  {path:'Notifications',component:NotificationsComponent},
   {path:'**',component:InitiateJourneyComponent}
 ];
 

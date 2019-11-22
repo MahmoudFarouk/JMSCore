@@ -13,8 +13,6 @@ import { JourneyStartingAndMonitoringComponent} from './journey-starting-and-mon
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
-import { JourneyInfoComponent } from './Components/journey-info/journey-info.component';
-import { NotificationsComponent } from './notifications/notifications.component';
 
 
 @NgModule({
@@ -22,7 +20,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
     AppComponent,DriverAssessmentComponent,
     DriverSelectionComponent,InitiateJourneyComponent,
     JourneyApprovalComponent,JourneyClosureComponent,
-    JourneyPreparationComponent,JourneyStartingAndMonitoringComponent, JourneyInfoComponent, NotificationsComponent
+    JourneyPreparationComponent,JourneyStartingAndMonitoringComponent
   ],
   imports: [
     BrowserModule,

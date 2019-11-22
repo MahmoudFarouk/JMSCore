@@ -1,0 +1,36 @@
+*,body,ul,li,h1,h2,h3,h4,h5,h6,p,input,label,ol{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+input,
+input:focus,
+input:active,
+input:focus-within,
+textarea,
+textarea:focus,
+textarea:active,
+textarea:focus-within,
+select,
+select:focus,
+select:active,
+select:focus-within{
+    outline: 0!important;
+    box-shadow:none!important;
+}
+button,
+button:focus,
+button:active,
+button:focus-within{
+    background-color: transparent;
+    outline: none;
+}
+a,
+a:hover,
+a:focus,
+a:visited{
+    text-decoration: none; 
+}
+.mobileContainer{
+    margin: 0 25px;
+}
