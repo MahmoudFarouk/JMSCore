@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationModel } from '../Models/NotificationModel';
 import { NotificationService } from '../Services/NotificationService';
-
+import { Subscription,Observable,timer } from 'rxjs';
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
@@ -9,8 +9,9 @@ import { NotificationService } from '../Services/NotificationService';
 })
 export class NotificationsComponent implements OnInit {
   loading: boolean = false;
-  
+  timer: Observable<any>;
   Notifications: NotificationModel[];
+  subscription: Subscription;
   constructor(private NotificationService:NotificationService) { }
 
   ngOnInit() {
@@ -21,11 +22,24 @@ export class NotificationsComponent implements OnInit {
      
       console.log(data);
       this.Notifications = data.data;
-      
+      this.setTimer();
       this.loading = false;
-    }, (error) => {
+    }, (error) => { 
       this.loading = false;
     });
-
+    
+  }
+  public setTimer(){
+    this.timer = timer(3000);
+    this.subscription = this.timer.subscribe(() => {
+      this.NotificationService.GetNotifications().toPromise().then((data: any) => {
+        this.Notifications = data.data;
+       
+        this.setTimer();
+       
+      }, (error) => { 
+       
+      });
+    });
   }
 }

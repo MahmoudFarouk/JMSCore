@@ -14,7 +14,7 @@ namespace JMS.BLL.Interfaces
 
         public ServiceResponse UpdateJourney(Journey journey);
 
-        public ServiceResponse<JourneyDetailsModel> GetJourneyDetails(int journeyId);
+        public ServiceResponse<object> GetJourneyDetails(int journeyId);
 
         public ServiceResponse<PageResult<Journey>> GetJourneys(DateTime? date, PagingProperties pagingProperties);
 

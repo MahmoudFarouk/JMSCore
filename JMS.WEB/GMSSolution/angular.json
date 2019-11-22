@@ -406,7 +406,9 @@
               "src/css/vendors/normalize.css",
               "src/css/vendors/materialize.css",
               "src/css/vendors/bootstrap.min.css",
-              "src/css/main.css"
+              "src/css/main.css",
+              "src/css/fullcalendarmain.css",
+              "src/css/fullcalendarmaindygrid.css"
             ],
             "scripts": [
               "src/js/jquery-3.4.1.min.js",

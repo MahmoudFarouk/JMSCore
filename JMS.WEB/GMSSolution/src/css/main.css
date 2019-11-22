@@ -26,7 +26,6 @@ button,
 button:focus,
 button:active,
 button:focus-within {
-  background-color: transparent;
   outline: none;
 }
 
@@ -57,6 +56,16 @@ a:visited {
 }
 
 @font-face {
+  font-family: Montserrat;
+  src: url(../fonts/Montserrat-Regular.ttf);
+}
+
+@font-face {
+  font-family: MontserratLight;
+  src: url(../fonts/Montserrat-Light.ttf);
+}
+
+@font-face {
   font-family: lato;
   src: url(../fonts/Lato-Regular.ttf);
 }
@@ -69,6 +78,16 @@ a:visited {
 @font-face {
   font-family: Quicksand;
   src: url(../fonts/Quicksand-Regular.otf);
+}
+
+@font-face {
+  font-family: Montserrat;
+  src: url(../fonts/Montserrat-Regular.ttf);
+}
+
+@font-face {
+  font-family: MontserratLight;
+  src: url(../fonts/Montserrat-Light.ttf);
 }
 
 .logoNav {
@@ -191,6 +210,20 @@ a:visited {
   color: #575757;
 }
 
+.mainButtonStyle, .formWrapper button[type='submit'] {
+  width: 100%;
+  border: 0;
+  padding: 10px 0;
+  border-radius: 7px;
+  background-color: #17BC9B;
+  font-family: lato;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  margin-top: 30px;
+}
+
 .formWrapper {
   background-color: #FFF;
   padding: 35px 20px;
@@ -205,20 +238,6 @@ a:visited {
   color: #3D3B3B;
   font-weight: bold;
   margin-bottom: 20px;
-}
-
-.formWrapper button[type='submit'] {
-  width: 100%;
-  border: 0;
-  padding: 10px 0;
-  border-radius: 7px;
-  background-color: #17BC9B;
-  font-family: lato;
-  color: #FFFFFF;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 18px;
-  margin-top: 30px;
 }
 
 .mainInputComp {
@@ -715,7 +734,7 @@ body {
   padding-left: 25px;
 }
 
-.sumbitToInitiate {
+.sumbitToInitiate, .journeyApproval .changeDriver {
   width: 100%;
   text-align: center;
   background-color: #17BC9B;
@@ -826,5 +845,139 @@ body {
 
 .assessments ul li .collapsible-body .answer button:last-of-type {
   background-color: #CA6C6C;
+}
+
+.myRequestsComp {
+  background-color: #FFF;
+  margin: 20px 0;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+          box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+  padding: 15px;
+}
+
+.myRequestsComp .request h3 {
+  color: #508DB0;
+  padding: 10px 0;
+  border-bottom: 1px solid #DDD;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.myRequestsComp .request .info {
+  margin: 10px 0;
+}
+
+.myRequestsComp .request .info h6 {
+  color: #A5B0C2;
+  padding: 10px 0;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-family: 'MontserratLight', sans-serif;
+}
+
+.myRequestsComp .request .info p {
+  font-family: "Segoe UI",Roboto,"Helvetica Neue";
+  font-size: 13px;
+  color: #555;
+}
+
+.myRequestsComp .request .mainButtonStyle, .myRequestsComp .request .formWrapper button[type='submit'], .formWrapper .myRequestsComp .request button[type='submit'] {
+  margin-top: 0;
+}
+
+.journeyApproval ul .collapsible-body {
+  padding: 0;
+}
+
+.journeyApproval .collapsible-body .detail {
+  border-bottom: 1px solid #DDD;
+  padding: 10px 15px;
+}
+
+.journeyApproval .collapsible-body .detail .col-3 {
+  padding-left: 0;
+}
+
+.journeyApproval .collapsible-body .detail:last-of-type {
+  border-bottom: 0;
+}
+
+.journeyApproval .collapsible-body .detail img {
+  margin-right: 10px;
+}
+
+.journeyApproval .collapsible-body .detail h3,
+.journeyApproval .collapsible-body .detail p {
+  display: inline;
+  color: #979797;
+  font-size: 14px;
+}
+
+.journeyApproval .collapsible-body .detail h3 {
+  font-weight: bold;
+}
+
+.journeyApproval .collapsible-body .detail p {
+  font-size: 13px;
+}
+
+.journeyApproval .drivAss .detail p {
+  margin: 10px 0;
+  display: block;
+}
+
+.journeyApproval .collapsible-body .detail .yes, .journeyApproval .collapsible-body .detail .no {
+  width: 100%;
+  margin: 10px 0;
+  border: 0;
+  background-color: #48CBC3;
+  border-radius: 5px;
+  padding: 5px;
+  color: #FFF;
+}
+
+.journeyApproval .collapsible-body .detail .no {
+  background-color: #CA6C6C;
+}
+
+.journeyApproval .changeDriver {
+  background-color: #AFAFAF;
+}
+
+.journeyMonitoring .point {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #979797;
+  font-family: Lato;
+  padding: 15px 0;
+}
+
+.journeyMonitoring .point .time {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.journeyMonitoring .point img {
+  width: 37px;
+  height: 37px;
+}
+
+.journeyMonitoring .point:first-of-type img {
+  width: 30px;
+  height: 30px;
+}
+
+.journeyMonitoring .point .info {
+  font-size: 13px;
+}
+
+.journeyMonitoring .point:first-of-type .info,
+.journeyMonitoring .point:last-of-type .info {
+  font-weight: bold;
 }
 /*# sourceMappingURL=main.css.map */

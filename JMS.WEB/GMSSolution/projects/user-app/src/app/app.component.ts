@@ -20,7 +20,13 @@ export class AppComponent {
       || window.location.href.indexOf('/DriverSelection') > -1
       || window.location.href.indexOf('/JourneyStartingAndMonitoring') > -1
       || window.location.href.indexOf('/JourneyApproval') > -1
-      || window.location.href.indexOf('/DriverAssessment') > -1){
+      || window.location.href.indexOf('/DriverAssessment') > -1
+      || window.location.href.indexOf('/Notifications') > -1
+      || window.location.href.indexOf('/JourneyCalendar') > -1
+      || window.location.href.indexOf('/JourneyDetails') > -1
+
+  )
+      {
         this.isCurrentPage = true;
         this.isCustomComponent = true;
       }

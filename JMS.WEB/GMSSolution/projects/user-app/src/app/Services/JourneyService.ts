@@ -19,6 +19,11 @@ export class JourneyService {
         return this.http.get<JourneyModel>(`${Constants.Url}/api/journey/journeyInfo?id=${id}`, { headers: this.headers });
 
     }
+    GetJourneyDetails(id) {
+
+        return this.http.get<JourneyModel>(`${Constants.Url}/api/journey/${id}`, { headers: this.headers });
+
+    }
     async AssignDriverToJourney(model) {
 
         return await this.http.post(`${Constants.Url}/api/journey/AssignDriverToJourney`,model, { headers: this.headers }).toPromise();

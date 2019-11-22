@@ -14,7 +14,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';  
-
+import { DriverAssessmentComponent } from './driver-assessment/driver-assessment.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { JourneyInfoComponent } from './Components/journey-info/journey-info.component';
+import { JourneyCalendarComponent } from './journey-calendar/journey-calendar.component';
+import { CommonModule } from '@angular/common';
+import { AlertComponent } from 'src/app/shared/Components/alert/alert.component';
+import { JourneyDetailsComponent } from './Components/journey-details/journey-details.component';
 
 
 @NgModule({
@@ -22,7 +28,12 @@ import { AgmDirectionModule } from 'agm-direction';
     AppComponent,CheckpointAssessmentComponent,
     DriverSelectionComponent,InitiateJourneyComponent,
     JourneyApprovalComponent,JourneyClosureComponent,
-    JourneyPreparationComponent,JourneyStartingAndMonitoringComponent
+    JourneyPreparationComponent,JourneyStartingAndMonitoringComponent,
+    DriverAssessmentComponent,
+    NotificationsComponent,
+    JourneyInfoComponent,
+    JourneyCalendarComponent,
+    JourneyDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +55,7 @@ import { AgmDirectionModule } from 'agm-direction';
       tertiaryColour: '#F5A622'
   })
   ],
-  providers: [],
+  providers:[],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

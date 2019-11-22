@@ -50,98 +50,107 @@ namespace JMS.BLL.Services
 
 
         }
-        public ServiceResponse<JourneyDetailsModel> GetJourneyDetails(int journeyId)
+        public ServiceResponse<object> GetJourneyDetails(int journeyId)
         {
             var journey = _context.Journey.Find(journeyId);
-            var journeyUpdates = _context.JourneyUpdate.Include(x => x.Checkpoint).Include(x => x.AssessmentResult).Where(x => x.JourneyId == journeyId).ToList();
-            var _journeyUpdates = new List<JourneyUpdateModel>();
-            var _checkpoints = new List<CheckPointModel>();
-            var _assessmentQuestion = new List<AssessmentQuestionModel>();
-            for (int i = 0; i < journeyUpdates.Count(); i++)
-            {
-                var journeyUpdate = journeyUpdates[i];
-
-                if (journeyUpdate.CheckpointId != null)
+            var assesements = _context.AssessmentQuestion.Where(x => x.JourneyId == journeyId).Include(x => x.AssessmentResult).ToList().Select(c=>
+                new
                 {
-                    _checkpoints.Add(new CheckPointModel
-                    {
-                        Id = journeyUpdate.Checkpoint.Id,
-                        IsThirdParty = journeyUpdate.Checkpoint.IsThirdParty,
-                        Lat = journeyUpdate.Checkpoint.Latitude.HasValue ? journeyUpdate.Checkpoint.Latitude.Value : default(double?),
-                        Lng = journeyUpdate.Checkpoint.Longitude.HasValue ? journeyUpdate.Checkpoint.Longitude.Value : default(double?),
-                        Name = journeyUpdate.Checkpoint.Name
-                    });
+                    c.Category,
+                    c.Question,
+                    Assessments=c.AssessmentResult.Select(x=>new { x.IsYes })
                 }
-                var AssessmentResults = journeyUpdate.AssessmentResult.ToList();
-                for (var x = 0; x < AssessmentResults.Count; x++)
-                {
-                    var assessmentResult = AssessmentResults[x];
-                    var question = _context.AssessmentQuestion.Find(assessmentResult.QuestionId);
-                    var _question = _assessmentQuestion.Where(x => x.Id == assessmentResult.QuestionId).FirstOrDefault();
-                    if (_question != null)
-                    {
-                        _question.AssessmentResults.Add(new AssessmentResultModel
-                        {
-                            Comment = assessmentResult.Comment,
-                            Id = assessmentResult.Id,
-                            IsYes = assessmentResult.IsYes,
-                            JourneyUpdateId = assessmentResult.JourneyUpdateId,
-                            QuestionId = assessmentResult.QuestionId,
-                            SubmittedBy = assessmentResult.UserId,
-                            SubmittedByname = assessmentResult.UserId != null ? _context.Users.Find(assessmentResult.UserId).FullName : "",
-                            VehicleNo = assessmentResult.VehicleNo
-                        });
-                    }
-                    else
-                    {
-                        var _assessResults = new List<AssessmentResultModel>();
-                        _assessResults.Add(new AssessmentResultModel
-                        {
-                            Comment = assessmentResult.Comment,
-                            Id = assessmentResult.Id,
-                            IsYes = assessmentResult.IsYes,
-                            JourneyUpdateId = assessmentResult.JourneyUpdateId,
-                            QuestionId = assessmentResult.QuestionId,
-                            SubmittedBy = assessmentResult.UserId,
-                            SubmittedByname = assessmentResult.UserId != null ? _context.Users.Find(assessmentResult.UserId).FullName : "",
-                            VehicleNo = assessmentResult.VehicleNo
-                        });
-                        _assessmentQuestion.Add(new AssessmentQuestionModel
-                        {
-                            AssessmentResults = _assessResults,
-                            Category = question.Category,
-                            CheckpointId = question.CheckpointId,
-                            Id = question.Id,
-                            IsThirdParty = question.IsThirdParty,
-                            Question = question.Question,
-                            Weight = question.Weight
-                        });
-                    }
-                }
-                _journeyUpdates.Add(new JourneyUpdateModel
-                {
-                    CheckpointId = journeyUpdate.CheckpointId,
-                    Date = journeyUpdate.Date,
-                    DriverId = journeyUpdate.DriverId.ToString(),
-                    Drivername = journeyUpdate.DriverId != null ? _context.Users.Find(journeyUpdate.DriverId).FullName : "",
-                    Id = journeyUpdate.Id,
-                    IsAlert = journeyUpdate.IsAlert,
-                    IsDriverStatus = journeyUpdate.IsDriverStatus,
-                    IsJourneyCheckpoint = journeyUpdate.IsJourneyCheckpoint,
-                    JourneyId = journeyUpdate.JourneyId,
-                    JourneyStatus = journeyUpdate.JourneyStatus,
-                    Latitude = journeyUpdate.Latitude.HasValue ? journeyUpdate.Latitude.Value : default(double?),
-                    Longitude = journeyUpdate.Longitude.HasValue ? journeyUpdate.Longitude.Value : default(double?),
-                    RiskLevel = journeyUpdate.RiskLevel,
-                    StatusMessage = journeyUpdate.StatusMessage,
-                    VehicleNo = journeyUpdate.VehicleNo,
-                    AssessmentQuestions = _assessmentQuestion,
+                ).GroupBy(x => x.Category);
+           
+            //var journeyUpdates = _context.JourneyUpdate.Include(x => x.Checkpoint).Include(x => x.AssessmentResult).Where(x => x.JourneyId == journeyId).ToList();
+            //var _journeyUpdates = new List<JourneyUpdateModel>();
+            //var _checkpoints = new List<CheckPointModel>();
+            //var _assessmentQuestion = new List<AssessmentQuestionModel>();
+            //for (int i = 0; i < journeyUpdates.Count(); i++)
+            //{
+            //    var journeyUpdate = journeyUpdates[i];
 
-                });
+            //    if (journeyUpdate.CheckpointId != null)
+            //    {
+            //        _checkpoints.Add(new CheckPointModel
+            //        {
+            //            Id = journeyUpdate.Checkpoint.Id,
+            //            IsThirdParty = journeyUpdate.Checkpoint.IsThirdParty,
+            //            Lat = journeyUpdate.Checkpoint.Latitude.HasValue ? journeyUpdate.Checkpoint.Latitude.Value : default(double?),
+            //            Lng = journeyUpdate.Checkpoint.Longitude.HasValue ? journeyUpdate.Checkpoint.Longitude.Value : default(double?),
+            //            Name = journeyUpdate.Checkpoint.Name
+            //        });
+            //    }
+            //    var AssessmentResults = journeyUpdate.AssessmentResult.ToList();
+            //    for (var x = 0; x < AssessmentResults.Count; x++)
+            //    {
+            //        var assessmentResult = AssessmentResults[x];
+            //        var question = _context.AssessmentQuestion.Find(assessmentResult.QuestionId);
+            //        var _question = _assessmentQuestion.Where(x => x.Id == assessmentResult.QuestionId).FirstOrDefault();
+            //        if (_question != null)
+            //        {
+            //            _question.AssessmentResults.Add(new AssessmentResultModel
+            //            {
+            //                Comment = assessmentResult.Comment,
+            //                Id = assessmentResult.Id,
+            //                IsYes = assessmentResult.IsYes,
+            //                JourneyUpdateId = assessmentResult.JourneyUpdateId,
+            //                QuestionId = assessmentResult.QuestionId,
+            //                SubmittedBy = assessmentResult.UserId,
+            //                SubmittedByname = assessmentResult.UserId != null ? _context.Users.Find(assessmentResult.UserId).FullName : "",
+            //                VehicleNo = assessmentResult.VehicleNo
+            //            });
+            //        }
+            //        else
+            //        {
+            //            var _assessResults = new List<AssessmentResultModel>();
+            //            _assessResults.Add(new AssessmentResultModel
+            //            {
+            //                Comment = assessmentResult.Comment,
+            //                Id = assessmentResult.Id,
+            //                IsYes = assessmentResult.IsYes,
+            //                JourneyUpdateId = assessmentResult.JourneyUpdateId,
+            //                QuestionId = assessmentResult.QuestionId,
+            //                SubmittedBy = assessmentResult.UserId,
+            //                SubmittedByname = assessmentResult.UserId != null ? _context.Users.Find(assessmentResult.UserId).FullName : "",
+            //                VehicleNo = assessmentResult.VehicleNo
+            //            });
+            //            _assessmentQuestion.Add(new AssessmentQuestionModel
+            //            {
+            //                AssessmentResults = _assessResults,
+            //                Category = question.Category,
+            //                CheckpointId = question.CheckpointId,
+            //                Id = question.Id,
+            //                IsThirdParty = question.IsThirdParty,
+            //                Question = question.Question,
+            //                Weight = question.Weight
+            //            });
+            //        }
+            //    }
+            //    _journeyUpdates.Add(new JourneyUpdateModel
+            //    {
+            //        CheckpointId = journeyUpdate.CheckpointId,
+            //        Date = journeyUpdate.Date,
+            //        DriverId = journeyUpdate.DriverId.ToString(),
+            //        Drivername = journeyUpdate.DriverId != null ? _context.Users.Find(journeyUpdate.DriverId).FullName : "",
+            //        Id = journeyUpdate.Id,
+            //        IsAlert = journeyUpdate.IsAlert,
+            //        IsDriverStatus = journeyUpdate.IsDriverStatus,
+            //        IsJourneyCheckpoint = journeyUpdate.IsJourneyCheckpoint,
+            //        JourneyId = journeyUpdate.JourneyId,
+            //        JourneyStatus = journeyUpdate.JourneyStatus,
+            //        Latitude = journeyUpdate.Latitude.HasValue ? journeyUpdate.Latitude.Value : default(double?),
+            //        Longitude = journeyUpdate.Longitude.HasValue ? journeyUpdate.Longitude.Value : default(double?),
+            //        RiskLevel = journeyUpdate.RiskLevel,
+            //        StatusMessage = journeyUpdate.StatusMessage,
+            //        VehicleNo = journeyUpdate.VehicleNo,
+            //        AssessmentQuestions = _assessmentQuestion,
+
+            //    });
 
 
-            }
-            var details = new JourneyDetailsModel
+            //}
+            var details = new 
             {
                 CargoPriority = journey.CargoPriority,
                 CargoSeverity = journey.CargoSeverity,
@@ -162,12 +171,13 @@ namespace JMS.BLL.Services
                 ToLng = journey.ToLng.HasValue ? journey.ToLng.Value : default(double?),
                 UserId = journey.UserId,
                 UserFullname = journey.UserId != null ? _context.Users.Find(journey.UserId).FullName : "",
-                JourneyUpdates = _journeyUpdates,
-                CheckPoints = _checkpoints
+                Assesments=assesements
+                //JourneyUpdates = _journeyUpdates,
+                //CheckPoints = _checkpoints
 
 
             };
-            return new ServiceResponse<JourneyDetailsModel> { Data = details, Status = ResponseStatus.Success };
+            return new ServiceResponse<object> { Data = details, Status = ResponseStatus.Success };
         }
         public ServiceResponse<PageResult<Journey>> GetJourneys(DateTime? date, PagingProperties pagingProperties)
         {
@@ -245,7 +255,7 @@ namespace JMS.BLL.Services
 
         public ServiceResponse<int> AddJourneyUpdate(JourneyUpdate JourneyUpdate)
         {
-            if(JourneyUpdate.Id>0)
+            if (JourneyUpdate.Id > 0)
             {
                 var item = _context.JourneyUpdate.Find(JourneyUpdate.Id);
                 item.VehicleNo = JourneyUpdate.VehicleNo;
@@ -259,12 +269,12 @@ namespace JMS.BLL.Services
                 _context.SaveChanges();
                 return new ServiceResponse<int> { Data = item.Entity.Id, Status = ResponseStatus.Success };
             }
-          
+
         }
 
         public Journey GetById(int id)
         {
-           return  _context.Journey.Find(id);
+            return _context.Journey.Find(id);
         }
         public JourneyUpdate GetJourneyUpdateDriverInfo(int journeyId)
         {
