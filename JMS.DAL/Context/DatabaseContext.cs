@@ -28,7 +28,7 @@ namespace JMS.DAL.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"server=localhost;database=JMSDB1;User ID=sa;password=P@ssw0rd;", b => b.MigrationsAssembly("JMS.API"));
+            optionsBuilder.UseSqlServer(@"server=jmssqlserver.database.windows.net;database=JMSDBNew;User ID=jmsdbadmin;password=P@ssw0rd;MultipleActiveResultSets=True;", b => b.MigrationsAssembly("JMS.API"));
             //optionsBuilder.UseSqlServer(@"Server=jmssqlserver.database.windows.net;database=JMSDB;User ID=jmsdbadmin;password=P@ssw0rd;", b => b.MigrationsAssembly("JMS.API"));
 
         }
