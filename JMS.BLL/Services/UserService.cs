@@ -178,12 +178,12 @@ namespace JMS.BLL.Services
 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
-                return new ServiceResponse { Status = ResponseStatus.Success };
+                return new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.Success };
 
             }
             else
             {
-                return new ServiceResponse { Status = ResponseStatus.OldPasswordWrong };
+                return new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.OldPasswordWrong };
             }
 
         }
@@ -196,6 +196,57 @@ namespace JMS.BLL.Services
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
+        }
+
+        public User GetByName(string username)
+        {
+            return _context.Users.FirstOrDefault(x => x.Username == username.ToLower());
+        }
+        public ServiceResponse ForgetPassword(string username, string email, string emailPassword)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.Username == username.ToLower());
+            if (user == null)
+                return new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.UsernameNotExsit };
+            user.ChangePasswordToken = Guid.NewGuid().ToString() + General.CreatePassword(8);
+            _context.SaveChanges();
+            var fromAddress = new MailAddress(email, "JMS Support");
+            var toAddress = new MailAddress(username, "JMS Worker");
+            string fromPassword = emailPassword;
+            const string subject = "Forget Password";
+            string body = "http://jmsapi20191119104239.azurewebsites.net/forgetpassword?token=" + user.ChangePasswordToken; ;
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = true,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(message);
+            }
+            return new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.Success };
+
+        }
+        public ServiceResponse ResetForgetPassword(string token, string newpassword)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.ChangePasswordToken == token);
+            if (user == null)
+                return new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.Failed };
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(newpassword, out passwordHash, out passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            user.ChangePasswordToken = null;
+            _context.SaveChanges();
+            return new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.Success };
         }
 
 
