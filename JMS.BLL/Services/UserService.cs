@@ -8,6 +8,9 @@ using System.Linq;
 using JMS.BLL.Helper;
 using Microsoft.EntityFrameworkCore;
 using JMS.BLL.Common;
+using JMS.DAL.Common.Enums;
+using System.Net.Mail;
+using System.Net;
 
 namespace JMS.BLL.Services
 {
@@ -42,12 +45,12 @@ namespace JMS.BLL.Services
         public PageResult<User> GetAll(string keywordfilter, PagingProperties pagingProperties)
         {
             var skip = (pagingProperties.PageNo - 1) * pagingProperties.PageSize;
-            IQueryable<User> items= _context.Users;
+            IQueryable<User> items = _context.Users;
             var totalItems = items.Count();
             if (!string.IsNullOrEmpty(keywordfilter))
-                items = items.Where(x => x.FullName.Contains(keywordfilter)||x.Username.Contains(keywordfilter));
+                items = items.Where(x => x.FullName.Contains(keywordfilter) || x.Username.Contains(keywordfilter));
             items = items.Skip(skip).Take(pagingProperties.PageSize);
-            return new PageResult<User> {PageItems=items.ToList(),TotalItems=totalItems };
+            return new PageResult<User> { PageItems = items.ToList(), TotalItems = totalItems };
         }
 
         public User GetById(Guid id)
@@ -162,7 +165,7 @@ namespace JMS.BLL.Services
             var user = _context.Users.Find(userId);
             user.IsActive = isActive;
             _context.SaveChanges();
-            
+
         }
 
         public ServiceResponse ChangePassword(Guid userId, string oldPassword, string newPassword)
@@ -180,7 +183,7 @@ namespace JMS.BLL.Services
             }
             else
             {
-                return new ServiceResponse {Status=DAL.Common.Enums.ResponseStatus.OldPasswordWrong };
+                return new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.OldPasswordWrong };
             }
 
         }
@@ -194,5 +197,230 @@ namespace JMS.BLL.Services
             user.PasswordSalt = passwordSalt;
 
         }
+
+        public User GetByName(string username)
+        {
+            return _context.Users.FirstOrDefault(x => x.Username == username.ToLower());
+        }
+        public ServiceResponse ForgetPassword(string username, string email, string emailPassword)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.Username == username.ToLower());
+            if (user == null)
+                return new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.UsernameNotExsit };
+            user.ChangePasswordToken = Guid.NewGuid().ToString() + General.CreatePassword(8);
+            _context.SaveChanges();
+            var fromAddress = new MailAddress(email, "JMS Support");
+            var toAddress = new MailAddress(username, "JMS Worker");
+            string fromPassword = emailPassword;
+            const string subject = "Forget Password";
+            string body = "http://jmsapi20191119104239.azurewebsites.net/forgetpassword?token=" + user.ChangePasswordToken; ;
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = true,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(message);
+            }
+            return new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.Success };
+
+        }
+        public ServiceResponse ResetForgetPassword(string token, string newpassword)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.ChangePasswordToken == token);
+            if (user == null)
+                return new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.Failed };
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(newpassword, out passwordHash, out passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            user.ChangePasswordToken = null;
+            _context.SaveChanges();
+            return new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.Success };
+        }
+
+
+        public ServiceResponse AddUserGroup(UserGroup group)
+        {
+            ServiceResponse response = new ServiceResponse();
+
+            try
+            {
+                _context.UserGroups.Add(group);
+                _context.SaveChanges();
+
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+
+            return response;
+        }
+
+        public ServiceResponse AddUserWorkForce(UserWorkForce workforce)
+        {
+            ServiceResponse response = new ServiceResponse();
+
+            try
+            {
+                _context.UserWorkForces.Add(workforce);
+                _context.SaveChanges();
+
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+
+            return response;
+        }
+
+        public ServiceResponse DeleteUserGroup(Guid groupId)
+        {
+            ServiceResponse response = new ServiceResponse();
+
+            try
+            {
+                _context.UserGroups.Remove(_context.UserGroups.Find(groupId));
+                _context.SaveChanges();
+
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+
+            return response;
+
+        }
+
+        public ServiceResponse DeleteUserWorkForce(Guid workforceId)
+        {
+            ServiceResponse response = new ServiceResponse();
+
+            try
+            {
+                _context.UserWorkForces.Remove(_context.UserWorkForces.Find(workforceId));
+                _context.SaveChanges();
+
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+            return response;
+        }
+
+        public ServiceResponse EditUserGroup(UserGroup group)
+        {
+            ServiceResponse response = new ServiceResponse();
+
+            try
+            {
+                _context.UserGroups.Update(group);
+
+                _context.SaveChanges();
+
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+            return response;
+        }
+
+        public ServiceResponse EditUserWorkForce(UserWorkForce workforce)
+        {
+            ServiceResponse response = new ServiceResponse();
+
+            try
+            {
+                _context.UserWorkForces.Update(workforce);
+                _context.SaveChanges();
+
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+            return response;
+        }
+
+        public ServiceResponse<List<UserGroup>> GetUserGroups()
+        {
+            ServiceResponse<List<UserGroup>> response = new ServiceResponse<List<UserGroup>>();
+
+            try
+            {
+                response.Data = _context.UserGroups.ToList();
+
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+            return response;
+
+        }
+
+        public ServiceResponse<List<UserWorkForce>> GetUserWorkForces()
+        {
+            ServiceResponse<List<UserWorkForce>> response = new ServiceResponse<List<UserWorkForce>>();
+
+            try
+            {
+                response.Data = _context.UserWorkForces.ToList();
+
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+            return response;
+        }
+
     }
 }

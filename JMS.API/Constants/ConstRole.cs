@@ -14,6 +14,6 @@ namespace JMS.API.Constants
         public const string OperationManager = "Operation Manager";
         public const string QHSE = "QHSE";
         public const string GBM = "GBM";
-        public const string SystemAdmin = "System Admin";
+        public const string JMSAdmin = "JMS Admin";
     }
 }

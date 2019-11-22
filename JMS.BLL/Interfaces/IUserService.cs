@@ -8,7 +8,7 @@ namespace JMS.BLL.Interfaces
 {
     public interface IUserService
     {
-        User Authenticate(string username, string password);
+        User Authenticate(string username, string newpassword);
         PageResult<User> GetAll(string keywordfilter, PagingProperties pagingProperties);
         User GetById(Guid id);
         User Create(User user, string password);
@@ -18,6 +18,19 @@ namespace JMS.BLL.Interfaces
         void ActivateDisactvate(Guid userId, bool isActive);
         ServiceResponse ChangePassword(Guid userId, string oldPassword, string newPassword);
         void ResetPassword(Guid userId, string randomPassword);
+        User GetByName(string username);
+        ServiceResponse ForgetPassword(string username, string email, string emailPassword);
+        ServiceResponse ResetForgetPassword(string token, string newpassword);
+        
 
+
+        public ServiceResponse<List<UserGroup>> GetUserGroups();
+        public ServiceResponse AddUserGroup(UserGroup group);
+        public ServiceResponse EditUserGroup(UserGroup group);
+        public ServiceResponse DeleteUserGroup(Guid groupId);
+        public ServiceResponse<List<UserWorkForce>> GetUserWorkForces();
+        public ServiceResponse AddUserWorkForce(UserWorkForce workforce);
+        public ServiceResponse EditUserWorkForce(UserWorkForce workforce);
+        public ServiceResponse DeleteUserWorkForce(Guid workforceId);
     }
 }

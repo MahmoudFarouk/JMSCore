@@ -20,7 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace JMS.API.Controllers
 {
 
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/driver")]
     public class DriverController : ControllerBase
@@ -34,13 +34,16 @@ namespace JMS.API.Controllers
         }
 
         [HttpGet()]
-        [Route("getdrivers")]
+        [Authorize(Roles = ConstRole.Dispatcher + "," + ConstRole.JMC)]
+        [Route("getdrivers/{drivername?}")]
         public IActionResult GetDrivers(string driverName = "")
         {
             return Ok(_driverService.GetDrivers(driverName));
         }
 
+
         [HttpPost]
+        [Authorize(Roles = ConstRole.Driver)]
         [Route("submitassessment")]
         public IActionResult SubmitAssessment(List<AssessmentResult> assessmentResult)
         {
@@ -49,6 +52,7 @@ namespace JMS.API.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = ConstRole.Driver)]
         [Route("submitstatus")]
         public IActionResult SubmitStatus(JourneyUpdate status)
         {
@@ -56,6 +60,7 @@ namespace JMS.API.Controllers
         }
 
         [HttpGet()]
+        [Authorize(Roles = ConstRole.Driver)]
         [Route("getpretripassessment/{journeyid}")]
         public IActionResult GetPreJourneyAssessment(int journeyId)
         {
@@ -63,6 +68,7 @@ namespace JMS.API.Controllers
         }
 
         [HttpGet()]
+        [Authorize(Roles = ConstRole.Driver)]
         [Route("getposttripassessment/{journeyid}")]
         public IActionResult GetPostJourneyAssessment(int journeyId)
         {
@@ -70,6 +76,7 @@ namespace JMS.API.Controllers
         }
 
         [HttpGet()]
+        [Authorize(Roles = ConstRole.Driver)]
         [Route("getcheckpointassessment/{checkpointid}")]
         public IActionResult GetJourneyAssessment(int checkpointid)
         {
@@ -77,21 +84,24 @@ namespace JMS.API.Controllers
         }
 
         [HttpGet()]
-        [Route("getpretripassessment/{journeyid}")]
+        [Authorize(Roles = ConstRole.Driver)]
+        [Route("getpretripassessmentresult/{journeyid}")]
         public IActionResult GetPreJourneyAssessmentResult(int journeyId)
         {
             return Ok(_driverService.GetJourneyAssessment(journeyId, false, true));
         }
 
         [HttpGet()]
-        [Route("getposttripassessment/{journeyid}")]
+        [Authorize(Roles = ConstRole.Driver)]
+        [Route("getposttripassessmentresult/{journeyid}")]
         public IActionResult GetPostJourneyAssessmentResult(int journeyId)
         {
             return Ok(_driverService.GetJourneyAssessment(journeyId, true, true));
         }
 
         [HttpGet()]
-        [Route("getcheckpointassessment/{checkpointid}")]
+        [Authorize(Roles = ConstRole.Driver)]
+        [Route("getcheckpointassessmentresult/{checkpointid}")]
         public IActionResult GetCheckpointAssessmentResult(int checkpointid)
         {
             return Ok(_driverService.GetCheckpointAssessment(checkpointid, true));

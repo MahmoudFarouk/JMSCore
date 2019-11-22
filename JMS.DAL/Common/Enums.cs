@@ -14,7 +14,8 @@ namespace JMS.DAL.Common.Enums
         Failed = 2,
         Unauthorized = 3,
         Expired = 4,
-        OldPasswordWrong = 5
+        OldPasswordWrong = 5,
+        UsernameNotExsit=6
     }
 
     public enum QuestionCategory
