@@ -19,7 +19,7 @@ import { HomeComponent } from './home/home.component';
 import { MyRequestsComponent } from './my-requests/my-requests.component';
 
 const routes: Routes = [
-  {path:'',component:HomeComponent},
+  {path:'',component:LoginComponent},
   {path:'login',component:LoginComponent},
   {path:'ResetPassword',component:ResetPasswordComponent},
   {path:'InitiateJourney',component:InitiateJourneyComponent},
