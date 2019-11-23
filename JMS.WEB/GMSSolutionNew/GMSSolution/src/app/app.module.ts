@@ -29,6 +29,7 @@ import { JourneyDriverComponent } from './journey-driver/journey-driver.componen
 import { AuthGuard } from './shared/Helpers/auth.guard';
 import { MainHeaderComponent } from './shared/Components/main-header/main-header.component';
 
+import { MyRequestsComponent } from './my-requests/my-requests.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +52,7 @@ import { MainHeaderComponent } from './shared/Components/main-header/main-header
     JourneyDetailsComponent,
     JourneyDriverComponent,
     MainHeaderComponent,
+    MyRequestsComponent
   ],
   imports: [
     BrowserModule,

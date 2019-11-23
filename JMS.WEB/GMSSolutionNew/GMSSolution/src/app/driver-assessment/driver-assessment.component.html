@@ -67,8 +67,8 @@
               <div class="question" *ngFor="let preTripAssessment of preTripAssessmentQuestionList">
                   <p>{{preTripAssessment.Question}}</p>
                   <div class="answer">
-                      <button>YES</button>
-                      <button>NO</button>
+                      <button (click)="checkAssessmentResult($event)">YES</button>
+                      <button (click)="checkAssessmentResult($event)">NO</button>
                   </div>
               </div>
           </div>

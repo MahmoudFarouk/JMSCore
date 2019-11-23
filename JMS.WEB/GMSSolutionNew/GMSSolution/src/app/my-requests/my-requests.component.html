@@ -1,0 +1,91 @@
+<div>
+    <ng-template #customLoadingTemplate></ng-template>
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<div *ngIf="loading==false">
+<!--start aside menu-->
+<aside id="slide-out" class="sidenav">
+    <div class="userInfo">
+        <img src="assets/images/Jms_assets/user.svg">
+        <h2>Amar Omar</h2>
+        <button>
+            Product Line
+        </button>
+    </div>
+    <ul>
+        <li>
+            <img src="assets/images/Jms_assets/ic_plus_black.svg">
+            <h3>Initiate Journy</h3>
+        </li>
+        <li>
+            <img src="assets/images/Jms_assets/ic_calendar.svg">
+            <h3>Journey Calendar</h3>
+        </li>
+        <li class="selected">
+            <img src="assets/images/Jms_assets/ic_pending_black.svg">
+            <h3>Pending Journey</h3>
+        </li>
+        <li>
+            <img src="assets/images/Jms_assets/ic_trip_black.svg">
+            <h3>My Requests</h3>
+        </li>
+    </ul>
+</aside>
+<!--end aside menu-->
+
+
+<!--start requests Cards-->
+<div class="mobileContainer">
+
+    <div class="myRequestsComp">
+        <div class="request">
+            <h3>Kuwait to dubai</h3>
+            <div class="info">
+                <h6>Next Checkpoint</h6>
+                <p>Nasr City Road, Cairo</p>
+            </div>
+            <div class="info">
+                <h6>Time</h6>
+                <p>April 28, 2019 &nbsp; <span>14:36</span></p>
+            </div>
+            <button class="mainButtonStyle">
+                Complete Journey Info
+            </button>
+        </div>
+    </div>
+
+    <div class="myRequestsComp">
+        <div class="request">
+            <h3>Kuwait to dubai</h3>
+            <div class="info">
+                <h6>Next Checkpoint</h6>
+                <p>Nasr City Road, Cairo</p>
+            </div>
+            <div class="info">
+                <h6>Time</h6>
+                <p>April 28, 2019 &nbsp; <span>14:36</span></p>
+            </div>
+            <button class="mainButtonStyle">
+                Complete Journey Info
+            </button>
+        </div>
+    </div>
+
+    <div class="myRequestsComp">
+        <div class="request">
+            <h3>Kuwait to dubai</h3>
+            <div class="info">
+                <h6>Next Checkpoint</h6>
+                <p>Nasr City Road, Cairo</p>
+            </div>
+            <div class="info">
+                <h6>Time</h6>
+                <p>April 28, 2019 &nbsp; <span>14:36</span></p>
+            </div>
+            <button class="mainButtonStyle">
+                Complete Journey Info
+            </button>
+        </div>
+    </div>
+</div>
+<!--end requests Cards-->

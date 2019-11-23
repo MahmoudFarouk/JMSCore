@@ -86,6 +86,9 @@ GetPostTripAssessment() {
     }
   });
 }
+checkAssessmentResult(event) { 
+  console.log(event);
+}
 setErrorFlags() {
   this.loading = false;
   this.isSuccessMode = false;
