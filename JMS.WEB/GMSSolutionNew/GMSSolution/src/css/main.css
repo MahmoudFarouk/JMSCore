@@ -26,7 +26,6 @@ button,
 button:focus,
 button:active,
 button:focus-within {
-  background-color: transparent;
   outline: none;
 }
 
@@ -57,6 +56,16 @@ a:visited {
 }
 
 @font-face {
+  font-family: Montserrat;
+  src: url(../fonts/Montserrat-Regular.ttf);
+}
+
+@font-face {
+  font-family: MontserratLight;
+  src: url(../fonts/Montserrat-Light.ttf);
+}
+
+@font-face {
   font-family: lato;
   src: url(../fonts/Lato-Regular.ttf);
 }
@@ -69,6 +78,16 @@ a:visited {
 @font-face {
   font-family: Quicksand;
   src: url(../fonts/Quicksand-Regular.otf);
+}
+
+@font-face {
+  font-family: Montserrat;
+  src: url(../fonts/Montserrat-Regular.ttf);
+}
+
+@font-face {
+  font-family: MontserratLight;
+  src: url(../fonts/Montserrat-Light.ttf);
 }
 
 .logoNav {
@@ -191,6 +210,20 @@ a:visited {
   color: #575757;
 }
 
+.mainButtonStyle, .formWrapper button[type='submit'] {
+  width: 100%;
+  border: 0;
+  padding: 10px 0;
+  border-radius: 7px;
+  background-color: #17BC9B;
+  font-family: lato;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  margin-top: 30px;
+}
+
 .formWrapper {
   background-color: #FFF;
   padding: 35px 20px;
@@ -205,20 +238,6 @@ a:visited {
   color: #3D3B3B;
   font-weight: bold;
   margin-bottom: 20px;
-}
-
-.formWrapper button[type='submit'] {
-  width: 100%;
-  border: 0;
-  padding: 10px 0;
-  border-radius: 7px;
-  background-color: #17BC9B;
-  font-family: lato;
-  color: #FFFFFF;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 18px;
-  margin-top: 30px;
 }
 
 .mainInputComp {
@@ -715,7 +734,7 @@ body {
   padding-left: 25px;
 }
 
-.sumbitToInitiate {
+.sumbitToInitiate, .journeyApproval .changeDriver {
   width: 100%;
   text-align: center;
   background-color: #17BC9B;
@@ -826,5 +845,332 @@ body {
 
 .assessments ul li .collapsible-body .answer button:last-of-type {
   background-color: #CA6C6C;
+}
+
+.myRequestsComp {
+  background-color: #FFF;
+  margin: 20px 0;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+          box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+  padding: 15px;
+}
+
+.myRequestsComp .request h3 {
+  color: #508DB0;
+  padding: 10px 0;
+  border-bottom: 1px solid #DDD;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.myRequestsComp .request .info {
+  margin: 10px 0;
+}
+
+.myRequestsComp .request .info h6 {
+  color: #A5B0C2;
+  padding: 10px 0;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-family: 'MontserratLight', sans-serif;
+}
+
+.myRequestsComp .request .info p {
+  font-family: "Segoe UI",Roboto,"Helvetica Neue";
+  font-size: 13px;
+  color: #555;
+}
+
+.myRequestsComp .request .mainButtonStyle, .myRequestsComp .request .formWrapper button[type='submit'], .formWrapper .myRequestsComp .request button[type='submit'] {
+  margin-top: 0;
+}
+
+.journeyApproval ul .collapsible-body {
+  padding: 0;
+}
+
+.journeyApproval .collapsible-body .detail {
+  border-bottom: 1px solid #DDD;
+  padding: 10px 15px;
+}
+
+.journeyApproval .collapsible-body .detail .col-3 {
+  padding-left: 0;
+}
+
+.journeyApproval .collapsible-body .detail:last-of-type {
+  border-bottom: 0;
+}
+
+.journeyApproval .collapsible-body .detail img {
+  margin-right: 10px;
+}
+
+.journeyApproval .collapsible-body .detail h3,
+.journeyApproval .collapsible-body .detail p {
+  display: inline;
+  color: #979797;
+  font-size: 14px;
+}
+
+.journeyApproval .collapsible-body .detail h3 {
+  font-weight: bold;
+}
+
+.journeyApproval .collapsible-body .detail p {
+  font-size: 13px;
+}
+
+.journeyApproval .drivAss .detail p {
+  margin: 10px 0;
+  display: block;
+}
+
+.journeyApproval .collapsible-body .detail .yes, .journeyApproval .collapsible-body .detail .no {
+  width: 100%;
+  margin: 10px 0;
+  border: 0;
+  background-color: #48CBC3;
+  border-radius: 5px;
+  padding: 5px;
+  color: #FFF;
+}
+
+.journeyApproval .collapsible-body .detail .no {
+  background-color: #CA6C6C;
+}
+
+.journeyApproval .changeDriver {
+  background-color: #AFAFAF;
+}
+
+.journeyMonitoring .point {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #979797;
+  font-family: Lato;
+  padding: 15px 0;
+}
+
+.journeyMonitoring .point .time {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.journeyMonitoring .point img {
+  width: 37px;
+  height: 37px;
+}
+
+.journeyMonitoring .point:first-of-type img {
+  width: 30px;
+  height: 30px;
+}
+
+.journeyMonitoring .point .info {
+  font-size: 13px;
+}
+
+.journeyMonitoring .point:first-of-type .info,
+.journeyMonitoring .point:last-of-type .info {
+  font-weight: bold;
+}
+
+.myJourneyMap {
+  height: 175px;
+  border-radius: 8px;
+  margin: 30px 0;
+}
+
+.driverAndTripInfo {
+  background-color: #FFF;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+          box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+  margin-bottom: 30px;
+  padding: 15px;
+}
+
+.driverAndTripInfo .nameAndDestination {
+  margin: 20px 0;
+}
+
+.driverAndTripInfo .nameAndDestination h3 {
+  color: #4F8DB0;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.driverAndTripInfo .nameAndDestination p {
+  color: #8D8D8D;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.driverAndTripInfo .teamAndPassengers {
+  margin: 20px 0;
+}
+
+.driverAndTripInfo .teamAndPassengers .key {
+  color: #ABB6C6;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.driverAndTripInfo .teamAndPassengers .val {
+  color: #8F8F8F;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.driverAndTripInfo .journeyInfo li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px 0;
+}
+
+.driverAndTripInfo .journeyInfo li.infoWithNoDesc {
+  margin: 25px 0;
+}
+
+.driverAndTripInfo .journeyInfo li .info h4 {
+  color: #8F8F8F;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.driverAndTripInfo .journeyInfo li .info p {
+  color: #C1CAD5;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.driverAndTripInfo .journeyInfo li button {
+  padding: 5px 15px;
+  border: 0;
+  color: #FFF;
+  background-color: #17BC9B;
+  border-radius: 5px;
+}
+
+.driverAndTripInfo .journeyInfo li button.notActive {
+  color: #999;
+  background-color: #D0D0D0;
+}
+
+.cheackInSection {
+  background-color: #FFF;
+  border-radius: 7px;
+  -webkit-box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+          box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+}
+
+.cheackInSection .infoAndCheckCont {
+  border-bottom: 1px solid #DDD;
+  padding: 20px 15px;
+}
+
+.cheackInSection .infoAndCheckCont .info h3 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+}
+
+.cheackInSection .infoAndCheckCont .info h3 span {
+  color: #17BC9B;
+}
+
+.cheackInSection .infoAndCheckCont .info p {
+  font-size: 13px;
+  line-height: 18px;
+  color: #979797;
+  margin-top: 10px;
+}
+
+.cheackInSection .infoAndCheckCont .checkInBtn {
+  border: 2px solid #00ADEE;
+  border-radius: 8px;
+  background-color: transparent;
+  padding: 10px 5px;
+}
+
+.cheackInSection .infoAndCheckCont .checkInBtn p {
+  line-height: 15px;
+  color: #00ADEE;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.cheackInSection .buttonsAndPopUpsCont {
+  padding: 15px;
+}
+
+.cheackInSection .modalAndBtnCont {
+  padding: 0 8px;
+  margin: 10px 0;
+}
+
+.cheackInSection .modalAndBtnCont .modalTrigger,
+.cheackInSection .modalAndBtnCont .modalTrigger:visited,
+.cheackInSection .modalAndBtnCont .modalTrigger:active,
+.cheackInSection .modalAndBtnCont .modalTrigger:focus,
+.cheackInSection .modalAndBtnCont .modalTrigger:focus-within {
+  height: 100%;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+  border: 0 !important;
+  border-color: transparent !important;
+  border-radius: 8px;
+}
+
+.cheackInSection .modalAndBtnCont .modalTrigger.sendLocation {
+  background-color: #17BC9B;
+}
+
+.cheackInSection .modalAndBtnCont .modalTrigger.statusMessages {
+  background-color: #8EC1EB;
+}
+
+.cheackInSection .modalAndBtnCont .modalTrigger.sendAlert {
+  background-color: #F5A622;
+}
+
+.cheackInSection .modalAndBtnCont .modalTrigger.callPhone {
+  background-color: #00447D;
+}
+
+.cheackInSection .modalAndBtnCont .modalTrigger.pauseJourney {
+  background-color: #9EB4C6;
+}
+
+.cheackInSection .modalAndBtnCont .modalTrigger.closeJourney {
+  background-color: #DE4D46;
+}
+
+.cheackInSection .modalAndBtnCont .modalTrigger img {
+  width: 25px;
+  height: 25px;
+  margin: 10px 0;
+}
+
+.cheackInSection .modalAndBtnCont .modalTrigger p {
+  font-size: 12px;
+  font-family: Montserrat;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 /*# sourceMappingURL=main.css.map */
