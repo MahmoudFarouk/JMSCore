@@ -20,7 +20,7 @@ import { MyRequestsComponent } from './my-requests/my-requests.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
-  {path:'login',component:LoginComponent},
+  {path:'home',component:HomeComponent},
   {path:'ResetPassword',component:ResetPasswordComponent},
   {path:'InitiateJourney',component:InitiateJourneyComponent},
   {path:'DriverSelection',component:DriverSelectionComponent},
