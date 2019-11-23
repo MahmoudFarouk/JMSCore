@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  JMSApiURL:'https://jmsapi2019119104239.azurewebsites.net/api'
+  JMSApiURL:'https://jmsapi20191122034929.azurewebsites.net/api'
 };
 
 /*
