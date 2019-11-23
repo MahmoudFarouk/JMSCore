@@ -1,0 +1,37 @@
+.myRequestsComp{
+    background-color: #FFF;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: $mainBoxShadow;
+    padding: 15px;
+    .request h3{
+        color:#508DB0;
+        padding: 10px 0;
+        border-bottom: 1px solid #DDD;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        font-family: 'Montserrat', sans-serif;
+
+    }
+    .request .info{
+        margin: 10px 0;
+    }
+    .request .info h6{
+        color: #A5B0C2;
+        padding: 10px 0;
+        font-size: 15px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        font-family: 'MontserratLight', sans-serif;
+        
+    }
+    .request .info p{
+        font-family: "Segoe UI",Roboto,"Helvetica Neue";
+        font-size: 13px;
+        color: #555;
+    }
+    .request .mainButtonStyle{
+        margin-top: 0;
+    }
+}

@@ -16,6 +16,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/Helpers/auth.guard';
 import { HomeComponent } from './home/home.component';
+import { MyRequestsComponent } from './my-requests/my-requests.component';
 
 const routes: Routes = [
   {path:'',component:HomeComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path:'DriverSelection',component:DriverSelectionComponent},
   {path:'JourneyApproval',component:JourneyApprovalComponent},
   {path:'DriverAssessment',component:DriverAssessmentComponent},
+  {path:'MyRequests',component:MyRequestsComponent},
   {path:'JourneyClosure',component:JourneyClosureComponent},
   {path:'AdminDashboard',component:AdminDashboardComponent},
   {path:'UsersManagement',component:UsersManagementComponent},

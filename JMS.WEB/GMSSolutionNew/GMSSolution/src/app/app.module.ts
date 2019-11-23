@@ -21,7 +21,8 @@ import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './shared/Helpers/jwt.interceptor';
-import { ErrorInterceptor } from './shared/Helpers/error.interceptor'
+import { ErrorInterceptor } from './shared/Helpers/error.interceptor';
+import { MyRequestsComponent } from './my-requests/my-requests.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +39,8 @@ import { ErrorInterceptor } from './shared/Helpers/error.interceptor'
     WorkforceManagementComponent,
     CheckpointManagementComponent,
     ReportsComponent,
-    HomeComponent
+    HomeComponent,
+    MyRequestsComponent
   ],
   imports: [
     BrowserModule,
