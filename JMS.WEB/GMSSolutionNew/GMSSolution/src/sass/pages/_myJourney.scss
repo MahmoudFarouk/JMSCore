@@ -1,0 +1,155 @@
+.myJourneyMap{
+    height: 175px;
+    border-radius: 8px;
+    margin: 30px 0;
+}
+
+.driverAndTripInfo{
+    background-color: #FFF;
+    border-radius: 8px;
+    box-shadow: $mainBoxShadow;
+    margin-bottom: 30px;
+    padding: 15px;
+}
+.driverAndTripInfo .nameAndDestination{
+    margin:20px 0;
+}
+.driverAndTripInfo .nameAndDestination h3{ 
+    color: #4F8DB0;
+    font-size: 17px;
+    font-weight: bold;
+}
+.driverAndTripInfo .nameAndDestination p{ 
+    color:#8D8D8D;
+    font-size: 14px;
+    font-weight: bold;
+}
+.driverAndTripInfo .teamAndPassengers{
+    margin: 20px 0;
+}
+.driverAndTripInfo .teamAndPassengers .key{
+    color: #ABB6C6;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.driverAndTripInfo .teamAndPassengers .val{
+    color: #8F8F8F;
+    font-weight: bold;
+    font-size: 14px;
+}
+.driverAndTripInfo .journeyInfo li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+.driverAndTripInfo .journeyInfo li.infoWithNoDesc{
+    margin: 25px 0;
+}
+.driverAndTripInfo .journeyInfo li .info h4{
+    color: #8F8F8F;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 16px;
+}
+.driverAndTripInfo .journeyInfo li .info p{
+    color: #C1CAD5;
+    font-size: 12px;
+    font-weight: bold;
+}
+.driverAndTripInfo .journeyInfo li button{
+    padding: 5px 15px;
+    border:0;
+    color:#FFF;
+    background-color: #17BC9B;
+    border-radius: 5px;
+}
+.driverAndTripInfo .journeyInfo li button.notActive{
+    color:#999;
+    background-color: #D0D0D0;
+}
+.cheackInSection{
+    background-color: #FFF;
+    border-radius: 7px;
+    box-shadow: $mainBoxShadow;
+}
+.cheackInSection .infoAndCheckCont{
+    border-bottom: 1px solid #DDD;
+    padding:20px 15px;
+
+}
+.cheackInSection .infoAndCheckCont .info h3{
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+}
+.cheackInSection .infoAndCheckCont .info h3 span{
+    color: #17BC9B;
+}
+.cheackInSection .infoAndCheckCont .info p{
+    font-size: 13px;
+    line-height:18px;
+    color: #979797;
+    margin-top: 10px;
+}
+.cheackInSection .infoAndCheckCont .checkInBtn{
+    border: 2px solid #00ADEE;
+    border-radius: 8px;
+    background-color: transparent;
+    padding: 10px 5px;
+    
+}
+.cheackInSection .infoAndCheckCont .checkInBtn p{
+    line-height: 15px;
+    color: #00ADEE;
+    font-size: 14px;
+    font-weight: bold;
+}
+.cheackInSection .buttonsAndPopUpsCont{
+    padding: 15px;
+}
+.cheackInSection .modalAndBtnCont{
+    padding: 0 8px;
+    margin: 10px 0;
+}
+.cheackInSection .modalAndBtnCont .modalTrigger,
+.cheackInSection .modalAndBtnCont .modalTrigger:visited,
+.cheackInSection .modalAndBtnCont .modalTrigger:active,
+.cheackInSection .modalAndBtnCont .modalTrigger:focus,
+.cheackInSection .modalAndBtnCont .modalTrigger:focus-within{
+    height: 100%;
+    box-shadow: none !important;
+    border: 0!important;
+    border-color: transparent!important;
+    border-radius: 8px;
+}
+.cheackInSection .modalAndBtnCont .modalTrigger.sendLocation{
+    background-color: #17BC9B;
+}
+.cheackInSection .modalAndBtnCont .modalTrigger.statusMessages{
+    background-color: #8EC1EB;
+}
+.cheackInSection .modalAndBtnCont .modalTrigger.sendAlert{
+    background-color: #F5A622;
+}
+.cheackInSection .modalAndBtnCont .modalTrigger.callPhone{
+    background-color: #00447D;
+}
+.cheackInSection .modalAndBtnCont .modalTrigger.pauseJourney{
+    background-color: #9EB4C6;
+}
+.cheackInSection .modalAndBtnCont .modalTrigger.closeJourney{
+    background-color: #DE4D46;
+}
+.cheackInSection .modalAndBtnCont .modalTrigger img{
+    width: 25px;
+    height: 25px;
+    margin: 10px 0;
+}
+.cheackInSection .modalAndBtnCont .modalTrigger p{
+    font-size: 12px;
+    font-family: Montserrat;
+    font-weight: bold;
+    margin-bottom: 5px;
+}

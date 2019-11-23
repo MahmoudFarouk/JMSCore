@@ -280,5 +280,11 @@ namespace JMS.BLL.Services
         {
             return _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journeyId && x.DriverId != null);
         }
+
+        public ServiceResponse<object> JourneyCheckPoints(int journeyId)
+        {
+            var checkPoints = _context.JourneyUpdate.Where(x => x.JourneyId == journeyId && x.CheckpointId != null).Include(x => x.Checkpoint).Include(x => x.Journey).Select(x => new { });
+            return new ServiceResponse<object> { };
+        }
     }
 }

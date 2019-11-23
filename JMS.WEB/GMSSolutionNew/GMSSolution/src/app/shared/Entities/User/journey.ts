@@ -1,8 +1,9 @@
 import { Level } from './level.enum';
 import { JourneyStatus } from './journey-status.enum';
-import { User } from './user';
+
 import { JourneyUpdate } from './journey-update';
 import { AssessmentQuestion } from './assessment-question';
+import { User } from '../Login/user';
 
 export class Journey {
   Id: Number;

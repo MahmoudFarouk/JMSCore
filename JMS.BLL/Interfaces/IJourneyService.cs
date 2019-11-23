@@ -33,7 +33,9 @@ namespace JMS.BLL.Interfaces
         public ServiceResponse<int> AddJourneyUpdate(JourneyUpdate JourneyUpdate);
         public Journey GetById(int id);
         public JourneyUpdate GetJourneyUpdateDriverInfo(int journeyId);
-        
+
+        public ServiceResponse<object> JourneyCheckPoints(int journeyId);
+
 
     }
 }

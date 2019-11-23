@@ -1,0 +1,28 @@
+.journeyMonitoring{
+    .point{
+        align-items: center;
+        color: #979797;	
+        font-family: Lato;	
+        padding: 15px 0;
+    }
+    .point .time{
+        font-size: 11px;
+        font-weight: bold;
+    }
+    
+    .point img{
+        width: 37px;
+        height: 37px;
+    }
+    .point:first-of-type img{
+        width: 30px;
+        height: 30px;
+    }
+    .point .info{
+        font-size: 13px;
+    }
+    .point:first-of-type .info,
+    .point:last-of-type .info{
+        font-weight: bold;
+    }
+}

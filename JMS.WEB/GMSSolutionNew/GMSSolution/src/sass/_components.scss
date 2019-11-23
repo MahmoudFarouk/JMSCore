@@ -105,6 +105,20 @@
     color: #575757;
 }
 
+//main button style
+.mainButtonStyle{
+    width: 100%;
+    border:0;
+    padding:10px 0;
+    border-radius: 7px;	
+    background-color: #17BC9B;
+    font-family: lato;
+    color: #FFFFFF;		
+    font-size: 14px;	
+    font-weight: 600;		
+    line-height: 18px;
+    margin-top: 30px;
+}
 
 //form wrapper 
 .formWrapper{
@@ -121,17 +135,7 @@
     margin-bottom: 20px;
 }
 .formWrapper button[type='submit']{
-    width: 100%;
-    border:0;
-    padding:10px 0;
-    border-radius: 7px;	
-    background-color: #17BC9B;
-    font-family: lato;
-    color: #FFFFFF;		
-    font-size: 14px;	
-    font-weight: 600;		
-    line-height: 18px;
-    margin-top: 30px;
+    @extend .mainButtonStyle;
 }
 
 //login and registration inputs

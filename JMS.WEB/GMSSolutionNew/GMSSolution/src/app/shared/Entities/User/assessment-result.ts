@@ -1,6 +1,7 @@
 import { JourneyUpdate } from './journey-update';
 import { AssessmentQuestion } from './assessment-question';
-import { User } from './user';
+import { User } from '../Login/user';
+
 
 export class AssessmentResult {
     Id: Number;

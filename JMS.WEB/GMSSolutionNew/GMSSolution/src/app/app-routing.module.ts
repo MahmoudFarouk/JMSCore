@@ -16,23 +16,41 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/Helpers/auth.guard';
 import { HomeComponent } from './home/home.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { JourneyDetailsComponent } from './shared/Components/journey-details/journey-details.component';
+import { JourneyDriverComponent } from './journey-driver/journey-driver.component';
 
 const routes: Routes = [
-  {path:'',component:HomeComponent},
-  {path:'login',component:LoginComponent},
-  {path:'ResetPassword',component:ResetPasswordComponent},
-  {path:'InitiateJourney',component:InitiateJourneyComponent},
-  {path:'DriverSelection',component:DriverSelectionComponent},
-  {path:'JourneyApproval',component:JourneyApprovalComponent},
-  {path:'DriverAssessment',component:DriverAssessmentComponent},
-  {path:'JourneyClosure',component:JourneyClosureComponent},
-  {path:'AdminDashboard',component:AdminDashboardComponent},
-  {path:'UsersManagement',component:UsersManagementComponent},
-  {path:'TeamManagement',component:TeamManagementComponent},
-  {path:'WorkforceManagement',component:WorkforceManagementComponent},
-  {path:'CheckpointManagement',component:CheckpointManagementComponent},
-  {path:'Reports',component:ReportsComponent},
-  {path:'**',redirectTo: '' }
+  {
+    path: '',
+    component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'login', component: LoginComponent },
+  { path: 'ResetPassword', component: ResetPasswordComponent },
+  {
+    path: 'InitiateJourney',
+    component: InitiateJourneyComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'DriverSelection', component: DriverSelectionComponent,
+  canActivate: [AuthGuard]
+},
+  { path: 'JourneyApproval', component: JourneyApprovalComponent },
+  { path: 'DriverAssessment', component: DriverAssessmentComponent },
+  { path: 'JourneyClosure', component: JourneyClosureComponent },
+  { path: 'AdminDashboard', component: AdminDashboardComponent,canActivate: [AuthGuard] },
+  { path: 'UsersManagement', component: UsersManagementComponent },
+  { path: 'TeamManagement', component: TeamManagementComponent },
+  { path: 'WorkforceManagement', component: WorkforceManagementComponent },
+  { path: 'CheckpointManagement', component: CheckpointManagementComponent },
+  { path: 'Reports', component: ReportsComponent },
+  { path: 'Notifications', component: NotificationsComponent,canActivate: [AuthGuard] },
+  { path: 'JourneyDetails', component: JourneyDetailsComponent,canActivate: [AuthGuard] },
+  { path: 'JourneyDriver', component: JourneyDriverComponent,canActivate: [AuthGuard] },
+
+
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

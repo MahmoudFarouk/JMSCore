@@ -34,8 +34,8 @@ namespace JMS.API.Controllers
         }
 
         [HttpGet()]
-        [Authorize(Roles = ConstRole.Dispatcher + "," + ConstRole.JMC)]
-        [Route("getdrivers/{drivername?}")]
+        [Authorize(Roles = "Dispatcher,JMC")]
+        [Route("getdrivers")]
         public IActionResult GetDrivers(string driverName = "")
         {
             return Ok(_driverService.GetDrivers(driverName));

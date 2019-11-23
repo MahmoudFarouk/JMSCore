@@ -1,0 +1,51 @@
+.journeyApproval{
+    ul .collapsible-body{
+        padding: 0;
+    }
+    .collapsible-body .detail{
+        border-bottom: 1px solid #DDD;
+        padding:10px 15px;
+    }
+    .collapsible-body .detail .col-3{
+        padding-left: 0;
+    }
+    .collapsible-body .detail:last-of-type{
+        border-bottom: 0;
+    }
+    .collapsible-body .detail img{
+        margin-right: 10px;
+    }
+    .collapsible-body .detail h3,
+    .collapsible-body .detail p{
+        display: inline;
+        color: #979797;	
+        font-size: 14px;
+    }
+    .collapsible-body .detail h3{
+        font-weight: bold;
+    }
+    .collapsible-body .detail p{
+        font-size: 13px;
+    }
+    .drivAss .detail p{
+        margin: 10px 0;
+        display: block;
+    }
+    .collapsible-body .detail .yes{
+        width: 100%;
+        margin: 10px 0;
+        border: 0;
+        background-color: #48CBC3;
+        border-radius: 5px;
+        padding: 5px ;
+        color: #FFF;
+    }
+    .collapsible-body .detail .no{
+        @extend .yes;
+        background-color: #CA6C6C;
+    }
+    .changeDriver{
+        @extend .sumbitToInitiate;
+        background-color: #AFAFAF;
+    }
+}

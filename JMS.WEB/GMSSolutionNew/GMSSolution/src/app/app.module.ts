@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgxLoadingModule,ngxLoadingAnimationTypes  } from 'ngx-loading';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -22,6 +22,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './shared/Helpers/jwt.interceptor';
 import { ErrorInterceptor } from './shared/Helpers/error.interceptor'
+import { NotificationsComponent } from './notifications/notifications.component';
+import { JourneyInfoComponent } from './shared/Components/journey-info/journey-info.component';
+import { JourneyDetailsComponent } from './shared/Components/journey-details/journey-details.component';
+import { JourneyDriverComponent } from './journey-driver/journey-driver.component';
+import { AuthGuard } from './shared/Helpers/auth.guard';
+import { MainHeaderComponent } from './shared/Components/main-header/main-header.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +45,12 @@ import { ErrorInterceptor } from './shared/Helpers/error.interceptor'
     WorkforceManagementComponent,
     CheckpointManagementComponent,
     ReportsComponent,
-    HomeComponent
+    HomeComponent,
+    NotificationsComponent,
+    JourneyInfoComponent,
+    JourneyDetailsComponent,
+    JourneyDriverComponent,
+    MainHeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,14 +64,17 @@ import { ErrorInterceptor } from './shared/Helpers/error.interceptor'
     ReactiveFormsModule,
     NgxLoadingModule.forRoot({
       animationType: ngxLoadingAnimationTypes.cubeGrid,
-      backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+      backdropBackgroundColour: 'rgba(0,0,0,0.1)',
       backdropBorderRadius: '4px',
-      primaryColour: '#F5A622', 
-      secondaryColour: '#F5A622', 
+      primaryColour: '#F5A622',
+      secondaryColour: '#F5A622',
       tertiaryColour: '#F5A622'
-  })
+    })
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
