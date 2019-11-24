@@ -301,5 +301,10 @@ namespace JMS.BLL.Services
             return response;
 
         }
+
+        public ServiceResponse<object> JourneyCheckPoints(int journeyId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
