@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
             
-                                <div class="map" style="height: 400px;background-color: #DDD;">
+                                <div class="map" style="height: 400px;">
                                     <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
                                         <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
                                         <agm-direction [origin]="origin"
@@ -75,6 +75,7 @@
             
                                 <div class="radioButtonsGroup">
                                     <p>Transport Type :</p>
+                                    <div class="radioButtonsGroupCon">
                                         <div>
                                             <label>
                                                 <input type="radio" value="true" formControlName="isTruckTransport"/>
@@ -87,6 +88,7 @@
                                                 <span>People</span>
                                             </label>
                                         </div>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -108,6 +110,7 @@
 
                                 <div class="radioButtonsGroup">
                                     <p>Priority Degree :</p>
+                                    <div class="radioButtonsGroupCon">
                                         <div>
                                             <label>
                                                 <input value="0" type="radio" formControlName="cargoPriority" checked />
@@ -126,10 +129,14 @@
                                                 <span>Low</span>
                                             </label>
                                         </div>
+                                    </div>
                                 </div>
 
                                 <div class="radioButtonsGroup">
                                     <p>Security Degree :</p>
+                                    <div class="radioButtonsGroupCon">
+
+                                  
                                         <div>
                                             <label>
                                                 <input value="0" type="radio" formControlName="cargoSeverity" checked />
@@ -148,6 +155,7 @@
                                                 <span>Low</span>
                                             </label>
                                         </div>
+                                    </div>
                                 </div>
                             </div>
                         </li>

@@ -674,7 +674,11 @@ body {
   margin: 15px 0;
 }
 
-.initiateJourney ul.collapsible .collapsible-body .radioButtonsGroup form {
+.initiateJourney ul.collapsible .collapsible-body .radioButtonsGroup {
+  margin: 15px 0;
+}
+
+.initiateJourney ul.collapsible .collapsible-body .radioButtonsGroup .radioButtonsGroupCon {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
