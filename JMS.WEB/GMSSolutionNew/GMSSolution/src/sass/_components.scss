@@ -37,10 +37,10 @@
     height: auto;
     margin: 0;
     z-index: auto;
+    display: block!important;
 }
 .menuAndNotificationNav a.sidenav-trigger img{
     border-radius: 5px;
-
 }
 .notificationsNumberNavIcon {
     position: relative;

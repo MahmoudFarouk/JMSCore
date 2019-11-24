@@ -40,6 +40,11 @@ a:visited {
   margin: 0 25px;
 }
 
+.mainContainer {
+  max-width: 990px;
+  margin: auto;
+}
+
 @font-face {
   font-family: lato;
   src: url(../fonts/Lato-Regular.ttf);
@@ -131,6 +136,7 @@ a:visited {
   height: auto;
   margin: 0;
   z-index: auto;
+  display: block !important;
 }
 
 .menuAndNotificationNav a.sidenav-trigger img {
@@ -1120,8 +1126,23 @@ body {
 }
 
 .cheackInSection .modalAndBtnCont {
-  padding: 0 8px;
+  padding: 0 15px;
   margin: 10px 0;
+  width: 50%;
+}
+
+.cheackInSection .modalAndBtnCont button {
+  width: 80%;
+}
+
+@media only screen and (max-width: 500px) {
+  .cheackInSection .modalAndBtnCont {
+    padding: 0 8px;
+    margin: 10px 0;
+  }
+  .cheackInSection .modalAndBtnCont button {
+    width: 100%;
+  }
 }
 
 .cheackInSection .modalAndBtnCont .modalTrigger,
