@@ -79,25 +79,35 @@ namespace JMS.BLL.Services
             return user;
         }
 
-        public void Update(User userParam, string password = null)
+        public void Update(User updatedUser, string password = null)
         {
-            var user = _context.Users.Find(userParam.Id);
+            var user = _context.Users.Include(u => u.UserRoles).FirstOrDefault(u => u.Id == updatedUser.Id);
+
 
             if (user == null)
                 throw new AppException("User not found");
 
-            if (userParam.Username != user.Username)
-            {
-                // username has changed so check if the new username is already taken
-                if (_context.Users.Any(x => x.Username == userParam.Username))
-                    throw new AppException("Username " + userParam.Username + " is already taken");
-            }
+            //if (updatedUser.Username != user.Username)
+            //{
+            //    // username has changed so check if the new username is already taken
+            //    if (_context.Users.Any(x => x.Username == updatedUser.Username))
+            //        throw new AppException("Username " + updatedUser.Username + " is already taken");
+            //}
 
             // update user properties
-            user.FullName = userParam.FullName;
-            user.GatePassStatus = userParam.GatePassStatus;
-            user.LicenseExpiryDate = userParam.LicenseExpiryDate;
-            user.LicenseNo = user.LicenseNo;
+            //user.Username = updatedUser.Username;
+            user.FullName = updatedUser.FullName;
+            user.GatePassStatus = updatedUser.GatePassStatus;
+            user.LicenseExpiryDate = updatedUser.LicenseExpiryDate;
+            user.LicenseNo = updatedUser.LicenseNo;
+            user.UserGroupId = updatedUser.UserGroupId;
+            user.UserWorkForceId = updatedUser.UserWorkForceId;
+
+            if (updatedUser.UserRoles != null && user.UserRoles != null)
+            {
+                user.UserRoles.First().RoleId = updatedUser.UserRoles.First().RoleId;
+            }
+
             // update password if it was entered
             if (!string.IsNullOrWhiteSpace(password))
             {

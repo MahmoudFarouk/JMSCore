@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { JourneyService } from '../../Services/User/JourneyService';
-import { JourneyModel } from '../../Entities/User/JourneyModel';
+import { JourneyService } from 'src/app/shared/Services/User/JourneyService';
+import { JourneyModel } from 'src/app/shared/Entities/User/JourneyModel';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 @Component({
   selector: 'app-journey-info',

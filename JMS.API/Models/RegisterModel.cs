@@ -7,7 +7,7 @@ namespace JMS.API.Models
 {
     public class RegisterModel
     {
-       
+        public Guid Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string FullName { get; set; }
@@ -17,5 +17,7 @@ namespace JMS.API.Models
         public DateTime? LicenseExpiryDate { get; set; }
         public string TrainingDetails { get; set; }
         public string GatePassStatus { get; set; }
+        public Guid RoleId { get; set; }
+        public bool IsActive { get; set; }
     }
 }

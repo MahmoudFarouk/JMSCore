@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Subscription,Observable,timer } from 'rxjs';
-import { NotificationModel } from '../shared/Entities/User/NotificationModel';
-import { NotificationService } from '../shared/Services/User/NotificationService';
+import { Subscription, Observable, timer } from 'rxjs';
+import { NotificationModel } from 'src/app/shared/Entities/User/NotificationModel';
+import { NotificationService } from 'src/app/shared/Services/User/NotificationService';
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
@@ -21,7 +21,6 @@ export class NotificationsComponent implements OnInit {
     
     this.NotificationService.GetNotifications().toPromise().then((data: any) => {
      
-      console.log(data);
       this.Notifications = data.data;
       this.setTimer();
       this.loading = false;

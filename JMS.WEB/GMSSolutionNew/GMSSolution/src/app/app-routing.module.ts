@@ -1,60 +1,77 @@
-import { DriverAssessmentComponent } from './driver-assessment/driver-assessment.component';
-import { JourneyApprovalComponent } from './journey-approval/journey-approval.component';
-import { DriverSelectionComponent } from './driver-selection/driver-selection.component';
-import { InitiateJourneyComponent } from './initiate-journey/initiate-journey.component';
-import { ReportsComponent } from './reports/reports.component';
-import { WorkforceManagementComponent } from './workforce-management/workforce-management.component';
-import { TeamManagementComponent } from './team-management/team-management.component';
-import { UsersManagementComponent } from './users-management/users-management.component';
-import { CheckpointManagementComponent } from './checkpoint-management/checkpoint-management.component';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { JourneyClosureComponent } from './journey-closure/journey-closure.component';
-import { AppComponent } from './app.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/Helpers/auth.guard';
+
+//Common
+import { AppComponent } from './app.component';
+import { LoginComponent } from './common/login/login.component';
+import { ResetPasswordComponent } from './common/reset-password/reset-password.component';
+import { NotificationsComponent } from './common/notifications/notifications.component';
 import { HomeComponent } from './home/home.component';
-import { NotificationsComponent } from './notifications/notifications.component';
-import { JourneyDetailsComponent } from './shared/Components/journey-details/journey-details.component';
-import { JourneyDriverComponent } from './journey-driver/journey-driver.component';
+
+//Managers
+import { JourneyApprovalComponent } from './manager/journey-approval/journey-approval.component';
+import { DriverSelectionComponent } from './manager/driver-selection/driver-selection.component';
+import { InitiateJourneyComponent } from './manager/initiate-journey/initiate-journey.component';
+import { MyRequestsComponent } from './manager/my-requests/my-requests.component';
+import { CurrentJourneysComponent } from './manager/current-journeys/current-journeys.component';
+import { JourneyCalendarComponent } from './manager/journey-calendar/journey-calendar.component';
+import { JourneyDetailsComponent } from './common/journey-details/journey-details.component';
+
+//Drivers
+import { DriverAssessmentComponent } from './driver/assessment/driver-assessment.component';
+import { JourneyClosureComponent } from './driver/journey-closure/journey-closure.component';
+import { JourneyDriverComponent } from './driver/journey/journey-driver.component';
+
+//Admin
+import { AdminDashboardComponent } from './admin/dashboard/admin-dashboard.component';
+import { WorkforceManagementComponent } from './admin/workforce/workforce-management.component';
+import { TeamManagementComponent } from './admin/team/team-management.component';
+import { UsersManagementComponent } from './admin/users/users-management.component';
+import { CheckpointManagementComponent } from './admin/checkpoints/checkpoint-management.component';
+import { ReportsComponent } from './admin/reports/reports.component';
+
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent,
-    canActivate: [AuthGuard]
-  },
-  { path: 'login', component: LoginComponent },
-  { path: 'ResetPassword', component: ResetPasswordComponent },
-  {
-    path: 'InitiateJourney',
-    component: InitiateJourneyComponent,
-    canActivate: [AuthGuard]
-  },
-  { path: 'DriverSelection', component: DriverSelectionComponent,
-  canActivate: [AuthGuard]
-},
-  { path: 'JourneyApproval', component: JourneyApprovalComponent },
-  { path: 'DriverAssessment', component: DriverAssessmentComponent },
-  { path: 'JourneyClosure', component: JourneyClosureComponent },
-  { path: 'AdminDashboard', component: AdminDashboardComponent,canActivate: [AuthGuard] },
-  { path: 'UsersManagement', component: UsersManagementComponent },
-  { path: 'TeamManagement', component: TeamManagementComponent },
-  { path: 'WorkforceManagement', component: WorkforceManagementComponent },
-  { path: 'CheckpointManagement', component: CheckpointManagementComponent },
-  { path: 'Reports', component: ReportsComponent },
-  { path: 'Notifications', component: NotificationsComponent,canActivate: [AuthGuard] },
-  { path: 'JourneyDetails', component: JourneyDetailsComponent,canActivate: [AuthGuard] },
-  { path: 'JourneyDriver', component: JourneyDriverComponent,canActivate: [AuthGuard] },
+    {
+        path: '',
+        component: HomeComponent,
+        canActivate: [AuthGuard]
+    },
+    { path: 'login', component: LoginComponent },
+    //{ path: 'forget-password', component: ForgetPasswordComponent },
+    { path: 'reset-password', component: ResetPasswordComponent },
+
+    //App Routes
+    { path: 'initiate-journey', component: InitiateJourneyComponent, canActivate: [AuthGuard] },
+    { path: 'requests', component: MyRequestsComponent, canActivate: [AuthGuard] },
+    { path: 'journeys', component: CurrentJourneysComponent, canActivate: [AuthGuard] },
+    { path: 'journey-calendar', component: JourneyCalendarComponent, canActivate: [AuthGuard] },
+    { path: 'driver/journey', component: JourneyDriverComponent, canActivate: [AuthGuard] },
+
+    { path: 'driver-selection', component: DriverSelectionComponent, canActivate: [AuthGuard] },
+    { path: 'journeyapproval', component: JourneyApprovalComponent },
+    { path: 'driverassessment', component: DriverAssessmentComponent },
+    { path: 'journeyclosure', component: JourneyClosureComponent },
+    { path: 'checkpointmanagement', component: CheckpointManagementComponent },
+    { path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard] },
+    { path: 'journeydetails', component: JourneyDetailsComponent, canActivate: [AuthGuard] },
+    { path: 'journeydriver', component: JourneyDriverComponent, canActivate: [AuthGuard] },
+
+    //Admin Routes
+    { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard] },
+    { path: 'admin/users', component: UsersManagementComponent, canActivate: [AuthGuard] },
+    { path: 'admin/checkpoints', component: CheckpointManagementComponent, canActivate: [AuthGuard] },
+    { path: 'admin/teams', component: TeamManagementComponent, canActivate: [AuthGuard] },
+    { path: 'admin/workforces', component: WorkforceManagementComponent, canActivate: [AuthGuard] },
+    { path: 'admin/reports', component: ReportsComponent, canActivate: [AuthGuard] },
 
 
-  { path: '**', redirectTo: '' }
+    { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }

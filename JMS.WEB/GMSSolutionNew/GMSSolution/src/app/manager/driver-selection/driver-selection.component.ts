@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription, Observable, timer } from 'rxjs';
-import { DriverModel } from '../shared/Entities/User/DriverModel';
-import { DriverService } from '../shared/Services/User/DriverService';
-import { JourneyService } from '../shared/Services/User/JourneyService';
+import { DriverModel } from 'src/app//shared/Entities/User/DriverModel';
+import { DriverService } from 'src/app//shared/Services/User/DriverService';
+import { JourneyService } from 'src/app/shared/Services/User/JourneyService';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({

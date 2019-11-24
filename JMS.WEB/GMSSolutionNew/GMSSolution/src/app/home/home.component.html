@@ -1,72 +1,112 @@
+<!--start aside menu-->
+<aside id="slide-out" class="sidenav">
+  <div class="userInfo">
+    <img src="assets/images/Jms_assets/user.svg">
+    <h2>{{currentUser.username}}</h2>
+    <!-- <button>Product Line</button> -->
+  </div>
+  <ul>
+    <li routerLinkActive="active" routerLink="/InitiateJourney" (click)="navigateToCustomPage($event)">
+      <img src="assets/images/Jms_assets/ic_plus_black.svg">
+      <h3>Initiate Journy</h3>
+    </li>
+    <li>
+      <img src="assets/images/Jms_assets/ic_calendar.svg">
+      <h3>Journey Calendar</h3>
+    </li>
+    <li class="selected">
+      <img src="assets/images/Jms_assets/ic_pending_black.svg">
+      <h3>Pending Journey</h3>
+    </li>
+    <li routerLinkActive="active" routerLink="/MyRequests">
+      <img src="assets/images/Jms_assets/ic_trip_black.svg">
+      <h3>My Requests</h3>
+    </li>
+  </ul>
+</aside>
+<!--end aside menu-->
+<!--start home page actions-->
+<div>
+  <ng-template #customLoadingTemplate></ng-template>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<div *ngIf="isCustomComponent==false && isCurrentPage==false && loading==false">
+  <section id="homePage" class="text-center">
+    <div class="mobileContainer">
+      <h2 class="sectionHeader">Welcome <strong>{{currentUser.fullName}}</strong></h2>
+      <div class="row">
 
-    <!--start aside menu-->
-    <aside id="slide-out" class="sidenav">
-        <div class="userInfo">
-            <img src="assets/images/Jms_assets/user.svg">
-            <h2>{{currentUser.username}}</h2>
-            <!-- <button>Product Line</button> -->
-        </div>
-        <ul>
-            <li routerLinkActive="active" routerLink="/InitiateJourney" (click)="navigateToCustomPage($event)">
-                <img src="assets/images/Jms_assets/ic_plus_black.svg">
-                <h3>Initiate Journy</h3>
-            </li>
-            <li>
-                <img src="assets/images/Jms_assets/ic_calendar.svg">
-                <h3>Journey Calendar</h3>
-            </li>
-            <li class="selected">
-                <img src="assets/images/Jms_assets/ic_pending_black.svg">
-                <h3>Pending Journey</h3>
-            </li>
-            <li routerLinkActive="active" routerLink="/MyRequests">
-                <img src="assets/images/Jms_assets/ic_trip_black.svg">
-                <h3>My Requests</h3>
-            </li>
-        </ul>
-    </aside>
-    <!--end aside menu-->
-    <!--start home page actions-->
-    <div>
-    <ng-template #customLoadingTemplate></ng-template>
-    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
-    </div>
-    <div *ngIf="isCustomComponent==false && isCurrentPage==false && loading==false">
-      <section id="homePage" class="text-center" >
-          <div class="mobileContainer" >
-              <h2 class="sectionHeader">Welcome <strong>{{currentUser.username}}</strong></h2>
-              <div class="row">
-                  <div class="col-6">
-                      <div id="Init_Jou_0" class="homePageAction initJourney" routerLinkActive="active" routerLink="/InitiateJourney" (click)="navigateToCustomPage($event)">
-                          <img src="assets/images/Jms_assets/ic_plus.svg">
-                          <h2>Initiate Journy</h2>
-                      </div>
-                  </div>
-                  <div class="col-6">
-                      <div id="Driver_Sel_0" class="homePageAction driverSelection" routerLinkActive="active" routerLink="/DriverSelection" (click)="navigateToCustomPage($event)">
-                          <img src="assets/images/Jms_assets/ic_driver.svg">
-                          <h2>Driver Selection</h2>
-                      </div>
-                  </div>
-                  <div class="col-6">
-                      <div id="Pending_Jou_0" class="homePageAction pendingJourney" routerLinkActive="active" routerLink="/" (click)="navigateToCustomPage($event)">
-                          <img src="assets/images/Jms_assets/ic_pending.svg">
-                          <h2>Pending Journey</h2>
-                      </div>
-                  </div>
-                  <div class="col-6">
-                      <div id="Jou_Trip_0" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/JourneyApproval" (click)="navigateToCustomPage($event)">
-                          <img src="assets/images/Jms_assets/ic_trip.svg">
-                          <h2>Journey Trip</h2>
-                      </div>
-                  </div>
-              </div>
+        <!-- Start App Dashboard Items -->
+        <div class="col-6" *ngIf="currentUser.roles[0].name == 'Product Line'">
+          <div id="Init_Jou_0" class="homePageAction initJourney" routerLinkActive="active" routerLink="/initiate-journey" (click)="navigateToCustomPage($event)">
+            <img src="assets/images/Jms_assets/ic_plus.svg">
+            <h2>Initiate Journy</h2>
           </div>
-      </section>
+        </div>
+
+        <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMC' || currentUser.roles[0].name == 'Dispatcher' || currentUser.roles[0].name == 'QHSE' ||currentUser.roles[0].name == 'GBM'">
+          <div id="dvMyRequests" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/requests" (click)="navigateToCustomPage($event)">
+            <img src="assets/images/Jms_assets/ic_trip.svg">
+            <h2>My Requests</h2>
+          </div>
+        </div>
+
+        <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMC' || currentUser.roles[0].name == 'Dispatcher' || currentUser.roles[0].name == 'QHSE' ||currentUser.roles[0].name == 'GBM'">
+          <div id="dvMyRequests" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/journeys" (click)="navigateToCustomPage($event)">
+            <img src="assets/images/Jms_assets/ic_trip.svg">
+            <h2>Journeys</h2>
+          </div>
+        </div>
+
+        <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMC' || currentUser.roles[0].name == 'QHSE' ||currentUser.roles[0].name == 'GBM'">
+          <div id="dvMyRequests" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/calendar" (click)="navigateToCustomPage($event)">
+            <img src="assets/images/Jms_assets/ic_trip.svg">
+            <h2>Journey Calendar</h2>
+          </div>
+        </div>
+
+        <div class="col-6" *ngIf="currentUser.roles[0].name == 'Driver'">
+          <div id="Pending_Jou_0" class="homePageAction pendingJourney" routerLinkActive="active" routerLink="/driver/journey" (click)="navigateToCustomPage($event)">
+            <img src="assets/images/Jms_assets/ic_pending.svg">
+            <h2>My Journey</h2>
+          </div>
+        </div>
+        <!-- End App Dashboard Items -->
+        <!-- Start Admin Dashboard Items -->
+        <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMS Admin'">
+          <div id="dvAdminUsersManagement" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/admin/users" (click)="navigateToCustomPage($event)">
+            <img src="assets/images/Jms_assets/ic_trip.svg">
+            <h2>Users Management</h2>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMS Admin'">
+          <div id="dvAdminCheckpointsManagement" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/admin/checkpoints" (click)="navigateToCustomPage($event)">
+            <img src="assets/images/Jms_assets/ic_trip.svg">
+            <h2>Checkpoints Management</h2>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMS Admin'">
+          <div id="dvAdminGroupsManagement" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/admin/teams" (click)="navigateToCustomPage($event)">
+            <img src="assets/images/Jms_assets/ic_trip.svg">
+            <h2>Teams Management</h2>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMS Admin'">
+          <div id="dvAdminWorkforceManagement" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/admin/workforces" (click)="navigateToCustomPage($event)">
+            <img src="assets/images/Jms_assets/ic_trip.svg">
+            <h2>Workforces Management</h2>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMS Admin'">
+          <div id="dvAdminReportsManagement" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/admin/reports" (click)="navigateToCustomPage($event)">
+            <img src="assets/images/Jms_assets/ic_trip.svg">
+            <h2>Reports</h2>
+          </div>
+        </div>
+        <!-- End Admin Dashboard Items -->
+      </div>
     </div>
-    <router-outlet *ngIf="isCustomComponent==true && isCurrentPage==true && loading==false"></router-outlet>
-    <!--end home page actions-->
-  
-  
-  
-   
+  </section>
+</div>
+<router-outlet *ngIf="isCustomComponent==true && isCurrentPage==true && loading==false"></router-outlet>
+<!--end home page actions-->

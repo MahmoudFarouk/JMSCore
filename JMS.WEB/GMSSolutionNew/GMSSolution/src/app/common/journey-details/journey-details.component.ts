@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { AssessmentQuestion } from 'src/app/shared/Entities/User/assessment-question';
-import { JourneyService } from '../../Services/User/JourneyService';
+import { JourneyService } from 'src/app/shared/Services/User/JourneyService'
 import { Data, JourneyDetailModel } from 'src/app/shared/Entities/User/JourneDetailModel';
 @Component({
   selector: 'app-journey-details',

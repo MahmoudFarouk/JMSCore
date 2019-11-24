@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -20,15 +20,15 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        return this.http.post<User>(`${environment.JMSApiURL}/user/authenticate`, { username, password })
+        return this.http.post<any>(`${environment.JMSApiURL}/user/authenticate`, { username, password })
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response
-                if (user && user.data.token) {
+                if (user.data && user.data.token) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    this.currentUserSubject.next(user);
+                    localStorage.setItem('currentUser', JSON.stringify(user.data));
+                    this.currentUserSubject.next(user.data);
                 }
-                return user;
+                return user.data;
             }));
     }
     logout() {

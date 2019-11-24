@@ -41,16 +41,7 @@ namespace JMS.API.Controllers
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
-        [Authorize(Roles = ConstRole.Dispatcher)]
-        [Route("test")]
-        [HttpPost("test")]
-        public IActionResult test()
-        {
-            var extrarole = "";
-            if (User.IsInRole(ConstRole.ProductLine))
-                extrarole = ConstRole.ProductLine;
-            return Ok(new { User.Identity.Name, extrarole });
-        }
+
         [AllowAnonymous]
         [Route("authenticate")]
         [HttpPost("authenticate")]
@@ -97,7 +88,7 @@ namespace JMS.API.Controllers
             return Ok(new ServiceResponse<UserModel> { Data = result, Status = DAL.Common.Enums.ResponseStatus.Success });
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = ConstRole.JMSAdmin)]
         [Route("register")]
         [HttpPost("register")]
         public IActionResult Register(RegisterModel model)
@@ -111,7 +102,8 @@ namespace JMS.API.Controllers
                 LicenseNo = model.LicenseNo,
                 TrainingDetails = model.TrainingDetails,
                 Username = model.Username.ToLower(),
-                IsActive = true
+                IsActive = true,
+                UserRoles = new List<UserRole> { new UserRole { Id = Guid.NewGuid(), RoleId = model.RoleId } },
             };
 
             try
@@ -128,6 +120,7 @@ namespace JMS.API.Controllers
             }
         }
 
+        [Authorize(Roles = ConstRole.JMSAdmin)]
         [HttpGet]
         public IActionResult GetAll(string keywordfilter, PagingProperties pagingProperties)
         {
@@ -171,20 +164,22 @@ namespace JMS.API.Controllers
             }
         }
 
+        [Authorize(Roles = ConstRole.JMSAdmin)]
         [HttpPut("{id}")]
         public IActionResult Update(Guid id, RegisterModel model)
         {
             var user = new User
             {
+                Id = id,
                 FullName = model.FullName,
                 GatePassStatus = model.GatePassStatus,
                 LicenseExpiryDate = model.LicenseExpiryDate,
                 LicenseNo = model.LicenseNo,
                 TrainingDetails = model.TrainingDetails,
-                Username = model.Username
+                //Username = model.Username,
+                UserRoles = string.IsNullOrEmpty(model.RoleId.ToString()) ? null : new List<UserRole> { new UserRole { RoleId = model.RoleId } },
             };
 
-            user.Id = id;
             try
             {
                 // save 
@@ -199,6 +194,7 @@ namespace JMS.API.Controllers
             }
         }
 
+        [Authorize(Roles = ConstRole.JMSAdmin)]
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
@@ -215,6 +211,8 @@ namespace JMS.API.Controllers
             }
 
         }
+
+        [Authorize(Roles = ConstRole.JMSAdmin)]
         [HttpPost()]
         [Route("ActivateDisActivate")]
         public IActionResult ActivateDisActivate(Guid id, bool isActive)
@@ -232,6 +230,8 @@ namespace JMS.API.Controllers
             }
 
         }
+
+        [Authorize(Roles = ConstRole.JMSAdmin)]
         [HttpPost()]
         [Route("ChangePassword")]
         public IActionResult ChangePassword(ChangePasswordModel model)
@@ -250,6 +250,8 @@ namespace JMS.API.Controllers
             }
 
         }
+
+        [Authorize(Roles = ConstRole.JMSAdmin)]
         [HttpPost()]
         [Route("ResetPassword")]
         public IActionResult ResetPassword(Guid userid)
@@ -279,7 +281,7 @@ namespace JMS.API.Controllers
 
             try
             {
-                return Ok(_userService.ForgetPassword(username,_appSettings.Email,_appSettings.Password));
+                return Ok(_userService.ForgetPassword(username, _appSettings.Email, _appSettings.Password));
             }
             catch (Exception ex)
             {
@@ -289,10 +291,11 @@ namespace JMS.API.Controllers
             }
 
         }
+
         [HttpPost()]
         [AllowAnonymous]
         [Route("ResetForgetPassword")]
-        public IActionResult ResetForgetPassword(string token,string newPassword)
+        public IActionResult ResetForgetPassword(string token, string newPassword)
         {
             try
             {
@@ -354,7 +357,6 @@ namespace JMS.API.Controllers
             return Ok(_userService.EditUserWorkForce(workforce));
         }
 
-
         [HttpPost()]
         [Authorize(Roles = ConstRole.JMSAdmin)]
         [Route("deletegroup/{groupId}")]
@@ -362,7 +364,6 @@ namespace JMS.API.Controllers
         {
             return Ok(_userService.DeleteUserGroup(groupId));
         }
-
 
         [HttpPost()]
         [Authorize(Roles = ConstRole.JMSAdmin)]

@@ -9,7 +9,7 @@
             <img src="assets/images/Jms_assets/trackingSystemLogo.svg">
         </a>
 
-        <a *ngIf="!ShowLoginThings" style="color:black;cursor:pointer" (click)="logout()">Logout</a>
+        <a *ngIf="currentUser" style="color:black;cursor:pointer" (click)="logout()">Logout</a>
 
         <a *ngIf="!ShowLoginThings" class="notificationsNumberNavIcon" >
             <img src="assets/images/Jms_assets/ic_notifications-button.svg">
