@@ -162,6 +162,15 @@ a:visited {
   font-weight: bold;
 }
 
+.mainHeadSection {
+  font-family: Montserrat;
+  margin: 25px 0;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 30px;
+  color: #666;
+}
+
 .sidenav {
   width: 282px;
 }
