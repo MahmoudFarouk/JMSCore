@@ -37,5 +37,8 @@ namespace JMS.BLL.Interfaces
 
 
 
+        public ServiceResponse<object> JourneyCheckPoints(int journeyId);
+
+
     }
 }

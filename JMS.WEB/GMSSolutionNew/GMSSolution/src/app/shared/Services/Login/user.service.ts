@@ -5,12 +5,12 @@ import { User } from './../../Entities/Login/user';
 
 @Injectable({
     providedIn: 'root'
-  })
+})
 export class UserService {
     constructor(private http: HttpClient) { }
-test(){
-    return this.http.get<any>(`${environment.JMSApiURL}/user/test`);
-}
+    test() {
+        return this.http.get<any>(`${environment.JMSApiURL}/user/test`);
+    }
     getAll() {
         return this.http.get<User[]>(`${environment.JMSApiURL}/user/users`);
     }

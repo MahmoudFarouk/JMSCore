@@ -3,7 +3,8 @@ import { JourneyStatus } from './journey-status.enum';
 import { Checkpoint } from './checkpoint';
 import { Journey } from './journey';
 import { AssessmentResult } from './assessment-result';
-import { User } from './user';
+import { User } from '../Login/user';
+
 
 export class JourneyUpdate {
   Id: Number;

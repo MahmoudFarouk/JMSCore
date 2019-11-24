@@ -11,7 +11,7 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+    ShowLoginThings = true;
   loading:boolean = false;
   isCustomComponent:boolean = false;
   isCurrentPage:boolean = false;

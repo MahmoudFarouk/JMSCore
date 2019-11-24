@@ -293,6 +293,29 @@ namespace JMS.API.Controllers
             }
         }
 
+        [Route("JourneyCheckPoints")]
+        [HttpGet]
+        public IActionResult JourneyCheckPoints(int journeyId)
+        {
+            try
+            {
+                var driverInfo = _journeyService.GetJourneyUpdateDriverInfo(journeyId);
+                if (driverInfo != null)
+                {
+                    return Ok(new { Data = new { driverInfo.DriverId, driverInfo.Id, driverInfo.JourneyId, driverInfo.JourneyStatus, DriverName = driverInfo.DriverId.HasValue ? _userService.GetById(driverInfo.DriverId.Value).FullName : "" }, Status = ResponseStatus.Success });
+                }
+                object drive = null;
+                var driverInfofoModel = new { DriverId = drive, Id = 0, DriverName = "" };
+                return Ok(new { Data = driverInfofoModel, Status = ResponseStatus.Success });
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+            }
+        }
+
 
     }
 }

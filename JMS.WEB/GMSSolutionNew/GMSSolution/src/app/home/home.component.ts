@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription,Observable,timer } from 'rxjs';
-import { User } from '../shared/Entities/Login';
+
 import { UserService } from '../shared/Services/Login/user.service';
 import { AuthenticationService } from '../shared/Services/Login/authentication.service';
-
+import { User } from '../shared/Entities/Login/user';
+ 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  ShowLoginThings = false;
   loading:boolean = false;
   isCustomComponent:boolean = false;
   isCurrentPage:boolean = false;
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   constructor(private userService: UserService,
     private authenticationService: AuthenticationService) {
       this.currentUser =this.authenticationService.currentUserValue;
+      console.log(this.currentUser);
   }
   ngOnInit() {
     this.isCustomComponent = false;
