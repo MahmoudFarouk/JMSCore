@@ -53,15 +53,15 @@ namespace JMS.BLL.Services
         public ServiceResponse<object> GetJourneyDetails(int journeyId)
         {
             var journey = _context.Journey.Find(journeyId);
-            var assesements = _context.AssessmentQuestion.Where(x => x.JourneyId == journeyId).Include(x => x.AssessmentResult).ToList().Select(c=>
+            var assesements = _context.AssessmentQuestion.Where(x => x.JourneyId == journeyId).Include(x => x.AssessmentResult).ToList().Select(c =>
                 new
                 {
                     c.Category,
                     c.Question,
-                    Assessments=c.AssessmentResult.Select(x=>new { x.IsYes })
+                    Assessments = c.AssessmentResult.Select(x => new { x.IsYes })
                 }
                 ).GroupBy(x => x.Category);
-           
+
             //var journeyUpdates = _context.JourneyUpdate.Include(x => x.Checkpoint).Include(x => x.AssessmentResult).Where(x => x.JourneyId == journeyId).ToList();
             //var _journeyUpdates = new List<JourneyUpdateModel>();
             //var _checkpoints = new List<CheckPointModel>();
@@ -150,7 +150,7 @@ namespace JMS.BLL.Services
 
 
             //}
-            var details = new 
+            var details = new
             {
                 CargoPriority = journey.CargoPriority,
                 CargoSeverity = journey.CargoSeverity,
@@ -171,7 +171,7 @@ namespace JMS.BLL.Services
                 ToLng = journey.ToLng.HasValue ? journey.ToLng.Value : default(double?),
                 UserId = journey.UserId,
                 UserFullname = journey.UserId != null ? _context.Users.Find(journey.UserId).FullName : "",
-                Assesments=assesements
+                Assesments = assesements
                 //JourneyUpdates = _journeyUpdates,
                 //CheckPoints = _checkpoints
 
@@ -279,6 +279,27 @@ namespace JMS.BLL.Services
         public JourneyUpdate GetJourneyUpdateDriverInfo(int journeyId)
         {
             return _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journeyId && x.DriverId != null);
+        }
+
+        public ServiceResponse<List<Journey>> GetUserRequests(UserRoles userRole)
+        {
+            ServiceResponse<List<Journey>> response = new ServiceResponse<List<Journey>>();
+
+            try
+            {
+                
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+
+            return response;
+
         }
     }
 }
