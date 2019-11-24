@@ -8,6 +8,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './shared/Helpers/jwt.interceptor';
 import { ErrorInterceptor } from './shared/Helpers/error.interceptor'
 import { AuthGuard } from './shared/Helpers/auth.guard';
+import { AgmDirectionModule } from 'agm-direction';
+
 
 //Common
 import { AppComponent } from './app.component';
@@ -39,6 +41,8 @@ import { CheckpointManagementComponent } from './admin/checkpoints/checkpoint-ma
 import { TeamManagementComponent } from './admin/team/team-management.component';
 import { WorkforceManagementComponent } from './admin/workforce/workforce-management.component';
 import { ReportsComponent } from './admin/reports/reports.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -73,6 +77,7 @@ import { ReportsComponent } from './admin/reports/reports.component';
         AppRoutingModule,
         HttpClientModule,
         FormsModule,
+        AgmDirectionModule,
         AgmCoreModule.forRoot({
             apiKey: "AIzaSyD1mqYsV0ShwvvIaKU3MOr9CJelaCdAb7I",
             libraries: ["places"]
@@ -85,7 +90,9 @@ import { ReportsComponent } from './admin/reports/reports.component';
             primaryColour: '#F5A622',
             secondaryColour: '#F5A622',
             tertiaryColour: '#F5A622'
-        })
+        }),
+        BsDatepickerModule.forRoot(),
+        BrowserAnimationsModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

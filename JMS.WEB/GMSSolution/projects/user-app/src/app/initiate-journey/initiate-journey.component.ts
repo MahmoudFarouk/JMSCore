@@ -1,8 +1,9 @@
-//import {} from "googlemaps";
 import { timer, Observable, Subscription } from 'rxjs';
-import { ElementRef, NgZone, OnInit, ViewChild, Component } from '@angular/core';
+import { ElementRef, NgZone, OnInit, ViewChild, Component, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
+import { JourneyService } from '../Services/JourneyService';
+
 
 @Component({
   selector: 'app-initiate-journey',
@@ -10,23 +11,31 @@ import { MapsAPILoader } from '@agm/core';
   styles: [`
     agm-map {
       height: 400px;
+      display: block;
+    }
+    .collapsible-body{
       display: block
     }
   `],
-  styleUrls: ['./initiate-journey.component.css']
+  styleUrls: ['./initiate-journey.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 
 
 export class InitiateJourneyComponent implements OnInit {
 
-  public latitude: number;
-  public longitude: number;
-  public latitudeTo: number;
-  public longitudeTo: number;
-  public searchControl: FormControl;
+  public latitude: any;
+  public longitude: any;
+  public latitudeTo: any;
+  public longitudeTo: any;
   public zoom: number;
   public origin: any;
   public destination: any;
+  public drivingOptions: any = {
+    modes: ['BUS'],
+  }
+  public questions : Array<string> = [];
+
   
   loading:boolean = false;
   isCustomComponent:boolean = false;
@@ -35,73 +44,96 @@ export class InitiateJourneyComponent implements OnInit {
   timer: Observable<any>;
 
 
-  @ViewChild("destinationFrom",{static:false}) searchElementRef: ElementRef;
-  @ViewChild("destinationTo",{static:false}) searchElementTo: ElementRef;
+  @ViewChild("fromDestination",{static:false}) searchElementFrom: ElementRef;
+  @ViewChild("toDistination",{static:false}) searchElementTo: ElementRef;
+  @ViewChild("addQuestion",{static:false}) addQuestion: ElementRef;
+  // @ViewChild("fromLat",{static:false}) fromLat: ElementRef;
+  // @ViewChild("fromLng",{static:false}) fromLng: ElementRef;
+  // @ViewChild("toLat",{static:false}) toLat: ElementRef;
+  // @ViewChild("toLng",{static:false}) toLng: ElementRef;
 
 
 
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
-
-  ) { }
+    private ngZone: NgZone,
+    private JourneyService: JourneyService
+  ) {}
 
   initJourney = new FormGroup({
-    journeyDetails: new FormGroup({
       title : new FormControl(),
-      DestinationFrom : new FormControl(),
-      DestinationTo : new FormControl(),
-      dateOfDelivery : new FormControl()
-    }),
-    cargoDetails: new FormGroup({
-      Type : new FormControl(),
-      Weight : new FormControl()
-    }),
-    inspectionChecklist: new FormGroup({
-      LocationFrom : new FormControl(),
-      LocationTo : new FormControl(),
-      PLShipping : new FormControl(),
-      PLReceiving : new FormControl(),
-      DateAndTime : new FormControl(),
-      ConductedBy : new FormControl(),
-    }),
-    addJourneyAssessment: new FormGroup({
-
-    }),
-    addVehicleAssessment: new FormGroup({
-
-    }),
+      fromDestination : new FormControl(),
+      fromLat: new FormControl(),
+      fromLng: new FormControl(),    
+      toLat: new FormControl(),
+      toLng: new FormControl(),   
+      cargoWeight: new FormControl(),
+      cargoPriority: new FormControl(),
+      cargoSeverity: new FormControl(),
+      cargoType: new FormControl(), 
+      toDistination : new FormControl(),
+      dateOfDelivery : new FormControl(),
+      isTruckTransport : new FormControl(),
+      startDate : new FormControl(),
+      journeyStatus : new FormControl(),
   });
-
+  // {
+  //   "title": "test",
+  //   "isTruckTransport": false,
+  //   "journeyStatus": 0,
+  //   "fromDestination": "vjnufduuf",
+  //   "fromLat": "20.255555",
+  //   "fromLng": "21.255888888",
+  //   "toDistination": null,
+  //   "toLat": "20.255555",
+  //   "toLng": "20.255555",
+  //   "startDate": null,
+  //   "deliveryDate": null,
+  //   "cargoWeight": null,
+  //   "cargoPriority": 0,
+  //   "cargoSeverity": 0,
+  //   "cargoType": null,
+  //   "isThirdParty": false
+  // }
   submitJourney(){
     console.log(this.initJourney.value)
+    // this.JourneyService.InitJourney(this.initJourney.value);
   }
   
+  submitQuestion(){
+    this.questions.push(this.addQuestion.nativeElement.value);
+    console.log(this.questions);
+    console.log(this.addQuestion.nativeElement.value);
+    this.addQuestion.nativeElement.value = "";
+  }
+
+  
+  
   ngOnInit() {
-    console.log(this.searchElementRef)
+    // console.log(this.searchElementFrom)
     this.isCustomComponent=false;
     this.setTimer();
 
     this.zoom = 4;
     this.latitude = 39.8282;
     this.longitude = -98.5795;
-    
-    this.searchControl = new FormControl();
+    this.origin = { lat: this.latitude, lng: this.longitude };
+
     this.setCurrentPosition();
 
 
     this.mapsAPILoader.load().then(() => {
-      let distanceFrom = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+      let fromDestination = new google.maps.places.Autocomplete(this.searchElementFrom.nativeElement, {
         types: ["address"]
       });
-      let destinationTo = new google.maps.places.Autocomplete(this.searchElementTo.nativeElement, {
+      let toDistination = new google.maps.places.Autocomplete(this.searchElementTo.nativeElement, {
         types: ["address"]
       });
-      distanceFrom.addListener("place_changed", () => {
+      fromDestination.addListener("place_changed", () => {
         this.ngZone.run(() => {
           //get the place result
-          let place: google.maps.places.PlaceResult = distanceFrom.getPlace();
+          let place: google.maps.places.PlaceResult = fromDestination.getPlace();
 
           //verify result
           if (place.geometry === undefined || place.geometry === null) {
@@ -112,13 +144,17 @@ export class InitiateJourneyComponent implements OnInit {
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
           this.zoom = 12;
+          this.initJourney.patchValue({
+            fromLat : this.latitude,
+            fromLng : this.longitude,
+            fromDestination: place.formatted_address
+          })
           this.origin = { lat: this.latitude, lng: this.longitude };
-          this.destination = { lat: 24.799524, lng: 120.975017 };
         });
-        destinationTo.addListener("place_changed", ()=>{
+        toDistination.addListener("place_changed", ()=>{
           this.ngZone.run(() => {
             //get the place result
-            let place: google.maps.places.PlaceResult = distanceFrom.getPlace();
+            let place: google.maps.places.PlaceResult = toDistination.getPlace();
   
             //verify result
             if (place.geometry === undefined || place.geometry === null) {
@@ -128,9 +164,16 @@ export class InitiateJourneyComponent implements OnInit {
             //set latitude, longitude and zoom
             this.latitudeTo = place.geometry.location.lat();
             this.longitudeTo = place.geometry.location.lng();
+            this.zoom = 12;
+            this.initJourney.patchValue({
+              toLat : this.latitudeTo,
+              toLng : this.longitudeTo,
+              toDistination: place.formatted_address,
+            })  
             this.destination = { lat: this.latitudeTo, lng: this.longitudeTo };
+            
           });
-          })
+          });
       });
     });
  }
@@ -152,7 +195,4 @@ export class InitiateJourneyComponent implements OnInit {
       });
     }
   }
-
-
-
 }
