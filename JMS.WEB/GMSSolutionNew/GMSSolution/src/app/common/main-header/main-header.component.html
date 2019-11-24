@@ -1,20 +1,63 @@
+<!--start navbar-->
+<!--end navbar-->
+
+<div>
+  <ng-template #customLoadingTemplate></ng-template>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<div *ngIf="loading==false"></div>
+
+<!--start navbar-->
 <nav class="menuAndNotificationNav">
 
-    <div class="mobileContainer d-flex justify-content-between align-items-center">
-        <a routerLinkActive="active" routerLink="/" data-target="slide-out" class="sidenav-trigger">
-            <img src="assets/images/Jms_assets/ic_menu.svg">
-        </a>
-        <a>
-            <img src="assets/images/Jms_assets/trackingSystemLogo.svg">
-        </a>
+  <div class="mobileContainer d-flex justify-content-between align-items-center">
+    <a routerLinkActive="active" routerLink="/" data-target="slide-out" class="sidenav-trigger">
+      <img src="assets/images/Jms_assets/ic_menu.svg">
+    </a>
+    <a>
+      <img src="assets/images/Jms_assets/trackingSystemLogo.svg">
+    </a>
 
-        <a *ngIf="!ShowLoginThings" style="color:black;cursor:pointer" (click)="logout()">Logout</a>
+    <h2>{{componentName}}</h2>
 
-        <a *ngIf="!ShowLoginThings" class="notificationsNumberNavIcon" >
-            <img src="assets/images/Jms_assets/ic_notifications-button.svg">
-            <span class="notificationsNumber">
-                <span>5</span>
-            </span>
-        </a>
-    </div>
+    <a *ngIf="currentUser" style="color:black;cursor:pointer" (click)="logout()">Logout</a>
+
+    <a *ngIf="currentUser" class="notificationsNumberNavIcon">
+      <img src="assets/images/Jms_assets/ic_notifications-button.svg">
+      <span class="notificationsNumber">
+        <span>5</span>
+      </span>
+    </a>
+  </div>
 </nav>
+<!--end navbar-->
+
+<!--start aside menu-->
+<aside id="slide-out" class="sidenav">
+  <div class="userInfo">
+    <img src="assets/images/Jms_assets/user.svg">
+    <h2>Amar Omar</h2>
+    <button>
+      Product Line
+    </button>
+  </div>
+  <ul>
+    <li>
+      <img src="assets/images/Jms_assets/ic_plus_black.svg">
+      <h3>Initiate Journy</h3>
+    </li>
+    <li>
+      <img src="assets/images/Jms_assets/ic_calendar.svg">
+      <h3>Journey Calendar</h3>
+    </li>
+    <li class="selected">
+      <img src="assets/images/Jms_assets/ic_pending_black.svg">
+      <h3>Pending Journey</h3>
+    </li>
+    <li>
+      <img src="assets/images/Jms_assets/ic_trip_black.svg">
+      <h3>My Requests</h3>
+    </li>
+  </ul>
+</aside>
+<!--end aside menu-->

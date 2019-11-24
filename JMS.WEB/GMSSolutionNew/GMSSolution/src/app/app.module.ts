@@ -8,9 +8,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './shared/Helpers/jwt.interceptor';
 import { ErrorInterceptor } from './shared/Helpers/error.interceptor'
 import { AuthGuard } from './shared/Helpers/auth.guard';
+import { AgGridModule } from '@ag-grid-community/angular';
 
 //Common
 import { AppComponent } from './app.component';
+import { CommonService } from "src/app/shared/Services/CommonService";
 import { LoginComponent } from './common/login/login.component';
 import { ResetPasswordComponent } from './common/reset-password/reset-password.component';
 import { MainHeaderComponent } from './common/main-header/main-header.component';
@@ -73,6 +75,7 @@ import { ReportsComponent } from './admin/reports/reports.component';
         AppRoutingModule,
         HttpClientModule,
         FormsModule,
+        AgGridModule.withComponents([]),
         AgmCoreModule.forRoot({
             apiKey: "AIzaSyD1mqYsV0ShwvvIaKU3MOr9CJelaCdAb7I",
             libraries: ["places"]
@@ -89,6 +92,7 @@ import { ReportsComponent } from './admin/reports/reports.component';
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        CommonService,
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         AuthGuard],
     bootstrap: [AppComponent]

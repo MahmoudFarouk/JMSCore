@@ -1,34 +1,28 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
 import { User } from 'src/app/shared/Entities/Login/user';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './shared/Services/Login/authentication.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
- 
-  title = 'GMS';
-  currentUser: User;
- 
-  constructor(
-    private router: Router,
-    private authenticationService: AuthenticationService
-  ) {
-    
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
 
-  }
+    title = 'GMS';
+    currentUser: User;
+    componenetName: string;
 
-  ngOnInit(): void {
-    
-  }
+    constructor(private router: Router, private authenticationService: AuthenticationService) {
+        this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    }
 
+    getComponentName($event) {
+        this.componenetName = $event
+        debugger;
+    }
+    ngOnInit(): void {
 
-  logout() {
-    this.authenticationService.logout();
-    this.router.navigate(['/login']);
-  }
+    }
 }
