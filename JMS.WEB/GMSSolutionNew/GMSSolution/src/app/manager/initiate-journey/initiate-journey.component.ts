@@ -3,6 +3,7 @@ import { timer, Observable, Subscription } from 'rxjs';
 import { ElementRef, NgZone, OnInit, ViewChild, Component, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 
 @Component({

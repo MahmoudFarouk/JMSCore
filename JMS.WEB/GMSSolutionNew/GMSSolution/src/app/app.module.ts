@@ -45,6 +45,7 @@ import { WorkforceManagementComponent } from './admin/workforce/workforce-manage
 import { ReportsComponent } from './admin/reports/reports.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CheckpointsComponent } from './common/checkpoints/checkpoints.component';
 
 
 
@@ -72,7 +73,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         MainHeaderComponent,
         MyRequestsComponent,
         CurrentJourneysComponent,
-        JourneyCalendarComponent
+        JourneyCalendarComponent,
+        CheckpointsComponent
     ],
     imports: [
         BrowserModule,

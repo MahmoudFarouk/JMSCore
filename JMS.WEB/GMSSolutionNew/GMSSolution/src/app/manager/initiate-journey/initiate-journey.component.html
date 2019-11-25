@@ -1,257 +1,263 @@
 <div>
-    <ng-template #customLoadingTemplate></ng-template>
-    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
-    </div>
+  <ng-template #customLoadingTemplate></ng-template>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
 <div>
-    <form [formGroup]="initJourney" (ngSubmit)="submitJourney()">
-            <input type="hidden" name="" formControlName="journeyStatus" value="0">
-            <div class="mobileContainer initiateJourney">
-                    <ul class="collapsible expandable">
-                        <!--start Journey Details Section-->
-                        <li class="active">
-                            <div class="collapsible-header">
-                                <p>Joureny Details</p>
-                                <img src="../../assets/images/Jms_assets/ic_right_arrow.svg">
-                            </div>
-                            <div class="collapsible-body">
-                                <div class="input-group mainInputComp">
-                                    <input type="text" class="form-control" placeholder="Title" formControlName="title">
-                                </div>
-                                <div class="input-group mainInputComp">
-                                        <!-- <input formControlName="fromLat" #fromLat type="hidden" name="">
-                                        <input formControlName="fromLng" #fromLng type="hidden" name=""> -->
-                                        <input  #fromDestination
-                                        placeholder="Destination From"
-                                        autocorrect="off"
-                                        autocapitalize="off"
-                                        spellcheck="off"
-                                        type="text"
-                                        class="form-control">
-                                        <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <img src="../../assets/images/Jms_assets/ic_pin.svg">
-                                        </span>
-                                    </div>
-                                </div>
-            
-                                <div class="input-group mainInputComp">
-                                    <!-- <input formControlName="toLat" #toLat type="hidden" name="">
-                                    <input formControlName="toLng" #toLng type="hidden" name=""> -->
-                                    <input #toDistination
-                                    autocorrect="off"
-                                    autocapitalize="off"
-                                    spellcheck="off"
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Destination To">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <img src="../../assets/images/Jms_assets/ic_pin.svg">
-                                        </span>
-                                    </div>
-                                </div>
-            
-                                <div class="map" style="height: 400px;">
-                                    <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-                                        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-                                        <agm-direction [origin]="origin"
-                                        [destination]="destination"
-                                        
-                                        [provideRouteAlternatives]="true">
-                                        </agm-direction>
-                                      
-                                      </agm-map>
-                                </div>
-            
-                                <div class="input-group mainInputComp">
-                                    <input type="text" bsDatepicker class="form-control" placeholder="Date Of Delivery"
-                                        formControlName="dateOfDelivery">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <img src="../../assets/images/Jms_assets/ic_calendar.svg">
-                                        </span>
-                                    </div>
-                                </div>
-            
-                                <div class="radioButtonsGroup">
-                                    <p>Transport Type :</p>
-                                    <div class="radioButtonsGroupCon">
-                                        <div>
-                                            <label>
-                                                <input type="radio" value="true" formControlName="isTruckTransport"/>
-                                                <span>Trucks & Goods</span>
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input type="radio" value="false" formControlName="isTruckTransport" />
-                                                <span>People</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <!--end Journey Details Section-->
-            
-                        <!--start Cargo Details Section-->
-                        <li class="active">
-                            <div class="collapsible-header">
-                                <p>Cargo Details</p>
-                                <img src="images/Jms_assets/ic_right_arrow.svg">
-                            </div>
-                            <div class="collapsible-body">
-                                <div class="input-group mainInputComp">
-                                    <input type="text" class="form-control" placeholder="Type" aria-label="Type" formControlName="cargoType">
-                                </div>
-                                <div class="input-group mainInputComp">
-                                    <input type="text" class="form-control" placeholder="Weight" aria-label="Weight" formControlName="cargoWeight">
-                                </div>
+  <form [formGroup]="initJourney" (ngSubmit)="submitJourney()">
+    <input type="hidden" name="" formControlName="journeyStatus" value="0">
+    <div class="mobileContainer initiateJourney">
+      <ul class="collapsible expandable">
+        <!--start Journey Details Section-->
+        <li class="active">
+          <div class="collapsible-header">
+            <p>Joureny Details</p>
+            <img src="../../assets/images/Jms_assets/ic_right_arrow.svg">
+          </div>
+          <div class="collapsible-body">
+            <div class="input-group mainInputComp">
+              <input type="text" class="form-control" placeholder="Title" formControlName="title">
+            </div>
+            <div class="input-group mainInputComp">
+              <!-- <input formControlName="fromLat" #fromLat type="hidden" name="">
+              <input formControlName="fromLng" #fromLng type="hidden" name=""> -->
+              <input #fromDestination
+                     placeholder="Destination From"
+                     autocorrect="off"
+                     autocapitalize="off"
+                     spellcheck="off"
+                     type="text"
+                     class="form-control">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <img src="../../assets/images/Jms_assets/ic_pin.svg">
+                </span>
+              </div>
+            </div>
 
-                                <div class="radioButtonsGroup">
-                                    <p>Priority Degree :</p>
-                                    <div class="radioButtonsGroupCon">
-                                        <div>
-                                            <label>
-                                                <input value="0" type="radio" formControlName="cargoPriority" checked />
-                                                <span>High</span>
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input value="1" type="radio" formControlName="cargoPriority" />
-                                                <span>Medium</span>
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input value="2" type="radio" formControlName="cargoPriority" />
-                                                <span>Low</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="input-group mainInputComp">
+              <!-- <input formControlName="toLat" #toLat type="hidden" name="">
+              <input formControlName="toLng" #toLng type="hidden" name=""> -->
+              <input #toDistination
+                     autocorrect="off"
+                     autocapitalize="off"
+                     spellcheck="off"
+                     type="text"
+                     class="form-control"
+                     placeholder="Destination To">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <img src="../../assets/images/Jms_assets/ic_pin.svg">
+                </span>
+              </div>
+            </div>
 
-                                <div class="radioButtonsGroup">
-                                    <p>Security Degree :</p>
-                                    <div class="radioButtonsGroupCon">
+            <div class="map" style="height: 400px;">
+              <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+                <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                <agm-direction [origin]="origin"
+                               [destination]="destination"
+                               [provideRouteAlternatives]="true">
+                </agm-direction>
 
-                                  
-                                        <div>
-                                            <label>
-                                                <input value="0" type="radio" formControlName="cargoSeverity" checked />
-                                                <span>High</span>
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input value="1" type="radio" formControlName="cargoSeverity" />
-                                                <span>Medium</span>
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input value="2" type="radio" formControlName="cargoSeverity" />
-                                                <span>Low</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <!--end Cargo Details Section-->
-          
-                        <!--start Inspection Checklist Section-->
+              </agm-map>
 
-                        <!--end Inspection Checklist Section-->
-            
-                        <!--start Journey Assessment Section-->
+              <div class="example-container">
+                <h2>To do</h2>
 
-                        <li class="active">
-
-                            <div class="collapsible-header">
-                                <p>Add Journey Assessment</p>
-                                <img src="../../assets/images/Jms_assets/ic_right_arrow.svg">
-                            </div>
-                            <div class="collapsible-body">
-                                <div class="addAssessment">
-                                    <ul *ngFor="let question of questions">
-                                        <li>{{question}}</li>
-                                    </ul>
-                                    <div class="input-group mainInputComp">
-                                        <input #addQuestion type="text" class="form-control" placeholder="Add Question">
-                                    </div>
-                                    </div>
-                                <div (click)="submitQuestion()" class="submitAssessment text-center">
-                                    <img src="../../assets/images/Jms_assets/ic_plus.svg">
-                                    <span>Add more assessment</span>
-                                </div>
-                            </div>
-
-                        </li>
-                        <!--end Journey Assessment Section-->
-            
-            
-                        <!--start Journey Assessment Section-->
-                        <!-- <li class="active">
-                            <div class="collapsible-header">
-                                <p>Add Vehicle Assessment</p>
-                                <img src="../../assets/images/Jms_assets/ic_right_arrow.svg">
-                            </div>
-                            <div class="collapsible-body">
-                                <div class="addAssessment">
-                                    <div class="row">
-                                        <div class="col-9 questionCont">
-                                            <div class="question">
-                                                is the cargo & lifting equipment / gears in good condition
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <ul class="actions">
-                                                <li>
-                                                    <img src="../../assets/images/Jms_assets/ic_search.svg">
-                                                </li>
-                                                <li>
-                                                    <img src="../../assets/images/assets_icons/ic_pin.svg">
-                                                </li>
-                                            </ul>
-            
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="addAssessment">
-                                    <div class="row">
-                                        <div class="col-9 questionCont">
-                                            <div class="question">
-                                                is the cargo & lifting equipment / gears in good condition
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <ul class="actions">
-                                                <li>
-                                                    <img src="../../assets/images/Jms_assets/ic_search.svg">
-                                                </li>
-                                                <li>
-                                                    <img src="../../assets/images/assets_icons/ic_pin.svg">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="submitAssessment">
-                                    <img src="../../assets/images/Jms_assets/ic_plus.svg">
-                                    <span>Add more assessment</span>
-                                </button>
-                            </div>
-                        </li> -->
-                        <!--end Journey Assessment Section-->
-            
-                    </ul>
-                    <button (click)="submitJourney" class="sumbitToInitiate">
-                        Submit Journey
-                    </button>
+                <div cdkDropList
+                     #todoList="cdkDropList"
+                     [cdkDropListData]="todo"
+                     [cdkDropListConnectedTo]="[doneList]"
+                     class="example-list"
+                     (cdkDropListDropped)="drop($event)">
+                  <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
                 </div>
-            
-    </form>
+              </div>
+            </div>
+
+            <div class="input-group mainInputComp">
+              <input type="text" bsDatepicker class="form-control" placeholder="Date Of Delivery"
+                     formControlName="dateOfDelivery">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <img src="../../assets/images/Jms_assets/ic_calendar.svg">
+                </span>
+              </div>
+            </div>
+
+            <div class="radioButtonsGroup">
+              <p>Transport Type :</p>
+              <div class="radioButtonsGroupCon">
+                <div>
+                  <label>
+                    <input type="radio" value="true" formControlName="isTruckTransport" />
+                    <span>Trucks & Goods</span>
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input type="radio" value="false" formControlName="isTruckTransport" />
+                    <span>People</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <!--end Journey Details Section-->
+        <!--start Cargo Details Section-->
+        <li class="active">
+          <div class="collapsible-header">
+            <p>Cargo Details</p>
+            <img src="../../../assets/images/Jms_assets/ic_right_arrow.svg">
+          </div>
+          <div class="collapsible-body">
+            <div class="input-group mainInputComp">
+              <input type="text" class="form-control" placeholder="Type" aria-label="Type" formControlName="cargoType">
+            </div>
+            <div class="input-group mainInputComp">
+              <input type="text" class="form-control" placeholder="Weight" aria-label="Weight" formControlName="cargoWeight">
+            </div>
+
+            <div class="radioButtonsGroup">
+              <p>Priority Degree :</p>
+              <div class="radioButtonsGroupCon">
+                <div>
+                  <label>
+                    <input value="0" type="radio" formControlName="cargoPriority" checked />
+                    <span>High</span>
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input value="1" type="radio" formControlName="cargoPriority" />
+                    <span>Medium</span>
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input value="2" type="radio" formControlName="cargoPriority" />
+                    <span>Low</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="radioButtonsGroup">
+              <p>Security Degree :</p>
+              <div class="radioButtonsGroupCon">
+
+
+                <div>
+                  <label>
+                    <input value="0" type="radio" formControlName="cargoSeverity" checked />
+                    <span>High</span>
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input value="1" type="radio" formControlName="cargoSeverity" />
+                    <span>Medium</span>
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input value="2" type="radio" formControlName="cargoSeverity" />
+                    <span>Low</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <!--end Cargo Details Section-->
+        <!--start Inspection Checklist Section-->
+        <!--end Inspection Checklist Section-->
+        <!--start Journey Assessment Section-->
+
+        <li class="active">
+
+          <div class="collapsible-header">
+            <p>Add Journey Assessment</p>
+            <img src="../../assets/images/Jms_assets/ic_right_arrow.svg">
+          </div>
+          <div class="collapsible-body">
+            <div class="addAssessment">
+              <ul *ngFor="let question of questions">
+                <li>{{question}}</li>
+              </ul>
+              <div class="input-group mainInputComp">
+                <input #addQuestion type="text" class="form-control" placeholder="Add Question">
+              </div>
+            </div>
+            <div (click)="submitQuestion()" class="submitAssessment text-center">
+              <img src="../../assets/images/Jms_assets/ic_plus.svg">
+              <span>Add more assessment</span>
+            </div>
+          </div>
+
+        </li>
+        <!--end Journey Assessment Section-->
+        <!--start Journey Assessment Section-->
+        <!-- <li class="active">
+            <div class="collapsible-header">
+                <p>Add Vehicle Assessment</p>
+                <img src="../../assets/images/Jms_assets/ic_right_arrow.svg">
+            </div>
+            <div class="collapsible-body">
+                <div class="addAssessment">
+                    <div class="row">
+                        <div class="col-9 questionCont">
+                            <div class="question">
+                                is the cargo & lifting equipment / gears in good condition
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <ul class="actions">
+                                <li>
+                                    <img src="../../assets/images/Jms_assets/ic_search.svg">
+                                </li>
+                                <li>
+                                    <img src="../../assets/images/assets_icons/ic_pin.svg">
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="addAssessment">
+                    <div class="row">
+                        <div class="col-9 questionCont">
+                            <div class="question">
+                                is the cargo & lifting equipment / gears in good condition
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <ul class="actions">
+                                <li>
+                                    <img src="../../assets/images/Jms_assets/ic_search.svg">
+                                </li>
+                                <li>
+                                    <img src="../../assets/images/assets_icons/ic_pin.svg">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <button class="submitAssessment">
+                    <img src="../../assets/images/Jms_assets/ic_plus.svg">
+                    <span>Add more assessment</span>
+                </button>
+            </div>
+        </li> -->
+        <!--end Journey Assessment Section-->
+
+      </ul>
+      <button (click)="submitJourney" class="sumbitToInitiate">
+        Submit Journey
+      </button>
+    </div>
+
+  </form>
 
 </div>
