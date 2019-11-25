@@ -110,9 +110,23 @@
     padding: 15px;
 }
 .cheackInSection .modalAndBtnCont{
-    padding: 0 8px;
+    padding: 0 15px;
     margin: 10px 0;
+    width: 50%;
 }
+.cheackInSection .modalAndBtnCont button{
+    width: 80%;
+}
+@media only screen and (max-width: 500px) {
+    .cheackInSection .modalAndBtnCont{
+        padding: 0 8px;
+        margin: 10px 0;
+    }
+    .cheackInSection .modalAndBtnCont button{
+        width: 100%;
+    }
+}
+  
 .cheackInSection .modalAndBtnCont .modalTrigger,
 .cheackInSection .modalAndBtnCont .modalTrigger:visited,
 .cheackInSection .modalAndBtnCont .modalTrigger:active,

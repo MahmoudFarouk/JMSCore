@@ -18,14 +18,9 @@ Login, Forget Password, Reset Password => Logo Only
     <a routerLinkActive="active" routerLink="/" data-target="slide-out" class="sidenav-trigger">
       <img src="assets/images/Jms_assets/ic_menu.svg">
     </a>
-    <a>
+    <div class="text-center w-100">
       <img src="assets/images/Jms_assets/trackingSystemLogo.svg">
-    </a>
-
-    <h2>{{componentName}}</h2>
-
-    <a *ngIf="currentUser" style="color:black;cursor:pointer" (click)="logout()">Logout</a>
-
+    </div>
     <a *ngIf="currentUser" class="notificationsNumberNavIcon">
       <img src="assets/images/Jms_assets/ic_notifications-button.svg">
       <span class="notificationsNumber">
@@ -33,6 +28,7 @@ Login, Forget Password, Reset Password => Logo Only
       </span>
     </a>
   </div>
+  
 </nav>
 <!--end navbar-->
 
@@ -62,6 +58,14 @@ Login, Forget Password, Reset Password => Logo Only
       <img src="assets/images/Jms_assets/ic_trip_black.svg">
       <h3>My Requests</h3>
     </li>
+    <li>
+      <img src="assets/images/icons/Logout.svg">
+      <h3 *ngIf="currentUser"  (click)="logout()">
+        <a>Logout</a>
+      </h3>
+    </li>
   </ul>
 </aside>
 <!--end aside menu-->
+
+<h2 class="text-center mainHeadSection">{{componentName}}</h2>

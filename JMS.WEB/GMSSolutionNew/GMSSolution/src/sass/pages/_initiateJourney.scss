@@ -69,7 +69,10 @@
     ul.collapsible .collapsible-body form{
         margin: 15px 0;
     }
-    ul.collapsible .collapsible-body .radioButtonsGroup  form{
+    ul.collapsible .collapsible-body .radioButtonsGroup  {
+        margin: 15px 0;
+    }
+    ul.collapsible .collapsible-body .radioButtonsGroup  .radioButtonsGroupCon{
         display: flex;
         justify-content: space-between;
     }
