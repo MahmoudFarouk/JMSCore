@@ -15,14 +15,14 @@ export class JwtInterceptor implements HttpInterceptor {
         const isLoggedIn = currentUser && currentUser.data.token;
         const isApiUrl = request.url.startsWith(environment.JMSApiURL);
         debugger;
-        if (isLoggedIn && isApiUrl) {
+        if (isLoggedIn && isApiUrl&& request.url.indexOf('ForgetPassword') == -1) {
             request = request.clone({
                 setHeaders: {
                     Authorization: `Bearer ${currentUser.data.token}`
                 }
             });
-        }
 
+        }
         return next.handle(request);
     }
 }

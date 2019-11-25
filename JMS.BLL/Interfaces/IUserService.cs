@@ -19,7 +19,7 @@ namespace JMS.BLL.Interfaces
         ServiceResponse ChangePassword(Guid userId, string oldPassword, string newPassword);
         void ResetPassword(Guid userId, string randomPassword);
         User GetByName(string username);
-        ServiceResponse ForgetPassword(string username, string email, string emailPassword);
+        ServiceResponse ForgetPassword(string username, string email, string emailPassword, string hosting);
         ServiceResponse ResetForgetPassword(string token, string newpassword);
         
 

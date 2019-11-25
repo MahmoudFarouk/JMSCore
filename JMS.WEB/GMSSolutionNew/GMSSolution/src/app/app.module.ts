@@ -45,7 +45,8 @@ import { WorkforceManagementComponent } from './admin/workforce/workforce-manage
 import { ReportsComponent } from './admin/reports/reports.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CheckpointsComponent } from './common/checkpoints/checkpoints.component';
+import { ForgetPasswordComponent } from './common/forget-password/forget-password.component';
+import { ForgetchangepasswordComponent } from './common/forgetchangepassword/forgetchangepassword.component';
 
 
 
@@ -74,7 +75,8 @@ import { CheckpointsComponent } from './common/checkpoints/checkpoints.component
         MyRequestsComponent,
         CurrentJourneysComponent,
         JourneyCalendarComponent,
-        CheckpointsComponent
+        ForgetPasswordComponent,
+        ForgetchangepasswordComponent
     ],
     imports: [
         BrowserModule,

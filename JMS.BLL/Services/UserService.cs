@@ -212,7 +212,7 @@ namespace JMS.BLL.Services
         {
             return _context.Users.FirstOrDefault(x => x.Username == username.ToLower());
         }
-        public ServiceResponse ForgetPassword(string username, string email, string emailPassword)
+        public ServiceResponse ForgetPassword(string username, string email, string emailPassword,string hosting)
         {
             var user = _context.Users.FirstOrDefault(x => x.Username == username.ToLower());
             if (user == null)
@@ -223,7 +223,7 @@ namespace JMS.BLL.Services
             var toAddress = new MailAddress(username, "JMS Worker");
             string fromPassword = emailPassword;
             const string subject = "Forget Password";
-            string body = "http://jmsapi20191119104239.azurewebsites.net/forgetpassword?token=" + user.ChangePasswordToken; ;
+            string body = "<a href='"+hosting+"forgetchangepassword?token=" + user.ChangePasswordToken+"'>Reset your password</a>" ;
 
             var smtp = new SmtpClient
             {
@@ -237,6 +237,7 @@ namespace JMS.BLL.Services
             using (var message = new MailMessage(fromAddress, toAddress)
             {
                 Subject = subject,
+                IsBodyHtml=true,
                 Body = body
             })
             {

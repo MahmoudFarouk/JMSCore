@@ -36,4 +36,16 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
     }
+      async forgetPassword(username){
+        
+        return  await this.http.post<any>(environment.JMSApiURL + `/user/ForgetPassword?username=${username}`,{}).toPromise();
+
+    }
+    async forgetChangePassword(token,newpassword){
+        
+        return  await this.http.post<any>(environment.JMSApiURL + `/user/ResetForgetPassword?token=${token}&newPassword=${newpassword}`,{}).toPromise();
+
+    }
+    
+
 }
