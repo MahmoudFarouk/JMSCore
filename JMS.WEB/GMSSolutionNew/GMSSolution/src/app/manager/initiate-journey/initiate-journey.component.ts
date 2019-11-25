@@ -35,6 +35,11 @@ export class InitiateJourneyComponent implements OnInit {
   public drivingOptions: any = {
     modes: ['BUS'],
   }
+  public waypoints: any = []
+  public renderOptions = {
+    draggable: true,
+  } 
+
   public questions : Array<string> = [];
 
   
@@ -48,11 +53,6 @@ export class InitiateJourneyComponent implements OnInit {
   @ViewChild("fromDestination",{static:false}) searchElementFrom: ElementRef;
   @ViewChild("toDistination",{static:false}) searchElementTo: ElementRef;
   @ViewChild("addQuestion",{static:false}) addQuestion: ElementRef;
-  // @ViewChild("fromLat",{static:false}) fromLat: ElementRef;
-  // @ViewChild("fromLng",{static:false}) fromLng: ElementRef;
-  // @ViewChild("toLat",{static:false}) toLat: ElementRef;
-  // @ViewChild("toLng",{static:false}) toLng: ElementRef;
-
 
 
 
@@ -79,24 +79,7 @@ export class InitiateJourneyComponent implements OnInit {
       startDate : new FormControl(),
       journeyStatus : new FormControl(),
   });
-  // {
-  //   "title": "test",
-  //   "isTruckTransport": false,
-  //   "journeyStatus": 0,
-  //   "fromDestination": "vjnufduuf",
-  //   "fromLat": "20.255555",
-  //   "fromLng": "21.255888888",
-  //   "toDistination": null,
-  //   "toLat": "20.255555",
-  //   "toLng": "20.255555",
-  //   "startDate": null,
-  //   "deliveryDate": null,
-  //   "cargoWeight": null,
-  //   "cargoPriority": 0,
-  //   "cargoSeverity": 0,
-  //   "cargoType": null,
-  //   "isThirdParty": false
-  // }
+
   submitJourney(){
     console.log(this.initJourney.value)
     this.JourneyService.initJourney(this.initJourney.value);
@@ -172,7 +155,6 @@ export class InitiateJourneyComponent implements OnInit {
               toDistination: place.formatted_address,
             })  
             this.destination = { lat: this.latitudeTo, lng: this.longitudeTo };
-            
           });
           });
       });
@@ -196,4 +178,9 @@ export class InitiateJourneyComponent implements OnInit {
       });
     }
   }
+  public change(event: any) {
+    this.waypoints = event.request.waypoints;
+  }
+
 }
+

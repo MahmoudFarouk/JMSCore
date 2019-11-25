@@ -54,14 +54,17 @@
             <div class="map" style="height: 400px;">
               <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
                 <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-                <agm-direction [origin]="origin"
-                               [destination]="destination"
-                               [provideRouteAlternatives]="true">
+                <agm-direction  [origin]="origin"
+                                [destination]="destination"
+                                [waypoints]="waypoints" 
+                                [renderOptions]="renderOptions" 
+                                (onChange)="change($event)"
+                                [provideRouteAlternatives]="true">
                 </agm-direction>
 
               </agm-map>
 
-              <div class="example-container">
+              <!-- <div class="example-container">
                 <h2>To do</h2>
 
                 <div cdkDropList
@@ -72,7 +75,7 @@
                      (cdkDropListDropped)="drop($event)">
                   <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <div class="input-group mainInputComp">
