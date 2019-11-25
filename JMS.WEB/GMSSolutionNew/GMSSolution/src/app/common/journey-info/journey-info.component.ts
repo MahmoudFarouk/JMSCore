@@ -26,7 +26,7 @@ export class JourneyInfoComponent implements OnInit {
     isTruckTransport: false,
     journeyStatus: null,
     startDate: null,
-    title: null,
+    title: '',
     toDestination: null,
     toLat: null,
     toLng: null,

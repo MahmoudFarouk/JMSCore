@@ -20,21 +20,21 @@ export class JourneyService {
     }
 
     GetJourneyInfo(id) {
-        return this.http.get<JourneyModel>("${environment.JMSApiURL}/journey/journeyInfo?id=${id}");
+        return this.http.get<JourneyModel>(`${environment.JMSApiURL}/journey/journeyInfo?id=${id}`);
     }
     GetJourneyDetails(id) {
-        return this.http.get<JourneyModel>("${environment.JMSApiURL}/journey/${id}");
+        return this.http.get<JourneyModel>(`${environment.JMSApiURL}/journey/${id}`);
     }
     async AssignDriverToJourney(model) {
-        return await this.http.post("${environment.JMSApiURL}/journey/AssignDriverToJourney", model).toPromise();
+        return await this.http.post(`${environment.JMSApiURL}/journey/AssignDriverToJourney`, model).toPromise();
     }
     async initJourney(model) {
 
-        return await this.http.post("${environment.JMSApiURL}/journey/initiate", model).toPromise();
+        return await this.http.post(`${environment.JMSApiURL}/journey/initiate`, model).toPromise();
     }
     GetJourneySelectDriver(id) {
 
-        return this.http.get<any>("${environment.JMSApiURL}/journey/JourneySelectDriver?journeyId=${id}");
+        return this.http.get<any>(`${environment.JMSApiURL}/journey/JourneySelectDriver?journeyId=${id}`);
     }
 
 
