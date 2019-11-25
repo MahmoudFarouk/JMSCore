@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="GMSSolutionNew\GMSSolution\src\app\shared\Services\CommonService.ts" />
+    <Compile Remove="GMSSolutionNew\GMSSolution\**" />
+    <Content Remove="GMSSolutionNew\GMSSolution\**" />
+    <EmbeddedResource Remove="GMSSolutionNew\GMSSolution\**" />
+    <None Remove="GMSSolutionNew\GMSSolution\**" />
+    <TypeScriptCompile Remove="GMSSolutionNew\GMSSolution\**" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using JMS.DAL.Common.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JMS.DAL.Models
 {
@@ -29,12 +30,15 @@ namespace JMS.DAL.Models
         public string CargoType { get; set; }
         public Guid UserId { get; set; }
         public bool IsThirdParty { get; set; }
-        public Guid DipatcherId { get; set; }
+        public Guid? DispatcherId { get; set; }
         public DateTime CreationDate { get; set; }
 
 
         public virtual User User { get; set; }
-        public virtual User Dipatcher { get; set; }
+
+        [ForeignKey("DispatcherId")]
+        [InverseProperty("DispatcherJourneys")]
+        public virtual User Dispatcher { get; set; }
         public virtual ICollection<JourneyUpdate> JourneyUpdate { get; set; }
         public virtual ICollection<AssessmentQuestion> AssessmentQuestion { get; set; }
 
