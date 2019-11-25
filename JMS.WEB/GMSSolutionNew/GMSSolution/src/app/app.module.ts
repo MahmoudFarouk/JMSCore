@@ -2,19 +2,21 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AppRoutingModule } from './app-routing.module';
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './shared/Helpers/jwt.interceptor';
 import { ErrorInterceptor } from './shared/Helpers/error.interceptor'
 import { AuthGuard } from './shared/Helpers/auth.guard';
-import { AgmDirectionModule } from 'agm-direction';
 import { AgGridModule } from '@ag-grid-community/angular';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatRadioModule } from '@angular/material/radio';
+
 
 
 //Common
 import { AppComponent } from './app.component';
-import { CommonService } from "src/app/shared/Services/CommonService";
 import { LoginComponent } from './common/login/login.component';
 import { ResetPasswordComponent } from './common/reset-password/reset-password.component';
 import { MainHeaderComponent } from './common/main-header/main-header.component';
@@ -84,6 +86,8 @@ import { ForgetchangepasswordComponent } from './common/forgetchangepassword/for
         HttpClientModule,
         FormsModule,
         AgGridModule.withComponents([]),
+        DragDropModule,
+        MatRadioModule,
         AgmDirectionModule,
         AgmCoreModule.forRoot({
             apiKey: "AIzaSyD1mqYsV0ShwvvIaKU3MOr9CJelaCdAb7I",
@@ -103,9 +107,9 @@ import { ForgetchangepasswordComponent } from './common/forgetchangepassword/for
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        CommonService,
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        AuthGuard],
+        AuthGuard,
+        GoogleMapsAPIWrapper],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription, Observable, timer } from 'rxjs';
-
-import { UserService } from '../shared/Services/Login/user.service';
-import { AuthenticationService } from '../shared/Services/Login/authentication.service';
-import { User } from '../shared/Entities/Login/user';
+import { User } from '../shared/models/UserModel';
+import { AuthenticationService } from '../shared/Services/AuthenticationService';
 
 @Component({
     selector: 'app-home',
@@ -19,8 +17,8 @@ export class HomeComponent implements OnInit {
     timer: Observable<any>;
     currentUser: User;
     data: any;
-    constructor(private userService: UserService,
-        private authenticationService: AuthenticationService) {
+
+    constructor(private authenticationService: AuthenticationService) {
         this.currentUser = this.authenticationService.currentUserValue;
     }
     ngOnInit() {

@@ -15,7 +15,7 @@ namespace JMS.API.Models
         public string FromDestination { get; set; }
         public double? FromLat { get; set; }
         public double? FromLng { get; set; }
-        public string ToDistination { get; set; }
+        public string ToDestination { get; set; }
         public double? ToLat { get; set; }
         public double? ToLng { get; set; }
         public DateTime? StartDate { get; set; }

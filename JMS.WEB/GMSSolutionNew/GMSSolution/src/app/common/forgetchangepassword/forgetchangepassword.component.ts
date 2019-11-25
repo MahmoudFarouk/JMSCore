@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { AuthenticationService } from '../../shared/Services/Login/authentication.service';
+import { AuthenticationService } from '../../shared/Services/AuthenticationService';
+
+
 @Component({
   selector: 'app-forgetchangepassword',
   templateUrl: './forgetchangepassword.component.html',

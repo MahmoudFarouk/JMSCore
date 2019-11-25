@@ -1,15 +1,18 @@
-import { JourneyService } from './../../shared/Services/User/JourneyService';
-import { timer, Observable, Subscription } from 'rxjs';
-import { ElementRef, NgZone, OnInit, ViewChild, Component, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { NgZone, OnInit, Component, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { MapsAPILoader } from '@agm/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { timer, Observable, Subscription } from 'rxjs';
+import { InitiateJourneyService } from '../initiate-journey/journey-service'
+import { HttpClient } from '@angular/common/http';
+import { CheckPoint } from '../../shared/models/JourneDetailModel';
+import { JourneyModel } from '../../shared/models/JourneyModel';
 
 
 @Component({
-  selector: 'app-initiate-journey',
-  templateUrl: './initiate-journey.component.html',
-  styles: [`
+    selector: 'app-initiate-journey',
+    templateUrl: './initiate-journey.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    styles: [`
     agm-map {
       height: 400px;
       display: block;
@@ -18,182 +21,219 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
       display: block
     }
   `],
-  styleUrls: ['./initiate-journey.component.css'],
-  encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./initiate-journey.component.css'],
+    encapsulation: ViewEncapsulation.None,
 })
 
 
 export class InitiateJourneyComponent implements OnInit {
 
-  public latitude: any;
-  public longitude: any;
-  public latitudeTo: any;
-  public longitudeTo: any;
-  public zoom: number;
-  public origin: any;
-  public destination: any;
-  public drivingOptions: any = {
-    modes: ['BUS'],
-  }
-  public questions : Array<string> = [];
+    journey = {
+        isTruckTransport: true, isThirdParty: false, cargoPriority: 0, cargoSeverity: 0
+    } as JourneyModel;
+    checkpoints: Array<CheckPoint> = [];
+    selectedCheckpoint = { id: 1 } as CheckPoint;
+    lat: Number = 26.84;
+    lng: Number = 26.38;
 
-  
-  loading:boolean = false;
-  isCustomComponent:boolean = false;
-  isCurrentPage:boolean;
-  subscription: Subscription;
-  timer: Observable<any>;
+    origin;
+    destination;
 
+    waypoints = [];
 
-  @ViewChild("fromDestination",{static:false}) searchElementFrom: ElementRef;
-  @ViewChild("toDistination",{static:false}) searchElementTo: ElementRef;
-  @ViewChild("addQuestion",{static:false}) addQuestion: ElementRef;
-  // @ViewChild("fromLat",{static:false}) fromLat: ElementRef;
-  // @ViewChild("fromLng",{static:false}) fromLng: ElementRef;
-  // @ViewChild("toLat",{static:false}) toLat: ElementRef;
-  // @ViewChild("toLng",{static:false}) toLng: ElementRef;
+    //lat: Number = 41.85
+    //lng: Number = -87.65
 
+    //origin = { lat: 29.8174782, lng: -95.6814757 }
+    //destination = { lat: 40.6976637, lng: -74.119764 }
+    //waypoints = [
+    //    { location: { lat: 39.0921167, lng: -94.8559005 } },
+    //    { location: { lat: 41.8339037, lng: -87.8720468 } },
+    //    {
+    //        location: { lat: 28.4813989, lng: -81.5088363 },
+    //    },
+    //    {
+    //        location: { lat: 27.9947147, lng: -82.5943668 },
+    //    }, {
+    //        location: { lat: 29.9065557, lng: -81.340431 },
+    //    }
+    //]
 
+    constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone, private journeyService: InitiateJourneyService, private cd: ChangeDetectorRef) { }
 
+    @ViewChild('fromDestinationInput', { static: false }) fromDestinationInput: ElementRef;
+    @ViewChild('toDestinationInput', { static: false }) toDestinationInput: ElementRef;
+    @ViewChild('checkpointAddressInput', { static: false }) checkpointAddressInput: ElementRef;
 
-  constructor(
-    private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone,
-    private JourneyService: JourneyService
-  ) {}
+    ngOnInit() {
+        this.mapsAPILoader.load().then(() => {
+            let fromDestination = new google.maps.places.Autocomplete(this.fromDestinationInput.nativeElement, {
+                types: ["address"]
+            });
+            let toDestination = new google.maps.places.Autocomplete(this.toDestinationInput.nativeElement, {
+                types: ["address"]
+            });
+            let checkpointAddress = new google.maps.places.Autocomplete(this.checkpointAddressInput.nativeElement, {
+                types: ["address"]
+            });
 
-  initJourney = new FormGroup({
-      title : new FormControl(),
-      fromDestination : new FormControl(),
-      fromLat: new FormControl(),
-      fromLng: new FormControl(),    
-      toLat: new FormControl(),
-      toLng: new FormControl(),   
-      cargoWeight: new FormControl(),
-      cargoPriority: new FormControl(),
-      cargoSeverity: new FormControl(),
-      cargoType: new FormControl(), 
-      toDistination : new FormControl(),
-      dateOfDelivery : new FormControl(),
-      isTruckTransport : new FormControl(),
-      startDate : new FormControl(),
-      journeyStatus : new FormControl(),
-  });
-  // {
-  //   "title": "test",
-  //   "isTruckTransport": false,
-  //   "journeyStatus": 0,
-  //   "fromDestination": "vjnufduuf",
-  //   "fromLat": "20.255555",
-  //   "fromLng": "21.255888888",
-  //   "toDistination": null,
-  //   "toLat": "20.255555",
-  //   "toLng": "20.255555",
-  //   "startDate": null,
-  //   "deliveryDate": null,
-  //   "cargoWeight": null,
-  //   "cargoPriority": 0,
-  //   "cargoSeverity": 0,
-  //   "cargoType": null,
-  //   "isThirdParty": false
-  // }
-  submitJourney(){
-    console.log(this.initJourney.value)
-    this.JourneyService.initJourney(this.initJourney.value);
-  }
-  
-  submitQuestion(){
-    this.questions.push(this.addQuestion.nativeElement.value);
-    console.log(this.questions);
-    console.log(this.addQuestion.nativeElement.value);
-    this.addQuestion.nativeElement.value = "";
-  }
+            fromDestination.addListener("place_changed", () => {
+                this.ngZone.run(() => {
+                    let place: google.maps.places.PlaceResult = fromDestination.getPlace();
+                    debugger;
+                    if (place.geometry === undefined || place.geometry === null) {
+                        return;
+                    }
+                    else {
+                        this.journey.fromDestination = place.formatted_address;
+                        this.journey.fromLat = place.geometry.location.lat();
+                        this.journey.fromLng = place.geometry.location.lng();
 
-  
-  
-  ngOnInit() {
-    // console.log(this.searchElementFrom)
-    this.isCustomComponent=false;
-    this.setTimer();
+                        this.origin = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
+                        debugger;
+                    }
 
-    this.zoom = 4;
-    this.latitude = 39.8282;
-    this.longitude = -98.5795;
-    this.origin = { lat: this.latitude, lng: this.longitude };
+                    if (this.journey.fromLat && this.journey.fromLng && this.journey.toLat && this.journey.toLng)
+                        this.getCheckpoints();
 
-    this.setCurrentPosition();
+                });
+            });
 
+            toDestination.addListener("place_changed", () => {
+                this.ngZone.run(() => {
+                    let place: google.maps.places.PlaceResult = toDestination.getPlace();
+                    if (place.geometry === undefined || place.geometry === null) {
+                        return;
+                    }
+                    else {
+                        this.journey.toDestination = place.formatted_address;
+                        this.journey.toLat = place.geometry.location.lat();
+                        this.journey.toLng = place.geometry.location.lng();
 
-    this.mapsAPILoader.load().then(() => {
-      let fromDestination = new google.maps.places.Autocomplete(this.searchElementFrom.nativeElement, {
-        types: ["address"]
-      });
-      let toDistination = new google.maps.places.Autocomplete(this.searchElementTo.nativeElement, {
-        types: ["address"]
-      });
-      fromDestination.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          //get the place result
-          let place: google.maps.places.PlaceResult = fromDestination.getPlace();
+                        this.destination = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
+                    }
 
-          //verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
+                    if (this.journey.fromLat && this.journey.fromLng && this.journey.toLat && this.journey.toLng)
+                        this.getCheckpoints();
 
-          //set latitude, longitude and zoom
-          this.latitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
-          this.zoom = 12;
-          this.initJourney.patchValue({
-            fromLat : this.latitude,
-            fromLng : this.longitude,
-            fromDestination: place.formatted_address
-          })
-          this.origin = { lat: this.latitude, lng: this.longitude };
+                });
+            });
+
+            checkpointAddress.addListener("place_changed", () => {
+                this.ngZone.run(() => {
+                    let place: google.maps.places.PlaceResult = checkpointAddress.getPlace();
+                    if (place.geometry === undefined || place.geometry === null) {
+                        return;
+                    }
+                    else {
+
+                        this.selectedCheckpoint.name = place.formatted_address;
+                        this.selectedCheckpoint.lat = place.geometry.location.lat();
+                        this.selectedCheckpoint.lng = place.geometry.location.lng();
+                        this.checkpoints.push(Object.assign({}, this.selectedCheckpoint));
+                        this.selectedCheckpoint.name = "";
+                        this.selectedCheckpoint.id++;
+
+                        let waypoint = { location: { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() } };
+                        this.waypoints = [...this.waypoints, waypoint];
+
+                        this.cd.detectChanges()
+
+                    }
+
+                });
+            });
+
         });
-        toDistination.addListener("place_changed", ()=>{
-          this.ngZone.run(() => {
-            //get the place result
-            let place: google.maps.places.PlaceResult = toDistination.getPlace();
-  
-            //verify result
-            if (place.geometry === undefined || place.geometry === null) {
-              return;
-            }
-  
-            //set latitude, longitude and zoom
-            this.latitudeTo = place.geometry.location.lat();
-            this.longitudeTo = place.geometry.location.lng();
-            this.zoom = 12;
-            this.initJourney.patchValue({
-              toLat : this.latitudeTo,
-              toLng : this.longitudeTo,
-              toDistination: place.formatted_address,
-            })  
-            this.destination = { lat: this.latitudeTo, lng: this.longitudeTo };
-            
-          });
-          });
-      });
-    });
- }
- 
-  public setTimer(){
-    this.loading   = true;
-    this.timer = timer(500);
-    this.subscription = this.timer.subscribe(() => {
-        this.loading = false;
-    });
-  }
-
-  private setCurrentPosition() {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-        this.zoom = 12;
-      });
     }
-  }
+
+    //public renderOptions = {
+    //    draggable: true,
+    //}
+
+    //public change(event: any) {
+    //    this.waypoints = event.request.waypoints;
+    //}
+
+    deleteCheckpoint(checkpointId) {
+
+        let locToDelete = { location: { lat: 0, lng: 0 } };
+
+        this.checkpoints = this.checkpoints.filter(function (checkpoint) {
+
+            locToDelete = { location: { lat: checkpoint.lat, lng: checkpoint.lng } };
+            return checkpoint.id !== checkpointId;
+        });
+
+        this.waypoints = this.waypoints.filter(function (waypoint) {
+            return waypoint.location.lat != locToDelete.location.lat && waypoint.location.lng != locToDelete.location.lng;
+        });
+
+        this.cd.detectChanges()
+    }
+
+
+    getCheckpoints() {
+        debugger;
+        this.journeyService.getCheckpoints(this.journey.fromLat, this.journey.fromLng, this.journey.toLat, this.journey.toLng).subscribe(result => {
+            this.checkpoints = result.data;
+        });
+    }
+
+
+
+    drop(event: CdkDragDrop<string[]>) {
+        if (event.previousContainer === event.container) {
+            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        } else {
+            transferArrayItem(event.previousContainer.data,
+                event.container.data,
+                event.previousIndex,
+                event.currentIndex);
+        }
+    }
+
+
+
+    //private setCurrentPosition(lat, lng) {
+    //    if ("geolocation" in navigator) {
+    //        navigator.geolocation.getCurrentPosition((position) => {
+    //            this.journey.fromLat = position.coords.latitude;
+    //            this.journey.fronLng = position.coords.longitude;
+    //        });
+    //    }
+    //}
+
+
+    //public questions: Array<string> = [];
+
+    ////addQuestion() {
+
+    ////}
+
+    //deleteQuestion() {
+
+    //}
+
+    //submitQuestion() {
+    //    this.questions.push(this.addQuestion.nativeElement.value);
+    //    this.addQuestion.nativeElement.value = "";
+    //}
+
+    submitJourney() {
+        //console.log(this.initJourney.value)
+        //this.JourneyService.initJourney(this.initJourney.value);
+    }
+
+
+
+    ////public setTimer() {
+    ////    this.loading = true;
+    ////    this.timer = timer(500);
+    ////    this.subscription = this.timer.subscribe(() => {
+    ////        this.loading = false;
+    ////    });
+    ////}
+
+
 }

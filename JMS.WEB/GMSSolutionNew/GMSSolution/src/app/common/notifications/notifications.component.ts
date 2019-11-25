@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Subscription, Observable, timer } from 'rxjs';
-import { NotificationModel } from 'src/app/shared/Entities/User/NotificationModel';
-import { NotificationService } from 'src/app/shared/Services/User/NotificationService';
+import { NotificationModel } from '../../shared/models/NotificationModel';
+import { NotificationService } from '../../shared/Services/NotificationService';
+
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css']
 })
+
 export class NotificationsComponent implements OnInit {
   loading: boolean = false;
   timer: Observable<any>;

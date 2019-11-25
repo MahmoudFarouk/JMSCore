@@ -1,12 +1,6 @@
 <!--start navbar-->
 <!--end navbar-->
 
-<div>
-  <ng-template #customLoadingTemplate></ng-template>
-  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
-</div>
-<div *ngIf="loading==false"></div>
-
 <!--
 Login, Forget Password, Reset Password => Logo Only
  -->
@@ -28,7 +22,6 @@ Login, Forget Password, Reset Password => Logo Only
       </span>
     </a>
   </div>
-  
 </nav>
 <!--end navbar-->
 
@@ -67,5 +60,3 @@ Login, Forget Password, Reset Password => Logo Only
   </ul>
 </aside>
 <!--end aside menu-->
-
-<h2 class="text-center mainHeadSection">{{componentName}}</h2>

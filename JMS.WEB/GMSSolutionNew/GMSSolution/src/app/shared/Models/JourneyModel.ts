@@ -6,7 +6,7 @@ export interface JourneyModel {
     fromDestination?: any;
     fromLat?: any;
     fromLng?: any;
-    toDistination?: any;
+    toDestination?: any;
     toLat?: any;
     toLng?: any;
     startDate?: any;

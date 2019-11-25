@@ -1,6 +1,6 @@
-import { Level } from 'src/app/shared/Entities/User/level.enum';
-import { JourneyStatus } from 'src/app/shared/Entities/User/journey-status.enum';
-import { QuestionCategory } from 'src/app/shared/Entities/User/question-category.enum';
+import { QuestionCategory } from '../enums/question-category.enum';
+import { JourneyStatus } from '../enums/journey-status.enum';
+import { Level } from '../enums/level.enum';
 
 export interface AssessmentResult {
     id: number;
@@ -58,7 +58,7 @@ export interface Data {
     fromDestination: string;
     fromLat: number;
     fromLng: number;
-    toDistination: string;
+    toDestination: string;
     toLat: number;
     toLng: number;
     startDate: Date;
@@ -74,11 +74,3 @@ export interface Data {
     //checkPoints: CheckPoint[];
     assesments:any[]
 }
-
-export interface JourneyDetailModel {
-    data: Data;
-    status: number;
-    message?: any;
-    exception?: any;
-}
-

@@ -36,12 +36,12 @@ namespace JMS.API.Controllers
         }
 
 
-        [HttpGet("{startLat, startLng, endLat, endLng, isThirdParty}")]
-        [Authorize(Roles = ConstRole.Dispatcher + "," + ConstRole.JMC)]
+        [HttpGet("{fromLat, fromLng, toLat, toLng, isThirdParty}")]
+        [Authorize(Roles = "Product Line,Dispatcher,JMC")]
         [Route("getcheckpoints")]
-        public IActionResult GetCheckpoints(double startLat, double startLng, double endLat, double endLng, bool isThirdParty = false)
+        public IActionResult GetCheckpoints(double fromLat, double fromLng, double toLat, double toLng, bool isThirdParty = false)
         {
-            return Ok(_checkpointService.GetCheckpoints(startLat, startLng, endLat, endLng, isThirdParty));
+            return Ok(_checkpointService.GetCheckpoints(fromLat, fromLng, toLat, toLng, isThirdParty));
         }
 
         [HttpPost]

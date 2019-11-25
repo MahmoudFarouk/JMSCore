@@ -42,7 +42,7 @@ namespace JMS.BLL.Services
             _journey.JourneyStatus = journey.JourneyStatus;
             _journey.StartDate = journey.StartDate;
             _journey.Title = journey.Title;
-            _journey.ToDistination = journey.ToDistination;
+            _journey.ToDestination = journey.ToDestination;
             _journey.ToLat = journey.ToLat;
             _journey.ToLng = journey.ToLng;
             _context.SaveChanges();
@@ -166,7 +166,7 @@ namespace JMS.BLL.Services
                 JourneyStatus = journey.JourneyStatus,
                 StartDate = journey.StartDate,
                 Title = journey.Title,
-                ToDistination = journey.ToDistination,
+                ToDestination = journey.ToDestination,
                 ToLat = journey.ToLat.HasValue ? journey.ToLat.Value : default(double?),
                 ToLng = journey.ToLng.HasValue ? journey.ToLng.Value : default(double?),
                 UserId = journey.UserId,

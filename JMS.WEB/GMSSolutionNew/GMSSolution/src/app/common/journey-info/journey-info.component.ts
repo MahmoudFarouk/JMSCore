@@ -1,12 +1,14 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { JourneyService } from 'src/app/shared/Services/User/JourneyService';
-import { JourneyModel } from 'src/app/shared/Entities/User/JourneyModel';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { JourneyService } from './../../shared/Services/JourneyService';
+import { JourneyModel } from '../../shared/models/JourneyModel';
+
 @Component({
   selector: 'app-journey-info',
   templateUrl: './journey-info.component.html',
   styleUrls: ['./journey-info.component.css']
 })
+
 export class JourneyInfoComponent implements OnInit {
   loading: boolean = false;
   public JourneyId: number = 0;
@@ -25,7 +27,7 @@ export class JourneyInfoComponent implements OnInit {
     journeyStatus: null,
     startDate: null,
     title: null,
-    toDistination: null,
+    toDestination: null,
     toLat: null,
     toLng: null,
     userId: ""

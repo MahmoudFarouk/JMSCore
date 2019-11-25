@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../shared/Services/Login/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { AuthenticationService } from '../../shared/Services/AuthenticationService';
+
 @Component({
   selector: 'app-forget-password',
   templateUrl: './forget-password.component.html',

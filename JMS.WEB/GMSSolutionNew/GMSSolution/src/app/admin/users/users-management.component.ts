@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AllCommunityModules, Module } from '@ag-grid-community/all-modules';
-import { CommonService } from "src/app/shared/Services/CommonService";
 
 
 @Component({
@@ -15,12 +14,10 @@ export class UsersManagementComponent implements OnInit {
     rowData: { make: string, model: string, price: number }[];
     modules: Module[];
 
-    constructor(private common: CommonService) { }
+    constructor() { }
 
 
     ngOnInit() {
-        this.common.setComponentName("Users Management");
-
         this.columnDefs = [
             { headerName: 'Make', field: 'make' },
             { headerName: 'Model', field: 'model' },

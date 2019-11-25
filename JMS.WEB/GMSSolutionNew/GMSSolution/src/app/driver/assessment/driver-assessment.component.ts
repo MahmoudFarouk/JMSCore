@@ -1,9 +1,8 @@
-import { UserService } from 'src/app//shared/Services/User/user.service';
-import { AssessmentResult } from 'src/app/shared/Entities/User/assessment-result';
 import { Component, OnInit } from '@angular/core';
 import { Subscription, Observable, timer } from 'rxjs';
-import { AssessmentQuestion } from 'src/app/shared/Entities/User/assessment-question';
 import { NgForm } from '@angular/forms';
+import { AssessmentResult, AssessmentQuestion } from '../../shared/models/JourneDetailModel';
+
 
 @Component({
     selector: 'app-driver-assessment',
@@ -30,9 +29,8 @@ export class DriverAssessmentComponent implements OnInit {
     checkPointAssessmentQuestionList: AssessmentQuestion[];
     postTripAssessmentQuestionList: AssessmentQuestion[];
 
-    constructor(private userService: UserService) {
-        this.language = window.location.href.indexOf("/ar/") > -1 ? "ar" : "en";
-    }
+    userService: any;
+
     ngOnInit() {
         this.isCustomComponent = false;
         this.setTimer();
@@ -111,7 +109,7 @@ export class DriverAssessmentComponent implements OnInit {
         if ((form = null)) {
             form.resetForm();
         }
-        this.formData = new AssessmentResult();
+       // this.formData = new AssessmentResult();
     };
     public setTimer() {
         this.loading = true;
