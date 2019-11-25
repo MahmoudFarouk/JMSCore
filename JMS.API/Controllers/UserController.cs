@@ -281,7 +281,7 @@ namespace JMS.API.Controllers
 
             try
             {
-                return Ok(_userService.ForgetPassword(username, _appSettings.Email, _appSettings.Password));
+                return Ok(_userService.ForgetPassword(username, _appSettings.Email, _appSettings.Password,_appSettings.WebUrl));
             }
             catch (Exception ex)
             {

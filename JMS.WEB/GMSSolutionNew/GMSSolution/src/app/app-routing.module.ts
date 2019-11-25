@@ -30,6 +30,8 @@ import { TeamManagementComponent } from './admin/team/team-management.component'
 import { UsersManagementComponent } from './admin/users/users-management.component';
 import { CheckpointManagementComponent } from './admin/checkpoints/checkpoint-management.component';
 import { ReportsComponent } from './admin/reports/reports.component';
+import { ForgetPasswordComponent } from './common/forget-password/forget-password.component';
+import { ForgetchangepasswordComponent } from './common/forgetchangepassword/forgetchangepassword.component';
 
 
 const routes: Routes = [
@@ -39,9 +41,11 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     { path: 'login', component: LoginComponent },
-    //{ path: 'forget-password', component: ForgetPasswordComponent },
+    { path: 'forgetpassword', component: ForgetPasswordComponent },
     { path: 'reset-password', component: ResetPasswordComponent },
-
+    { path: 'forgetchangepassword', component: ForgetchangepasswordComponent },
+    
+    
     //App Routes
     { path: 'initiate-journey', component: InitiateJourneyComponent, canActivate: [AuthGuard] },
     { path: 'requests', component: MyRequestsComponent, canActivate: [AuthGuard] },

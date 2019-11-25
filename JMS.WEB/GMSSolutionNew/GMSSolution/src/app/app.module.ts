@@ -45,6 +45,8 @@ import { WorkforceManagementComponent } from './admin/workforce/workforce-manage
 import { ReportsComponent } from './admin/reports/reports.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ForgetPasswordComponent } from './common/forget-password/forget-password.component';
+import { ForgetchangepasswordComponent } from './common/forgetchangepassword/forgetchangepassword.component';
 
 
 
@@ -72,7 +74,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         MainHeaderComponent,
         MyRequestsComponent,
         CurrentJourneysComponent,
-        JourneyCalendarComponent
+        JourneyCalendarComponent,
+        ForgetPasswordComponent,
+        ForgetchangepasswordComponent
     ],
     imports: [
         BrowserModule,
