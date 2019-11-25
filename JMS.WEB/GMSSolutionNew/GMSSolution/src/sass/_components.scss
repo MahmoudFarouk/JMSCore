@@ -37,10 +37,10 @@
     height: auto;
     margin: 0;
     z-index: auto;
+    display: block!important;
 }
 .menuAndNotificationNav a.sidenav-trigger img{
     border-radius: 5px;
-
 }
 .notificationsNumberNavIcon {
     position: relative;
@@ -58,6 +58,15 @@
     font-size: 12px;
     font-weight: bold;
     
+}
+
+.mainHeadSection{
+    font-family: Montserrat;
+    margin: 25px 0;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 30px;
+    color: #666;
 }
 
 //side nav config

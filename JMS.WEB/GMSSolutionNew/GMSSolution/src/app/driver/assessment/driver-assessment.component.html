@@ -1,37 +1,7 @@
-<div>
-    <ng-template #customLoadingTemplate></ng-template>
-    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
-</div>
 <div *ngIf="loading==false">
 <form name="form" #form="ngForm" (ngSubmit)="onSubmit(form)" autocomplete="off" novalidate>
 <!-- <input type="hidden" name="ID" #Id="ngModel" [(ngModel)]="formData.Id" /> -->
-<aside id="slide-out" class="sidenav">
-  <div class="userInfo">
-      <img src="assets/images/Jms_assets/user.svg">
-      <h2>Amar Omar</h2>
-      <button>
-          Product Line
-      </button>
-  </div>
-  <ul>
-      <li>
-          <img src="assets/images/Jms_assets/ic_plus_black.svg">
-          <h3>Initiate Journy</h3>
-      </li>
-      <li>
-          <img src="assets/images/Jms_assets/ic_calendar.svg">
-          <h3>Journey Calendar</h3>
-      </li>
-      <li class="selected">
-          <img src="assets/images/Jms_assets/ic_pending_black.svg">
-          <h3>Pending Journey</h3>
-      </li>
-      <li>
-          <img src="assets/images/Jms_assets/ic_trip_black.svg">
-          <h3>My Requests</h3>
-      </li>
-  </ul>
-</aside>
+
 <div class="mobileContainer">
   <section id="titleHere">
       <h3>Title Here</h3>
@@ -58,51 +28,75 @@
 </div>
 <div class="mobileContainer assessments">
   <ul class="collapsible expandable">
-      <li class="active" >
-          <div class="collapsible-header">
-              <p>PreTrip Assessments</p>
-              <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+    <li class="active">
+      <div class="collapsible-header">
+        <p>PreTrip Assessments</p>
+        <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+      </div>
+
+      <!-- After Select Driver -->
+      <div class="collapsible-body" style="display:block;">
+        <div class="question" *ngFor="let preTripAssessment of preTripAssessmentQuestionList">
+          <p>{{preTripAssessment.Question}}</p>
+          <div class="answer">
+            <button (click)="checkAssessmentResult($event)">YES</button>
+            <button (click)="checkAssessmentResult($event)">NO</button>
           </div>
-          <div class="collapsible-body" >
-              <div class="question" *ngFor="let preTripAssessment of preTripAssessmentQuestionList">
-                  <p>{{preTripAssessment.Question}}</p>
-                  <div class="answer">
-                      <button (click)="checkAssessmentResult($event)">YES</button>
-                      <button (click)="checkAssessmentResult($event)">NO</button>
-                  </div>
-              </div>
+        </div>
+      </div>
+    </li>
+    <li class="active">
+      <div class="collapsible-header">
+        <p>CheckPoint Assessments</p>
+        <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+      </div>
+
+      <!-- After Each Checkpoint -->
+      <div class="collapsible-body">
+        <div class="question" *ngFor="let checkPointAssessment of checkPointAssessmentQuestionList">
+          <p>{{checkPointAssessment.Question}}</p>
+          <div class="answer">
+            <button>YES</button>
+            <button>NO</button>
           </div>
-      </li>
-      <li class="active" >
-          <div class="collapsible-header">
-              <p>CheckPoint Assessments</p>
-              <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+        </div>
+      </div>
+    </li>
+    <li class="active">
+      <div class="collapsible-header">
+        <p>PostTrip Assessments</p>
+        <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+      </div>
+
+      <!-- After Journey Completion -->
+      <div class="collapsible-body">
+        <div class="question" *ngFor="let postTripAssessment of postTripAssessmentQuestionList">
+          <p>{{postTripAssessment.Question}}</p>
+          <div class="answer">
+            <button>YES</button>
+            <button>NO</button>
           </div>
-          <div class="collapsible-body" >
-              <div class="question" *ngFor="let checkPointAssessment of checkPointAssessmentQuestionList">
-                  <p>{{checkPointAssessment.Question}}</p>
-                  <div class="answer">
-                      <button>YES</button>
-                      <button>NO</button>
-                  </div>
-              </div>
+        </div>
+      </div>
+    </li>
+
+    <li class="active">
+      <div class="collapsible-header">
+        <p>Vehicle Checklist</p>
+        <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+      </div>
+
+      <!-- For All Cases -->
+      <div class="collapsible-body">
+        <div class="question" *ngFor="let postTripAssessment of postTripAssessmentQuestionList">
+          <p>{{postTripAssessment.Question}}</p>
+          <div class="answer">
+            <button>YES</button>
+            <button>NO</button>
           </div>
-      </li>
-      <li class="active" >
-          <div class="collapsible-header">
-              <p>PostTrip Assessments</p>
-              <img src="assets/images/Jms_assets/ic_right_arrow.svg">
-          </div>
-          <div class="collapsible-body" >
-              <div class="question" *ngFor="let postTripAssessment of postTripAssessmentQuestionList">
-                  <p>{{postTripAssessment.Question}}</p>
-                  <div class="answer">
-                      <button>YES</button>
-                      <button>NO</button>
-                  </div>
-              </div>
-          </div>
-      </li>
+        </div>
+      </div>
+    </li>
   </ul>
 </div>
 <input  class="sumbitToInitiate" type="submit" value= "submit">

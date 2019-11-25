@@ -55,7 +55,7 @@ const routes: Routes = [
 
     { path: 'driver-selection', component: DriverSelectionComponent, canActivate: [AuthGuard] },
     { path: 'journeyapproval', component: JourneyApprovalComponent },
-    { path: 'driverassessment', component: DriverAssessmentComponent },
+    { path: 'driver/assessment', component: DriverAssessmentComponent },
     { path: 'journeyclosure', component: JourneyClosureComponent },
     { path: 'checkpointmanagement', component: CheckpointManagementComponent },
     { path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard] },

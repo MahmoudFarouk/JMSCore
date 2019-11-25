@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace JMS.DAL.Models
 {
-    public  class Journey
+    public class Journey
     {
         public Journey()
         {
@@ -29,9 +29,12 @@ namespace JMS.DAL.Models
         public string CargoType { get; set; }
         public Guid UserId { get; set; }
         public bool IsThirdParty { get; set; }
+        public Guid DipatcherId { get; set; }
+        public DateTime CreationDate { get; set; }
 
 
         public virtual User User { get; set; }
+        public virtual User Dipatcher { get; set; }
         public virtual ICollection<JourneyUpdate> JourneyUpdate { get; set; }
         public virtual ICollection<AssessmentQuestion> AssessmentQuestion { get; set; }
 
