@@ -12,8 +12,8 @@ import { AuthGuard } from './shared/Helpers/auth.guard';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatRadioModule } from '@angular/material/radio';
-
-
+import { BlockUIModule } from 'ng-block-ui';
+import { BlockUIHttpModule } from 'ng-block-ui/http';
 
 //Common
 import { AppComponent } from './app.component';
@@ -86,6 +86,8 @@ import { ForgetchangepasswordComponent } from './common/forgetchangepassword/for
         HttpClientModule,
         FormsModule,
         AgGridModule.withComponents([]),
+        BlockUIModule.forRoot(),
+        BlockUIHttpModule.forRoot(), 
         DragDropModule,
         MatRadioModule,
         AgmDirectionModule,
