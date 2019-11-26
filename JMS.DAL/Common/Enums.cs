@@ -46,16 +46,52 @@ namespace JMS.DAL.Common.Enums
 
     public enum JourneyStatus
     {
-        PendingOnJMCApproval = 0,
-        PendingOnDispatcherCompletion = 2,
+        PendingOnJMCInitialApproval = 0,
+        PendingOnDispatcherApproval = 2,
+
         PendingOnDriverSelection = 3,
-        PendingOnQHSEApproval = 4,
-        PendingOnGBMApproval = 5,
-        Approved =  6,
-        Canceled = 7,
-        Stopped =  8,
+        JMCAssignedDriver,
+        DispatcherAssignedDriver,
+
+        PendingOnDriverCompletePreTripAssessment,
+        DriverCompletedPreTripAssessment,
+        PendingOnJMCApproveDriverPreTripAssessment,
+        JMCApprovedDriver,
+        JMCChangedDriver,
+
+        PendingOnJMCJourneyApproval,
+        JMCApprovedJourney,
+        JMCRejectedJourney,
+        PendingOnQHSEJourneyApproval = 4,
+        QHSEApprovedJourney,
+        QHSEejectedJourney,
+        PendingOnGBMJourneyApproval = 5,
+        JBMApprovedJourney,
+        GBMRejectedJourney,
+
+        PendingOnDriverStartJourney,
+        DriverStartedJourney,
+
+        DriverProceedNextCheckpoint,
+        DriverReachedCheckpoint,
+        PendingOnDriverCompleteCheckpointAssessment,
+        DriverCompletedCheckpointAssessemnt,
+
+        PendingOnJMCCheckpointApproval,
+        JMCApprovedCheckpoint,
+        JMCRejectedCheckpoint,
+        PendingOnQHSECheckpointApproval = 4,
+        QHSEApprovedCheckpoint,
+        QHSERejectedCheckpoint,
+        PendingOnGBMCheckpointApproval = 5,
+        GBMApprovedCheckpoint,
+        GBMRejectedCheckpoint,
+
+        PendingOnDriverCompletePostTripAssessment,
+        Completed,
+        Closed ,
         Paused = 9,
-        Completed = 10
+        Stopped =  8,
     }
 
 }
