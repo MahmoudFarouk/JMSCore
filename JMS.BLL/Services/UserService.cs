@@ -11,6 +11,7 @@ using JMS.BLL.Common;
 using JMS.DAL.Common.Enums;
 using System.Net.Mail;
 using System.Net;
+using JMS.BLL.Models;
 
 namespace JMS.BLL.Services
 {
@@ -212,7 +213,7 @@ namespace JMS.BLL.Services
         {
             return _context.Users.FirstOrDefault(x => x.Username == username.ToLower());
         }
-        public ServiceResponse ForgetPassword(string username, string email, string emailPassword,string hosting)
+        public ServiceResponse ForgetPassword(string username, string email, string emailPassword, string hosting)
         {
             var user = _context.Users.FirstOrDefault(x => x.Username == username.ToLower());
             if (user == null)
@@ -223,7 +224,7 @@ namespace JMS.BLL.Services
             var toAddress = new MailAddress(username, "JMS Worker");
             string fromPassword = emailPassword;
             const string subject = "Forget Password";
-            string body = "<a href='"+hosting+"forgetchangepassword?token=" + user.ChangePasswordToken+"'>Reset your password</a>" ;
+            string body = "<a href='" + hosting + "forgetchangepassword?token=" + user.ChangePasswordToken + "'>Reset your password</a>";
 
             var smtp = new SmtpClient
             {
@@ -237,7 +238,7 @@ namespace JMS.BLL.Services
             using (var message = new MailMessage(fromAddress, toAddress)
             {
                 Subject = subject,
-                IsBodyHtml=true,
+                IsBodyHtml = true,
                 Body = body
             })
             {
@@ -432,6 +433,32 @@ namespace JMS.BLL.Services
             }
             return response;
         }
+
+
+        public ServiceResponse<List<LookupModel<Guid>>> GetRoleUsers(UserRoles role)
+        {
+            ServiceResponse<List<LookupModel<Guid>>> response = new ServiceResponse<List<LookupModel<Guid>>>();
+
+            try
+            {
+                response.Data = _context.Users.Where(u => u.UserRoles.Any(r => r.Role.Name == role.ToString())).Select(u => new LookupModel<Guid>
+                {
+                    Id = u.Id,
+                    Value = u.FullName
+                }).ToList();
+
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+            return response;
+        }
+
 
     }
 }

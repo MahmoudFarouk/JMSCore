@@ -46,11 +46,16 @@ namespace JMS.DAL.Common.Enums
 
     public enum JourneyStatus
     {
-        PendingOnApproval = 0,
-        Approved = 1,
-        Canceled = 2,
-        Stopped = 3,
-        Completed = 4
+        PendingOnJMCApproval = 0,
+        PendingOnDispatcherCompletion = 2,
+        PendingOnDriverSelection = 3,
+        PendingOnQHSEApproval = 4,
+        PendingOnGBMApproval = 5,
+        Approved =  6,
+        Canceled = 7,
+        Stopped =  8,
+        Paused = 9,
+        Completed = 10
     }
 
 }

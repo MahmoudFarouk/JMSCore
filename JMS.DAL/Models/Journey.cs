@@ -9,7 +9,7 @@ namespace JMS.DAL.Models
     {
         public Journey()
         {
-            JourneyUpdate = new HashSet<JourneyUpdate>();
+            JourneyUpdates = new HashSet<JourneyUpdate>();
         }
 
         public int Id { get; set; }
@@ -39,8 +39,10 @@ namespace JMS.DAL.Models
         [ForeignKey("DispatcherId")]
         [InverseProperty("DispatcherJourneys")]
         public virtual User Dispatcher { get; set; }
-        public virtual ICollection<JourneyUpdate> JourneyUpdate { get; set; }
-        public virtual ICollection<AssessmentQuestion> AssessmentQuestion { get; set; }
+        public virtual ICollection<JourneyUpdate> JourneyUpdates { get; set; }
+        [NotMapped]
+        public virtual ICollection<Checkpoint> Checkpoints { get; set; }
 
+        public virtual ICollection<AssessmentQuestion> AssessmentQuestion { get; set; }
     }
 }

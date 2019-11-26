@@ -14,6 +14,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatRadioModule } from '@angular/material/radio';
 import { BlockUIModule } from 'ng-block-ui';
 import { BlockUIHttpModule } from 'ng-block-ui/http';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 //Common
 import { AppComponent } from './app.component';
@@ -88,12 +89,15 @@ import { ForgetchangepasswordComponent } from './common/forgetchangepassword/for
         AgGridModule.withComponents([]),
         BlockUIModule.forRoot(),
         BlockUIHttpModule.forRoot(), 
+        SweetAlert2Module.forRoot(),
         DragDropModule,
         MatRadioModule,
         AgmDirectionModule,
         AgmCoreModule.forRoot({
             apiKey: "AIzaSyD1mqYsV0ShwvvIaKU3MOr9CJelaCdAb7I",
-            libraries: ["places"]
+            libraries: ["places"],
+            language:'ar',
+            region:'EG'
         }),
         ReactiveFormsModule,
         NgxLoadingModule.forRoot({

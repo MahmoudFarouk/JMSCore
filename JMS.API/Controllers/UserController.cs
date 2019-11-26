@@ -318,6 +318,15 @@ namespace JMS.API.Controllers
         }
 
         [HttpGet()]
+        [Authorize(Roles = ConstRole.ProductLine)]
+        [Route("getdispatchers")]
+        public IActionResult GetDispatchers()
+        {
+            return Ok(_userService.GetRoleUsers(DAL.Common.Enums.UserRoles.Dispatcher));
+        }
+
+
+        [HttpGet()]
         [Authorize(Roles = ConstRole.JMSAdmin)]
         [Route("getworkforces")]
         public IActionResult GetUserWorkForces()
