@@ -18,7 +18,8 @@
             </div>
             <div class="input-group mainInputComp">
               <!-- From Distination -->
-              <input type="text" class="form-control" placeholder="Journey From" autocorrect="off" autocapitalize="off" spellcheck="false" name="fromDestination" #fromDestinationInput [(ngModel)]="journey.fromDestination">
+              <input type="text" class="form-control" placeholder="Journey From" autocorrect="off" autocapitalize="off"
+                spellcheck="false" name="fromDestination" #fromDestinationInput [(ngModel)]="journey.fromDestination">
               <div class="input-group-prepend">
                 <span class="input-group-text">
                   <img src="../../assets/images/Jms_assets/ic_pin.svg">
@@ -28,7 +29,8 @@
 
             <div class="input-group mainInputComp">
               <!-- To Distination -->
-              <input type="text" class="form-control" placeholder="Journey To" autocorrect="off" autocapitalize="off" spellcheck="false" name="toDestination" #toDestinationInput [(ngModel)]="journey.toDestination">
+              <input type="text" class="form-control" placeholder="Journey To" autocorrect="off" autocapitalize="off"
+                spellcheck="false" name="toDestination" #toDestinationInput [(ngModel)]="journey.toDestination">
               <div class="input-group-prepend">
                 <span class="input-group-text">
                   <img src="../../assets/images/Jms_assets/ic_pin.svg">
@@ -53,35 +55,36 @@
                 </agm-map>-->
                 <agm-map [latitude]="lat" [longitude]="lng">
                   <div *ngIf="origin && destination">
-                    <agm-direction  [origin]="origin" [destination]="destination" [waypoints]="waypoints"></agm-direction>
+                    <agm-direction [origin]="origin" [destination]="destination" [waypoints]="waypoints">
+                    </agm-direction>
                   </div>
                 </agm-map>
               </div>
 
               <div class="autoCompLocations">
                 <h4 class="text-center mainHeadSection">Checkpoints</h4>
-                <div class="input-group mainInputComp">
-                  <input type="text" class="form-control" placeholder="Enter Checkpoint Address" autocorrect="off" autocapitalize="off" spellcheck="false" name="checkpointAddress" #checkpointAddressInput [(ngModel)]="selectedCheckpoint.name">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Enter Checkpoint Address" autocorrect="off"
+                    autocapitalize="off" spellcheck="false" name="checkpointAddress" #checkpointAddressInput
+                    [(ngModel)]="selectedCheckpoint.name">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
                       <img src="../../assets/images/Jms_assets/ic_pin.svg">
                     </span>
                   </div>
                 </div>
-                <div cdkDropList *ngIf="checkpoints.length>0"
-                     #todoList="cdkDropList"
-                     [cdkDropListData]="checkpoints"
-                     [cdkDropListConnectedTo]="[doneList]"
-                     class="example-list"
-                     (cdkDropListDropped)="drop($event)">
+                <div cdkDropList *ngIf="checkpoints.length>0" #todoList="cdkDropList" [cdkDropListData]="checkpoints"
+                  [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
                   <span *ngIf="checkpoints.length>1">Drag and Drop to Reorder</span>
-                  <div class="example-box" *ngFor="let checkpoint of checkpoints" cdkDrag>{{checkpoint.name}} <a (click)="deleteCheckpoint(checkpoint.id)" href="javascript:void(0);">X</a></div>
+                  <div class="example-box" *ngFor="let checkpoint of checkpoints" cdkDrag>{{checkpoint.name}} <a
+                      (click)="deleteCheckpoint(checkpoint.id)" href="javascript:void(0);">X</a></div>
                 </div>
               </div>
             </section>
 
             <div class="input-group mainInputComp">
-              <input type="text" bsDatepicker class="form-control" placeholder="Delivery Date" name="deliveryDate" [(ngModel)]="journey.deliveryDate">
+              <input type="text" bsDatepicker class="form-control" placeholder="Delivery Date" name="deliveryDate"
+                [(ngModel)]="journey.deliveryDate">
               <div class="input-group-prepend">
                 <span class="input-group-text">
                   <img src="../../assets/images/Jms_assets/ic_calendar.svg">
@@ -101,7 +104,8 @@
                 </div>
                 <div>
                   <label>
-                    <input type="radio" [value]="false" name="isTruckTransport" [(ngModel)]="journey.isTruckTransport" />
+                    <input type="radio" [value]="false" name="isTruckTransport"
+                      [(ngModel)]="journey.isTruckTransport" />
                     <span>People</span>
                   </label>
                 </div>
@@ -130,7 +134,8 @@
             <!--DispatcherId-->
             <div class="input-group mainInputComp" *ngIf="journey.isThirdParty">
               <p>Dispatcher</p>
-              <select class="custom-select d-block w-100" id="drpCustomers" name="drpCustomers" [(ngModel)]="selectedCustomer">
+              <select class="custom-select d-block w-100" id="drpCustomers" name="drpCustomers"
+                [(ngModel)]="selectedCustomer">
                 <option value="" selected disabled>Select Customer</option>
                 <option *ngFor="let customer of customers" [value]="customer.id">
                   {{customer.name}}
@@ -149,10 +154,12 @@
           </div>
           <div class="collapsible-body">
             <div class="input-group mainInputComp">
-              <input type="text" class="form-control" placeholder="Type" aria-label="Type" name="cargoType" [(ngModel)]="journey.cargoType">
+              <input type="text" class="form-control" placeholder="Type" aria-label="Type" name="cargoType"
+                [(ngModel)]="journey.cargoType">
             </div>
             <div class="input-group mainInputComp">
-              <input type="text" class="form-control" placeholder="Weight" aria-label="Weight" name="cargoWeight" [(ngModel)]="journey.cargoWeight">
+              <input type="text" class="form-control" placeholder="Weight" aria-label="Weight" name="cargoWeight"
+                [(ngModel)]="journey.cargoWeight">
             </div>
 
             <div class="radioButtonsGroup">
