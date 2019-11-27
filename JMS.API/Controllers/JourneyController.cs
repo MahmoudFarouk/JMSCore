@@ -45,9 +45,6 @@ namespace JMS.API.Controllers
 
                 var journey = iMapper.Map<JourneyModel, Journey>(model);
 
-
-
-
                 journey.UserId = Guid.Parse(User.Identity.Name);
                 var result = _journeyService.InitiateJourney(journey);
 

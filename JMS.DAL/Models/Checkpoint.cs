@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JMS.DAL.Models
 {
@@ -17,6 +18,9 @@ namespace JMS.DAL.Models
         public double? Longitude { get; set; }
         public bool IsThirdParty { get; set; }
 
+
+        [NotMapped]
+        public virtual ICollection<Journey> Journeys { get; set; }
 
         public virtual ICollection<JourneyUpdate> JourneyUpdate { get; set; }
 

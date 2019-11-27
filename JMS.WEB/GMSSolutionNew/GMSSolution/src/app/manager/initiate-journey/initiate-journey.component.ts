@@ -45,13 +45,29 @@ export class InitiateJourneyComponent implements OnInit {
     //Egypt Coordinates
     defaultLat: number = 26.84;
     defaultLng: number = 26.38;
+    //public renderOptions = { suppressMarkers: false };
+    //markerOptions = {
+    //    origin: {
+    //        //draggable: true,
+    //        infoWindow: `<h4>Start Point<h4>`,
+    //        icon: 'https://img.icons8.com/cotton/64/000000/place-marker.png'
+    //    },
+    //    waypoints: {
+    //        infoWindow: `<h4>Check Point<h4>`,
+    //        icon:'https://i.imgur.com/7teZKif.png',
+    //    },
+    //    destination: {
+    //        //draggable: true,
+    //        infoWindow: `<h4>End Point<h4>`,
+    //        icon: 'https://img.icons8.com/cotton/64/000000/pin3.png',
+    //    }
+    //}
 
-    origin;
-    destination;
+    fromDestination;
+    toDestination;
     waypoints = [];
 
     constructor(private mapsAPI: MapsAPILoader, private ngZone: NgZone, private journeyService: JourneyService, private cd: ChangeDetectorRef) { }
-
 
 
     @ViewChild('fromDestinationInput', { read: ElementRef, static: false }) fromDestinationInput: ElementRef;
@@ -60,6 +76,8 @@ export class InitiateJourneyComponent implements OnInit {
 
 
     ngOnInit() {
+
+        this.getDispatchers();
 
         this.mapsAPI.load().then(() => {
             let fromDestination = new google.maps.places.Autocomplete(this.fromDestinationInput.nativeElement, {});
@@ -79,7 +97,7 @@ export class InitiateJourneyComponent implements OnInit {
                         this.journey.fromLat = place.geometry.location.lat();
                         this.journey.fromLng = place.geometry.location.lng();
 
-                        this.origin = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
+                        this.fromDestination = { lat: this.journey.fromLat, lng: this.journey.fromLng };
                     }
 
                     if (this.journey.fromLat && this.journey.fromLng && this.journey.toLat && this.journey.toLng)
@@ -94,12 +112,16 @@ export class InitiateJourneyComponent implements OnInit {
                         return;
                     }
                     else {
+
                         this.journey.toDestination = place.formatted_address;
                         this.journey.toLat = place.geometry.location.lat();
                         this.journey.toLng = place.geometry.location.lng();
 
-                        this.destination = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
+                        this.toDestination = { lat: this.journey.toLat, lng: this.journey.toLng };
                     }
+
+                    this.cd.detectChanges();
+
 
                     if (this.journey.fromLat && this.journey.fromLng && this.journey.toLat && this.journey.toLng)
                         this.getCheckpoints();
@@ -113,46 +135,73 @@ export class InitiateJourneyComponent implements OnInit {
                     }
                     else {
 
-                        this.selectedCheckpoint.id = -1;
+
+                        this.selectedCheckpoint.id = 0;
                         this.selectedCheckpoint.name = place.formatted_address;
                         this.selectedCheckpoint.latitude = place.geometry.location.lat();
                         this.selectedCheckpoint.longitude = place.geometry.location.lng();
-                        this.journey.checkpoints.push(Object.assign({}, this.selectedCheckpoint));
+
+                        let filteredCheckpoints = this.journey.checkpoints.filter(c => (this.selectedCheckpoint.latitude == c.latitude && this.selectedCheckpoint.longitude == c.longitude));
+
+                        if (filteredCheckpoints.length > 0 ||
+                            (this.selectedCheckpoint.latitude == this.journey.fromLat && this.selectedCheckpoint.longitude == this.journey.fromLng) ||
+                            (this.selectedCheckpoint.latitude == this.journey.toLat && this.selectedCheckpoint.longitude == this.journey.toLng)) {
+
+                            if (filteredCheckpoints.length > 0 && filteredCheckpoints[0].isDeleted)
+                                filteredCheckpoints[0].isDeleted = false;
+                            else
+                                swal.fire("Attention", "Checkpoint Already Exist", "warning");
+                        }
+                        else {
+                            this.journey.checkpoints.push(Object.assign({}, this.selectedCheckpoint));
+                            this.drawMapCheckpoints();
+                        }
                         this.selectedCheckpoint.name = "";
-
-                        this.drawMapCheckpoints();
+                        this.cd.detectChanges();
                     }
-
                 });
             });
         });
     }
 
-    drawMapCheckpoints() {
-        this.waypoints = this.journey.checkpoints.map(function (checkpoint) {
-            return { location: { lat: checkpoint.latitude, lng: checkpoint.longitude } }
-        });
+    markerChanged(event: any) {
+        //this.waypoints = event.request.waypoints;
 
-        this.cd.detectChanges();
-    }
+        ////TODO OnSubmit Take The Final Waypoints into Checkpoints Object
+        //for (var i = 0; i < this.journey.checkpoints.length; i++) {
+        //    for (var key in this.journey.checkpoints[i]) {
 
-
-    getDispatchers() {
-        this.journeyService.getDispatchers().subscribe(result => {
-            this.dispatchers = result.data;
-        });
+        //        if (this.journey.checkpoints[i].hasOwnProperty(key)) {
+        //            //checkpoints[key] = "";
+        //        }
+        //    }
+        //}
     }
 
     getCheckpoints() {
         this.journeyService.getCheckpoints(this.journey.fromLat, this.journey.fromLng, this.journey.toLat, this.journey.toLng).subscribe(result => {
             this.journey.checkpoints = result.data;
+
             this.drawMapCheckpoints();
         });
     }
 
-    deleteCheckpoint(checkpointName) {
+    drawMapCheckpoints() {
+        this.waypoints = this.journey.checkpoints.map(function (checkpoint) {
+            if (!checkpoint.isDeleted)
+                return { location: { lat: checkpoint.latitude, lng: checkpoint.longitude } }
+        });
+
+        this.cd.detectChanges();
+    }
+
+    deleteCheckpoint(lat, lng) {
         this.journey.checkpoints = this.journey.checkpoints.filter(function (checkpoint) {
-            return checkpoint.name !== checkpointName;
+            if (checkpoint.latitude == lat && checkpoint.longitude == lng && checkpoint.id != -1)
+                checkpoint.isDeleted = true;
+            else
+                return checkpoint.latitude != lat && checkpoint.longitude != lng;
+            return checkpoint;
         });
         this.drawMapCheckpoints();
     }
@@ -160,6 +209,12 @@ export class InitiateJourneyComponent implements OnInit {
     reArrangeCheckpoints(event: CdkDragDrop<Checkpoint[]>) {
         moveItemInArray(this.journey.checkpoints, event.previousIndex, event.currentIndex);
         this.drawMapCheckpoints();
+    }
+
+    getDispatchers() {
+        this.journeyService.getDispatchers().subscribe(result => {
+            this.dispatchers = result.data;
+        });
     }
 
     submitForm() {

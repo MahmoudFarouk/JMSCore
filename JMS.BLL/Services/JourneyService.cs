@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using FlexLabs.EntityFrameworkCore.Upsert;
 
 namespace JMS.BLL.Services
 {
@@ -35,13 +36,13 @@ namespace JMS.BLL.Services
                 {
                     checkpoint.IsThirdParty = journey.IsThirdParty;
 
-                    if (checkpoint.Id == -1)
+                    if (checkpoint.Id == 0)
                         _context.Add(checkpoint);
 
                     journey.JourneyUpdates.Add(new JourneyUpdate
                     {
-                        Checkpoint = checkpoint.Id==-1? checkpoint:null,
-                        CheckpointId = checkpoint.Id == -1? 0:checkpoint.Id,
+                        Checkpoint = checkpoint.Id == 0 ? checkpoint : null,
+                        CheckpointId = checkpoint.Id == 0 ? 0 : checkpoint.Id,
                         Latitude = checkpoint.Latitude,
                         Longitude = checkpoint.Longitude,
                         Date = DateTime.Now,
@@ -236,7 +237,7 @@ namespace JMS.BLL.Services
         public ServiceResponse ApproveJourney(int journeyId)
         {
             var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = JourneyStatus.Approved;
+            journey.JourneyStatus = JourneyStatus.JMCApprovedJourney;
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
 
@@ -247,7 +248,7 @@ namespace JMS.BLL.Services
         public ServiceResponse CloseJourney(int journeyId)
         {
             var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = JourneyStatus.Canceled;
+            journey.JourneyStatus = JourneyStatus.Closed;
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
         }

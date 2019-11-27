@@ -40,9 +40,10 @@ namespace JMS.DAL.Models
         [InverseProperty("DispatcherJourneys")]
         public virtual User Dispatcher { get; set; }
         public virtual ICollection<JourneyUpdate> JourneyUpdates { get; set; }
+        public virtual ICollection<AssessmentQuestion> AssessmentQuestion { get; set; }
+
         [NotMapped]
         public virtual ICollection<Checkpoint> Checkpoints { get; set; }
 
-        public virtual ICollection<AssessmentQuestion> AssessmentQuestion { get; set; }
     }
 }

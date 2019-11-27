@@ -96,8 +96,8 @@ import { ForgetchangepasswordComponent } from './common/forgetchangepassword/for
         AgmCoreModule.forRoot({
             apiKey: "AIzaSyD1mqYsV0ShwvvIaKU3MOr9CJelaCdAb7I",
             libraries: ["places"],
-            language:'ar',
-            region:'EG'
+            language:"ar",
+            region:"EG"
         }),
         ReactiveFormsModule,
         NgxLoadingModule.forRoot({
