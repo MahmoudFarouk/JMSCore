@@ -15,11 +15,11 @@
               <!-- Journey Title -->
               <input type="text" class="form-control" placeholder="Title" name="journeyTitle" #journeyTitle="ngModel"
                 [(ngModel)]="journey.title" required>
+              </div>
               <div *ngIf="journeyTitle.invalid && (journeyTitle.dirty || journeyTitle.touched)"
-                class="alert alert-danger">
+                class="alert alert-danger customAlert">
                 <div *ngIf="journeyTitle.errors.required">Please Enter Journey Title</div>
               </div>
-            </div>
             <div class="input-group mainInputComp">
               <!-- From Distination -->
               <input type="text" class="form-control" placeholder="Journey From" autocorrect="off" autocapitalize="off"
@@ -30,10 +30,10 @@
                   <img src="../../assets/images/Jms_assets/ic_pin.svg">
                 </span>
               </div>
-              <div *ngIf="fromDestinationInput.invalid && (fromDestinationInput.dirty || fromDestinationInput.touched)"
-                class="alert alert-danger">
-                <div *ngIf="fromDestinationInput.errors.required">Please Enter Journey From Destination</div>
-              </div>
+            </div>
+            <div *ngIf="fromDestinationInput.invalid && (fromDestinationInput.dirty || fromDestinationInput.touched)"
+              class="alert alert-danger customAlert">
+              <div *ngIf="fromDestinationInput.errors.required">Please Enter Journey From Destination</div>
             </div>
 
             <div class="input-group mainInputComp">
@@ -41,15 +41,15 @@
               <input type="text" class="form-control" placeholder="Journey To" autocorrect="off" autocapitalize="off"
                 spellcheck="false" name="toDestination" #toDestinationInput="ngModel" required
                 [(ngModel)]="journey.toDestination" [readonly]="!journey.fromDestination">
-              <div class="input-group-prepend">
+              <div class="input-group-prepend" >
                 <span class="input-group-text">
                   <img src="../../assets/images/Jms_assets/ic_pin.svg">
                 </span>
               </div>
-              <div *ngIf="toDestinationInput.invalid && (toDestinationInput.dirty || toDestinationInput.touched)"
-                class="alert alert-danger">
-                <div *ngIf="toDestinationInput.errors.required">Please Enter Journey To Destination</div>
-              </div>
+            </div>
+            <div *ngIf="toDestinationInput.invalid && (toDestinationInput.dirty || toDestinationInput.touched)"
+              class="alert alert-danger customAlert">
+              <div *ngIf="toDestinationInput.errors.required">Please Enter Journey To Destination</div>
             </div>
 
             <section class="initiateJourneyMap">
@@ -90,17 +90,17 @@
             </section>
 
             <div class="input-group mainInputComp">
-              <input type="text" bsDatepicker class="form-control" placeholder="Delivery Date" name="deliveryDate"
+              <input type="text" bsDatepicker class="form-control bgLight" placeholder="Delivery Date" name="deliveryDate"
                 #deliveryDate="ngModel" required [readonly]="true" [(ngModel)]="journey.deliveryDate">
               <div class="input-group-prepend">
                 <span class="input-group-text">
                   <img src="../../assets/images/Jms_assets/ic_calendar.svg">
                 </span>
               </div>
-              <div *ngIf="deliveryDate.invalid && (deliveryDate.dirty || deliveryDate.touched)"
-                class="alert alert-danger">
-                <div *ngIf="deliveryDate.errors.required">Please Enter Delivery Date</div>
-              </div>
+            </div>
+            <div *ngIf="deliveryDate.invalid && (deliveryDate.dirty || deliveryDate.touched)"
+              class="alert alert-danger customAlert">
+              <div *ngIf="deliveryDate.errors.required">Please Enter Delivery Date</div>
             </div>
             <!-- Transport Type -->
             <div class="radioButtonsGroup">
@@ -152,7 +152,7 @@
                 </option>
               </select>
               <div *ngIf="drpDispatchers.invalid && (drpDispatchers.dirty || drpDispatchers.touched)"
-                class="alert alert-danger">
+                class="alert alert-danger customAlert">
                 <div *ngIf="drpDispatchers.errors.required">Please Select Dispatcher</div>
               </div>
 
@@ -170,17 +170,17 @@
             <div class="input-group mainInputComp">
               <input type="text" class="form-control" placeholder="Type" aria-label="Type" name="cargoType"
                 #cargoType="ngModel" required [(ngModel)]="journey.cargoType">
-              <div *ngIf="cargoType.invalid && (cargoType.dirty || cargoType.touched)" class="alert alert-danger">
-                <div *ngIf="cargoType.errors.required">Please Enter Cargo Typer</div>
               </div>
-            </div>
+                <div *ngIf="cargoType.invalid && (cargoType.dirty || cargoType.touched)" class="alert alert-danger customAlert">
+                  <div *ngIf="cargoType.errors.required">Please Enter Cargo Typer</div>
+                </div>
             <div class="input-group mainInputComp">
               <input type="number" class="form-control" placeholder="Weight" aria-label="Weight" name="cargoWeight" [min]="1" [max]="99999999999999"
                 #cargoWeight="ngModel" required [(ngModel)]="journey.cargoWeight">
-              <div *ngIf="cargoWeight.invalid && (cargoWeight.dirty || cargoWeight.touched)" class="alert alert-danger">
-                <div *ngIf="cargoWeight.errors.required">Please Enter Cargo Weight</div>
               </div>
-            </div>
+                <div *ngIf="cargoWeight.invalid && (cargoWeight.dirty || cargoWeight.touched)" class="alert alert-danger customAlert">
+                  <div *ngIf="cargoWeight.errors.required">Please Enter Cargo Weight</div>
+                </div>
 
             <div class="radioButtonsGroup">
               <p>Priority Degree :</p>
