@@ -25,7 +25,7 @@ import { JourneyUpdate } from '../../shared/models/JourneyUpdateModel';
     }
   `],
     styleUrls: ['./initiate-journey.component.css'],
-    encapsulation: ViewEncapsulation.None,
+    //encapsulation: ViewEncapsulation.None,
 })
 
 
@@ -41,6 +41,7 @@ export class InitiateJourneyComponent implements OnInit {
 
     dispatchers: LookupModel[] = [];
     selectedCheckpoint = {} as Checkpoint;
+    predefinedCheckpoints = [] as Checkpoint[];
 
     //Egypt Coordinates
     defaultLat: number = 26.84;
@@ -142,13 +143,17 @@ export class InitiateJourneyComponent implements OnInit {
                         this.selectedCheckpoint.longitude = place.geometry.location.lng();
 
                         let filteredCheckpoints = this.journey.checkpoints.filter(c => (this.selectedCheckpoint.latitude == c.latitude && this.selectedCheckpoint.longitude == c.longitude));
+                        let filteredPredefined = this.predefinedCheckpoints.filter(c => (this.selectedCheckpoint.latitude == c.latitude && this.selectedCheckpoint.longitude == c.longitude));
 
-                        if (filteredCheckpoints.length > 0 ||
+                        if (filteredCheckpoints.length > 0 || filteredPredefined.length > 0 ||
                             (this.selectedCheckpoint.latitude == this.journey.fromLat && this.selectedCheckpoint.longitude == this.journey.fromLng) ||
                             (this.selectedCheckpoint.latitude == this.journey.toLat && this.selectedCheckpoint.longitude == this.journey.toLng)) {
 
-                            if (filteredCheckpoints.length > 0 && filteredCheckpoints[0].isDeleted)
-                                filteredCheckpoints[0].isDeleted = false;
+                            if (filteredPredefined.length>0)
+                            {
+                                this.journey.checkpoints.push(Object.assign({}, filteredPredefined[0]));
+                                this.predefinedCheckpoints = this.predefinedCheckpoints.filter(c => c != filteredPredefined[0]);
+                            }
                             else
                                 swal.fire("Attention", "Checkpoint Already Exist", "warning");
                         }
@@ -181,27 +186,29 @@ export class InitiateJourneyComponent implements OnInit {
     getCheckpoints() {
         this.journeyService.getCheckpoints(this.journey.fromLat, this.journey.fromLng, this.journey.toLat, this.journey.toLng).subscribe(result => {
             this.journey.checkpoints = result.data;
-
+            this.predefinedCheckpoints = [];
             this.drawMapCheckpoints();
         });
     }
 
     drawMapCheckpoints() {
-        this.waypoints = this.journey.checkpoints.map(function (checkpoint) {
-            if (!checkpoint.isDeleted)
-                return { location: { lat: checkpoint.latitude, lng: checkpoint.longitude } }
-        });
+        this.waypoints = this.journey.checkpoints.filter(function (checkpoint) {
+            return !checkpoint.isDeleted;
+        }).map(function (checkpoint) { return { location: { lat: checkpoint.latitude, lng: checkpoint.longitude } } });
+
+        this.waypoints = this.journey.checkpoints.map(function (checkpoint) { return { location: { lat: checkpoint.latitude, lng: checkpoint.longitude } } });
 
         this.cd.detectChanges();
     }
 
     deleteCheckpoint(lat, lng) {
+        let predefinedCheckpoints = this.predefinedCheckpoints
+
         this.journey.checkpoints = this.journey.checkpoints.filter(function (checkpoint) {
-            if (checkpoint.latitude == lat && checkpoint.longitude == lng && checkpoint.id != -1)
-                checkpoint.isDeleted = true;
-            else
-                return checkpoint.latitude != lat && checkpoint.longitude != lng;
-            return checkpoint;
+            if (checkpoint.latitude == lat && checkpoint.longitude == lng && checkpoint.id != -1) {
+                predefinedCheckpoints.push(checkpoint);
+            }
+            return checkpoint.latitude != lat && checkpoint.longitude != lng;
         });
         this.drawMapCheckpoints();
     }
@@ -218,9 +225,20 @@ export class InitiateJourneyComponent implements OnInit {
     }
 
     submitForm() {
-        this.journeyService.initJourney(this.journey).subscribe(result => {
-            if (result)
-                swal.fire("Sucess", "Journey Intiated Sucessfully", "success");
+
+        swal.fire({
+            title: 'Initiate Journey',
+            text: "Are you sure you want to initiate this Journey",
+            icon: 'warning',
+            showCancelButton: true,
+            //confirmButtonColor: '#3085d6',
+            //cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            this.journeyService.initJourney(this.journey).subscribe(result => {
+                if (result)
+                    swal.fire("Sucess", "Journey Intiated Sucessfully", "success");
+            });
         });
     }
 }

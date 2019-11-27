@@ -13,7 +13,7 @@
           <div class="collapsible-body">
             <div class="input-group mainInputComp">
               <!-- Journey Title -->
-              <input type="text" class="form-control" placeholder="Title" name="journeyTitle" #journeyTitle="ngModel"
+              <input type="text" class="form-control" placeholder="Title*" name="journeyTitle" #journeyTitle="ngModel"
                 [(ngModel)]="journey.title" required>
               </div>
               <div *ngIf="journeyTitle.invalid && (journeyTitle.dirty || journeyTitle.touched)"
@@ -22,7 +22,7 @@
               </div>
             <div class="input-group mainInputComp">
               <!-- From Distination -->
-              <input type="text" class="form-control" placeholder="Journey From" autocorrect="off" autocapitalize="off"
+              <input type="text" class="form-control" placeholder="Journey From*" autocorrect="off" autocapitalize="off"
                      spellcheck="false" name="fromDestination" required #fromDestinationInput="ngModel"
                      [(ngModel)]="journey.fromDestination">
               <div class="input-group-prepend">
@@ -35,10 +35,9 @@
               class="alert alert-danger customAlert">
               <div *ngIf="fromDestinationInput.errors.required">Please Enter Journey From Destination</div>
             </div>
-
             <div class="input-group mainInputComp">
               <!-- To Distination -->
-              <input type="text" class="form-control" placeholder="Journey To" autocorrect="off" autocapitalize="off"
+              <input type="text" class="form-control bgLight" placeholder="Journey To*" autocorrect="off" autocapitalize="off"
                 spellcheck="false" name="toDestination" #toDestinationInput="ngModel" required
                 [(ngModel)]="journey.toDestination" [readonly]="!journey.fromDestination">
               <div class="input-group-prepend" >
@@ -79,10 +78,10 @@
                   </div>
                 </div>
 
-                <!-- Draggable Checkpoints -->
+                 <!--Draggable Checkpoints 
                 {{waypoints|json}}
                 <br />
-                {{journey.checkpoints|json}}
+                {{journey.checkpoints|json}}-->
                 <div cdkDropList *ngIf="waypoints.length>0" class="example-list"
                      (cdkDropListDropped)="reArrangeCheckpoints($event)">
                   <span *ngIf="waypoints.length>1">Drag and Drop to Reorder</span>
@@ -98,7 +97,7 @@
             </section>
 
             <div class="input-group mainInputComp">
-              <input type="text" bsDatepicker class="form-control bgLight" placeholder="Delivery Date" name="deliveryDate"
+              <input type="text" bsDatepicker class="form-control bgLight" placeholder="Delivery Date*" name="deliveryDate"
                 #deliveryDate="ngModel" required [readonly]="true" [(ngModel)]="journey.deliveryDate">
               <div class="input-group-prepend">
                 <span class="input-group-text">
@@ -121,7 +120,7 @@
                   </label>
                 </div>
                 <div>
-                  <label>
+                  <label (change)="journey.cargoWeight=''">
                     <input type="radio" [value]="false" name="isTruckTransport"
                            [(ngModel)]="journey.isTruckTransport" />
                     <span>People</span>
@@ -163,8 +162,6 @@
                 class="alert alert-danger customAlert">
                 <div *ngIf="drpDispatchers.errors.required">Please Select Dispatcher</div>
               </div>
-
-
             </div>
           </div>
         </li>
@@ -177,14 +174,14 @@
           </div>
           <div class="collapsible-body">
             <div class="input-group mainInputComp">
-              <input type="text" class="form-control" placeholder="Type" aria-label="Type" name="cargoType"
+              <input type="text" class="form-control" placeholder="Type*" aria-label="Type" name="cargoType"
                 #cargoType="ngModel" required [(ngModel)]="journey.cargoType">
               <div *ngIf="cargoType.invalid && (cargoType.dirty || cargoType.touched)" class="alert alert-danger customAlert">
                 <div *ngIf="cargoType.errors.required">Please Enter Cargo Typer</div>
               </div>
             </div>
-            <div class="input-group mainInputComp">
-              <input type="number" class="form-control" placeholder="Weight" aria-label="Weight" name="cargoWeight" [min]="1" [max]="99999999999999"
+            <div class="input-group mainInputComp" *ngIf="journey.isTruckTransport">
+              <input type="number" class="form-control" placeholder="Weight*" aria-label="Weight" name="cargoWeight" [min]="1" [max]="99999999999999"
                 #cargoWeight="ngModel" required [(ngModel)]="journey.cargoWeight">
               <div *ngIf="cargoWeight.invalid && (cargoWeight.dirty || cargoWeight.touched)" class="alert alert-danger customAlert">
                 <div *ngIf="cargoWeight.errors.required">Please Enter Cargo Weight</div>
