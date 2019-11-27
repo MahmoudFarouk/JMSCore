@@ -10,6 +10,7 @@ using JMS.API.Constants;
 using JMS.API.Models;
 using JMS.BLL.Helper;
 using JMS.BLL.Interfaces;
+using JMS.DAL.Common.Enums;
 using JMS.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -45,9 +46,9 @@ namespace JMS.API.Controllers
         [HttpPost]
         [Authorize(Roles = ConstRole.Driver)]
         [Route("submitassessment")]
-        public IActionResult SubmitAssessment(List<AssessmentResult> assessmentResult)
+        public IActionResult SubmitAssessment(int journeyId,JourneyStatus status, List<AssessmentResult> assessmentResult)
         {
-            return Ok(_driverService.SubmitAssessment(assessmentResult));
+            return Ok(_driverService.SubmitAssessment( journeyId,  status, assessmentResult));
         }
 
 
@@ -61,7 +62,7 @@ namespace JMS.API.Controllers
 
         [HttpGet()]
         [Authorize(Roles = ConstRole.Driver)]
-        [Route("getpretripassessment/{journeyid}")]
+        [Route("getpretripassessment")]
         public IActionResult GetPreJourneyAssessment(int journeyId)
         {
             return Ok(_driverService.GetJourneyAssessment(journeyId, false, false));
@@ -69,7 +70,7 @@ namespace JMS.API.Controllers
 
         [HttpGet()]
         [Authorize(Roles = ConstRole.Driver)]
-        [Route("getposttripassessment/{journeyid}")]
+        [Route("getposttripassessment")]
         public IActionResult GetPostJourneyAssessment(int journeyId)
         {
             return Ok(_driverService.GetJourneyAssessment(journeyId, true, false));
@@ -77,7 +78,7 @@ namespace JMS.API.Controllers
 
         [HttpGet()]
         [Authorize(Roles = ConstRole.Driver)]
-        [Route("getcheckpointassessment/{checkpointid}")]
+        [Route("getcheckpointassessment")]
         public IActionResult GetJourneyAssessment(int checkpointid)
         {
             return Ok(_driverService.GetCheckpointAssessment(checkpointid, false));

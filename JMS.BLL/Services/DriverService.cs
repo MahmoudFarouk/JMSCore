@@ -54,13 +54,16 @@ namespace JMS.BLL.Services
             return response;
         }
 
-        public ServiceResponse SubmitAssessment(List<AssessmentResult> assessmentResult)
+        public ServiceResponse SubmitAssessment(int journeyId, JourneyStatus status, List<AssessmentResult> assessmentResult)
         {
             ServiceResponse response = new ServiceResponse();
 
             try
             {
-                _context.AssessmentResult.AddRange(assessmentResult);
+                var journey = _context.Journey.Find(journeyId);
+                journey.JourneyStatus = status;
+                if (assessmentResult.Count > 0)
+                    _context.AssessmentResult.AddRange(assessmentResult);
                 _context.SaveChanges();
 
                 response.Status = ResponseStatus.Success;
