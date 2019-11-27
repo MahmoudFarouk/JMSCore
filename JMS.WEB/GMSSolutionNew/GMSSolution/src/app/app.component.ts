@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
 
     @BlockUI() blockUI: NgBlockUI;
 
-    title = 'GMS';
+    title = 'JMS';
     currentUser: User;
     componenetName: string;
 
