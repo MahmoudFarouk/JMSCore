@@ -36,7 +36,7 @@ namespace JMS.BLL.Services
                          c.Latitude,
                          c.Longitude
                      }).ToList()
-                     .Where(c => c.StartDistance <= 100 || c.EndDistance <= 100)
+                     .Where(c => c.StartDistance <= 400 || c.EndDistance <= 400)
                      .Select(c => new Checkpoint
                      {
                          Id = c.Id,

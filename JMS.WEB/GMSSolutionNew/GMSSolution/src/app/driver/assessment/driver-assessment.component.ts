@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription, Observable, timer } from 'rxjs';
 import { NgForm } from '@angular/forms';
-import { AssessmentResult, AssessmentQuestion } from '../../shared/models/JourneDetailModel';
-
+import { AssessmentQuestion } from '../../shared/models/AssessmentQuestionModel';
+import { AssessmentResult } from '../../shared/models/AssessmentResultModel';
 
 @Component({
     selector: 'app-driver-assessment',

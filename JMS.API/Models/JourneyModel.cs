@@ -1,4 +1,5 @@
 ﻿using JMS.DAL.Common.Enums;
+using JMS.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,5 +27,6 @@ namespace JMS.API.Models
         public string CargoType { get; set; }
         public Guid UserId { get; set; }
         public bool IsThirdParty { get; set; }
+        public List<Checkpoint> Checkpoints { get; set; }
     }
 }

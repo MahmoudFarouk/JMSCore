@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Remove="GMSSolutionNew\GMSSolution\src\app\shared\Models\AssessmentQuestionModel.ts" />
+    <TypeScriptCompile Remove="GMSSolutionNew\GMSSolution\src\app\shared\Models\CheckpointModel.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.7.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

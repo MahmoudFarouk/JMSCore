@@ -23,7 +23,7 @@ namespace JMS.API.Controllers
         private IUserService _userService;
         private INotificationService _notificationService;
 
-        public JourneyController(IJourneyService journeyService, IUserService userService,INotificationService notificationService)
+        public JourneyController(IJourneyService journeyService, IUserService userService, INotificationService notificationService)
         {
             _journeyService = journeyService;
             _userService = userService;
@@ -42,9 +42,15 @@ namespace JMS.API.Controllers
                     cfg.CreateMap<JourneyModel, Journey>();
                 });
                 IMapper iMapper = config.CreateMapper();
+
                 var journey = iMapper.Map<JourneyModel, Journey>(model);
-                journey.UserId = Guid.Parse(User.Identity.Name)
-; var result = _journeyService.InitiateJourney(journey);
+
+
+
+
+                journey.UserId = Guid.Parse(User.Identity.Name);
+                var result = _journeyService.InitiateJourney(journey);
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -218,7 +224,7 @@ namespace JMS.API.Controllers
 
         }
 
-        
+
         [Route("journeyInfo")]
         [HttpGet]
         public IActionResult JourneyInfo(int id)
@@ -282,7 +288,7 @@ namespace JMS.API.Controllers
                     return Ok(new { Data = new { driverInfo.DriverId, driverInfo.Id, driverInfo.JourneyId, driverInfo.JourneyStatus, DriverName = driverInfo.DriverId.HasValue ? _userService.GetById(driverInfo.DriverId.Value).FullName : "" }, Status = ResponseStatus.Success });
                 }
                 object drive = null;
-                var driverInfofoModel = new { DriverId=drive, Id=0, DriverName = "" };
+                var driverInfofoModel = new { DriverId = drive, Id = 0, DriverName = "" };
                 return Ok(new { Data = driverInfofoModel, Status = ResponseStatus.Success });
             }
             catch (Exception ex)

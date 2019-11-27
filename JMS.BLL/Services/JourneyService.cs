@@ -20,12 +20,43 @@ namespace JMS.BLL.Services
         {
             _context = context;
         }
+
         public ServiceResponse InitiateJourney(Journey journey)
         {
+            journey.CreationDate = DateTime.Now;
+            if (journey.IsThirdParty)
+                journey.JourneyStatus = JourneyStatus.PendingOnDispatcherApproval;
+            else
+                journey.JourneyStatus = JourneyStatus.PendingOnJMCInitialApproval;
+
+            if (journey.Checkpoints.Any())
+            {
+                foreach (var checkpoint in journey.Checkpoints)
+                {
+                    checkpoint.IsThirdParty = journey.IsThirdParty;
+
+                    if (checkpoint.Id == -1)
+                        _context.Add(checkpoint);
+
+                    journey.JourneyUpdates.Add(new JourneyUpdate
+                    {
+                        Checkpoint = checkpoint.Id==-1? checkpoint:null,
+                        CheckpointId = checkpoint.Id == -1? 0:checkpoint.Id,
+                        Latitude = checkpoint.Latitude,
+                        Longitude = checkpoint.Longitude,
+                        Date = DateTime.Now,
+                        JourneyStatus = journey.JourneyStatus,
+                        IsJourneyCheckpoint = true,
+                        UserId = journey.UserId
+                    });
+                }
+            }
+
             _context.Journey.Add(journey);
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
+
         public ServiceResponse UpdateJourney(Journey journey)
         {
             var _journey = _context.Journey.Find(journey.Id);
@@ -287,7 +318,7 @@ namespace JMS.BLL.Services
 
             try
             {
-                
+
                 response.Status = ResponseStatus.Success;
             }
             catch (Exception ex)

@@ -1,22 +1,30 @@
+import { QuestionCategory } from '../enums/question-category.enum';
+import { JourneyStatus } from '../enums/journey-status.enum';
+import { Level } from '../enums/level.enum';
+import { JourneyUpdate } from './JourneyUpdateModel';
+import { Checkpoint } from './CheckpointModel';
+
 export interface JourneyModel {
     id: number;
-    title?: any;
+    title: string;
     isTruckTransport: boolean;
-    journeyStatus: number;
-    fromDestination?: any;
-    fromLat?: any;
-    fromLng?: any;
-    toDestination?: any;
-    toLat?: any;
-    toLng?: any;
-    startDate?: any;
-    deliveryDate?: any;
+    journeyStatus: JourneyStatus;
+    fromDestination: string;
+    fromLat: number;
+    fromLng: number;
+    toDestination: string;
+    toLat: number;
+    toLng: number;
+    startDate: Date;
+    deliveryDate: Date;
     cargoWeight?: any;
-    cargoPriority: number;
-    cargoSeverity: number;
+    cargoPriority: Level;
+    cargoSeverity: Level;
     cargoType?: any;
     userId: string;
+    userFullname: string;
     isThirdParty: boolean;
-   
-
+    journeyUpdates: JourneyUpdate[];
+    checkpoints: Checkpoint[];
+    assesments: any[]
 }

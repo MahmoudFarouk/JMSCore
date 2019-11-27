@@ -1,4 +1,6 @@
 ﻿using JMS.BLL.Common;
+using JMS.BLL.Models;
+using JMS.DAL.Common.Enums;
 using JMS.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -32,5 +34,7 @@ namespace JMS.BLL.Interfaces
         public ServiceResponse AddUserWorkForce(UserWorkForce workforce);
         public ServiceResponse EditUserWorkForce(UserWorkForce workforce);
         public ServiceResponse DeleteUserWorkForce(Guid workforceId);
+
+        public ServiceResponse<List<LookupModel<Guid>>> GetRoleUsers(UserRoles role);
     }
 }
