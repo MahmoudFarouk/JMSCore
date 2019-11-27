@@ -13,5 +13,22 @@ export class DriverService{
         return  this.http.get(`${environment.JMSApiURL}/driver/getdrivers?drivername=${drivername}`);
         
     }
+    GetPretripAssessment(journeyId){
+        return  this.http.get(`${environment.JMSApiURL}/driver/getpretripassessment?journeyid=${journeyId}`);
+        
+    }
+    GetPostTripAssessment(journeyId){
+        return  this.http.get(`${environment.JMSApiURL}/driver/getposttripassessment?journeyid=${journeyId}`);
+        
+    }
+    GetCheckpointAssessment(checkPointId){
+        return  this.http.get(`${environment.JMSApiURL}/driver/getcheckpointassessment?checkpointid=${checkPointId}`);
+        
+    }
+    
+    SubmitAssessments(journeyId,status,data){
+        return  this.http.post(`${environment.JMSApiURL}/driver/submitassessment?journeyId=${journeyId}&status=${status}`,data);
+
+    }
 
 }

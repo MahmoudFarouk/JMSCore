@@ -1,4 +1,5 @@
 ﻿using JMS.BLL.Common;
+using JMS.DAL.Common.Enums;
 using JMS.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace JMS.BLL.Interfaces
     {
         public ServiceResponse<List<User>> GetDrivers(string driverName );
 
-        public ServiceResponse SubmitAssessment(List<AssessmentResult> assessmentResult);
+        public ServiceResponse SubmitAssessment(int journeyId, JourneyStatus status, List<AssessmentResult> assessmentResult);
 
         public ServiceResponse SubmitStatus(JourneyUpdate journeyUpdate);
 

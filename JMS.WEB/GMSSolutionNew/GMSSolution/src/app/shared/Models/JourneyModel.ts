@@ -5,26 +5,26 @@ import { JourneyUpdate } from './JourneyUpdateModel';
 import { Checkpoint } from './CheckpointModel';
 
 export interface JourneyModel {
-    id: number;
-    title: string;
-    isTruckTransport: boolean;
-    journeyStatus: JourneyStatus;
-    fromDestination: string;
-    fromLat: number;
-    fromLng: number;
-    toDestination: string;
-    toLat: number;
-    toLng: number;
-    startDate: Date;
-    deliveryDate: Date;
+    id?: number;
+    title?: string;
+    isTruckTransport?: boolean;
+    journeyStatus?: JourneyStatus;
+    fromDestination?: string;
+    fromLat?: number;
+    fromLng?: number;
+    toDestination?: string;
+    toLat?: number;
+    toLng?: number;
+    startDate?: Date;
+    deliveryDate?: Date;
     cargoWeight?: any;
-    cargoPriority: Level;
-    cargoSeverity: Level;
+    cargoPriority?: Level;
+    cargoSeverity?: Level;
     cargoType?: any;
-    userId: string;
-    userFullname: string;
-    isThirdParty: boolean;
-    journeyUpdates: JourneyUpdate[];
-    checkpoints: Checkpoint[];
-    assesments: any[]
+    userId?: string;
+    userFullname?: string;
+    isThirdParty?: boolean;
+    journeyUpdates?: JourneyUpdate[];
+    checkpoints?: Checkpoint[];
+    assesments?: any[]
 }
