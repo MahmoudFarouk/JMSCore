@@ -347,6 +347,7 @@
   bs-daterangepicker-container {
     z-index: 1080; }
   
+    
   /* screen size < 1024px */
   @media (max-width: 768px) {
     .bs-datepicker-multiple {
@@ -376,20 +377,20 @@
     transition: 0s; }
   
   .theme-green .bs-datepicker-head {
-    background-color: #5cb85c; }
+    background-color: #006fad; }
   
   .theme-green .bs-datepicker-body table td span.selected,
   .theme-green .bs-datepicker-body table td.selected span,
   .theme-green .bs-datepicker-body table td span[class*="select-"]:after,
   .theme-green .bs-datepicker-body table td[class*="select-"] span:after {
-    background-color: #5cb85c; }
+    background-color: #006fad }
   
   .theme-green .bs-datepicker-body table td.week span {
-    color: #5cb85c; }
+    color: #006fad }
   
   .theme-green .bs-datepicker-body table td.active-week span:hover {
     cursor: pointer;
-    background-color: #5cb85c;
+    background-color: #006fad;
     color: #fff;
     opacity: 0.5;
     transition: 0s; }
@@ -473,7 +474,13 @@
   /*# sourceMappingURL=bs-datepicker.css.map */
 
 
-
+.bgLight{
+  background-color: #FFF!important;
+}
+/*
+input[readonly] {
+  background-color: yellow!important;
+}*/
 .example-container {
   width: 400px;
   max-width: 100%;
@@ -481,7 +488,6 @@
   display: inline-block;
   vertical-align: top;
 }
-
 .example-list {
   border: solid 1px #ccc;
   min-height: 35px;
@@ -542,14 +548,28 @@
   background-color:#EEE;
 }
 .autoCompLocations .input-group input{
-  background-color: transparent!important;
-  border:1px solid #888;
+  background-color: #FFF!important;
+  border:1px solid #ddd;
   border-right:0;
+  padding-left: 15px;
+
+  border-top-left-radius:5px ;
+  border-bottom-left-radius:5px ;
 }
 .autoCompLocations .input-group .input-group-prepend span{
-  border:1px solid #888;
+  border:1px solid #ddd;
   border-left: 0;
   border-top-right-radius:5px ;
   border-bottom-right-radius:5px ;
-  background-color: transparent!important;
+  background-color: #FFF!important;
+  padding:0 15px!important;
+}
+.alert.customAlert{
+  color:#b51010;
+  font-weight: bold;
+  font-size: 13px;
+  font-family: Montserrat;
+  background-color: #FFF;
+  padding-left: 0;
+  border:0
 }

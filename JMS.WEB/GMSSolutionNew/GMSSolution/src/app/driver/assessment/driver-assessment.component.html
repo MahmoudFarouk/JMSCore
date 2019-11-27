@@ -1,104 +1,94 @@
-<div *ngIf="loading==false">
-<form name="form" #form="ngForm" (ngSubmit)="onSubmit(form)" autocomplete="off" novalidate>
-<!-- <input type="hidden" name="ID" #Id="ngModel" [(ngModel)]="formData.Id" /> -->
 
-<div class="mobileContainer">
-  <section id="titleHere">
-      <h3>Title Here</h3>
-      <ul>
-          <li>
-              <img src="assets/images/Jms_assets/ic_pin.svg">
-              <span>Destination From: Alex</span>
-          </li>
-          <li>
-              <img src="assets/images/Jms_assets/ic_pin.svg">
-              <span>Destination To: Cairo</span>
-          </li>
-          <li>
-              <img src="assets/images/Jms_assets/ic_calendar.svg">
-              <span>Date Of Delivery: 20/12/2020</span>
-          </li>
-      </ul>
-  </section>
-</div>
+<!--start title section-->
+
+<app-journey-info></app-journey-info>
+
+<!--end title section-->
+
 <div class="mobileContainer">
   <div class="map" style="height: 140px;background-color: #DDD;padding: 20px;">
       MAP
   </div>
 </div>
+
+<!--start assessments Section-->
 <div class="mobileContainer assessments">
   <ul class="collapsible expandable">
-    <li class="active">
-      <div class="collapsible-header">
-        <p>PreTrip Assessments</p>
-        <img src="assets/images/Jms_assets/ic_right_arrow.svg">
-      </div>
 
-      <!-- After Select Driver -->
-      <div class="collapsible-body" style="display:block;">
-        <div class="question" *ngFor="let preTripAssessment of preTripAssessmentQuestionList">
-          <p>{{preTripAssessment.Question}}</p>
-          <div class="answer">
-            <button (click)="checkAssessmentResult($event)">YES</button>
-            <button (click)="checkAssessmentResult($event)">NO</button>
+      <li class="active" *ngIf='showPretripAssessment()'>
+          <div class="collapsible-header">
+              <p>Driver Assessments</p>
+              <img src="assets/images/Jms_assets/ic_right_arrow.svg">
           </div>
-        </div>
-      </div>
-    </li>
-    <li class="active">
-      <div class="collapsible-header">
-        <p>CheckPoint Assessments</p>
-        <img src="assets/images/Jms_assets/ic_right_arrow.svg">
-      </div>
+          <div class="collapsible-body" style="display:block">
+              <div class="question" *ngFor="let item of pretripassessments">
+                  <p>{{item.question}}</p>
+                  <div class="answer">
+                    <button style="background-color: #48CBC3;" (click)="SelectAnswer(item,true)" *ngIf="item.IsYes==undefined||item.IsYes">YES</button>
+                    <button style="background-color: #CA6C6C;"  (click)="SelectAnswer(item,false)" *ngIf="item.IsYes==undefined||!item.IsYes"> NO</button>
+                  </div>
+              </div>
 
-      <!-- After Each Checkpoint -->
-      <div class="collapsible-body">
-        <div class="question" *ngFor="let checkPointAssessment of checkPointAssessmentQuestionList">
-          <p>{{checkPointAssessment.Question}}</p>
-          <div class="answer">
-            <button>YES</button>
-            <button>NO</button>
+             
           </div>
+      </li>
+      <li class="active" *ngIf='showPosttripAssessment()'>
+        <div class="collapsible-header">
+            <p>Driver Post Trip Assessments</p>
+            <img src="assets/images/Jms_assets/ic_right_arrow.svg">
         </div>
-      </div>
+        <div class="collapsible-body" style="display:block">
+            <div class="question" *ngFor="let item of posttripassessments">
+                <p>{{item.question}}</p>
+                <div class="answer">
+                  <button style="background-color: #48CBC3;" (click)="SelectAnswer(item,true)" *ngIf="item.IsYes==undefined||item.IsYes">YES</button>
+                  <button style="background-color: #CA6C6C;"  (click)="SelectAnswer(item,false)" *ngIf="item.IsYes==undefined||!item.IsYes"> NO</button>
+                </div>
+            </div>
+
+           
+        </div>
     </li>
-    <li class="active">
+    <li class="active" *ngIf='showCheckpointAssessment()'>
       <div class="collapsible-header">
-        <p>PostTrip Assessments</p>
-        <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+          <p>Check Point Assessments</p>
+          <img src="assets/images/Jms_assets/ic_right_arrow.svg">
       </div>
-
-      <!-- After Journey Completion -->
-      <div class="collapsible-body">
-        <div class="question" *ngFor="let postTripAssessment of postTripAssessmentQuestionList">
-          <p>{{postTripAssessment.Question}}</p>
-          <div class="answer">
-            <button>YES</button>
-            <button>NO</button>
+      <div class="collapsible-body" style="display:block">
+          <div class="question" *ngFor="let item of checkpointassessments">
+              <p>{{item.question}}</p>
+              <div class="answer">
+                <button style="background-color: #48CBC3;" (click)="SelectAnswer(item,true)" *ngIf="item.IsYes==undefined||item.IsYes">YES</button>
+                <button style="background-color: #CA6C6C;"  (click)="SelectAnswer(item,false)" *ngIf="item.IsYes==undefined||!item.IsYes"> NO</button>
+              </div>
           </div>
-        </div>
-      </div>
-    </li>
 
-    <li class="active">
-      <div class="collapsible-header">
-        <p>Vehicle Checklist</p>
-        <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+         
       </div>
+  </li>
 
-      <!-- For All Cases -->
-      <div class="collapsible-body">
-        <div class="question" *ngFor="let postTripAssessment of postTripAssessmentQuestionList">
-          <p>{{postTripAssessment.Question}}</p>
-          <div class="answer">
-            <button>YES</button>
-            <button>NO</button>
+      <li class="active" *ngIf='showSubmit()'>
+          <div class="collapsible-header">
+              <p>Vehichle Assessments</p>
+              <img src="assets/images/Jms_assets/ic_right_arrow.svg">
           </div>
-        </div>
-      </div>
-    </li>
+          <div class="collapsible-body" style="display:block">
+              <div class="question" *ngFor="let item of vechCheckList">
+                  <p>{{item.question}}</p>
+                  <div class="answer">
+                      <button style="background-color: #48CBC3;"  (click)="SelectAnswer(item,true)" *ngIf="item.IsYes==undefined||item.IsYes">YES</button>
+                      <button style="background-color: #CA6C6C;"  (click)="SelectAnswer(item,false)" *ngIf="item.IsYes==undefined||!item.IsYes"> NO</button>
+                  </div>
+              </div>
+
+              
+
+              
+          </div>
+      </li>
+      <!--end assessments Section-->
   </ul>
-</div>
-<input  class="sumbitToInitiate" type="submit" value= "submit">
-</form>
+  <button class="sumbitToInitiate" *ngIf='showSubmit()' (click)="Submit()">
+      Submit
+  </button>
 </div>

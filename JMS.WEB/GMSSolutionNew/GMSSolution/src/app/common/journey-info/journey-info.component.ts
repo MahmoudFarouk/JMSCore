@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { JourneyService } from './../../shared/Services/JourneyService';
 import { JourneyModel } from '../../shared/models/JourneyModel';
@@ -11,6 +11,7 @@ import { JourneyUpdate } from '../../shared/models/JourneyUpdateModel';
 })
 
 export class JourneyInfoComponent implements OnInit {
+   
     loading: boolean = false;
     public JourneyId: number = 0;
     public Journey: JourneyModel = {
@@ -49,7 +50,7 @@ export class JourneyInfoComponent implements OnInit {
         this.loading = true
         this.JourneyService.GetJourneyInfo(this.JourneyId).toPromise().then((data: any) => {
             this.Journey = data.data;
-            console.log(this.Journey);
+        
             this.loading = false;
 
         }, (error) => { this.loading = false });
