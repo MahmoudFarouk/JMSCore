@@ -50,6 +50,7 @@ namespace JMS.DAL.Common.Enums
         PendingOnDispatcherApproval = 2,
 
         PendingOnDriverSelection = 3,
+<<<<<<< HEAD
         JMCAssignedDriver=1,
         DispatcherAssignedDriver=4,
 
@@ -86,6 +87,50 @@ namespace JMS.DAL.Common.Enums
         PendingOnJMCApproval=31,
         Approved=32,
         Canceled=33
+=======
+        JMCAssignedDriver,
+        DispatcherAssignedDriver,
+
+        PendingOnDriverCompletePreTripAssessment,
+        DriverCompletedPreTripAssessment,
+        PendingOnJMCApproveDriverPreTripAssessment,
+        JMCApprovedDriver,
+        JMCChangedDriver,
+
+        PendingOnJMCJourneyApproval,
+        JMCApprovedJourney,
+        JMCRejectedJourney,
+        PendingOnQHSEJourneyApproval = 4,
+        QHSEApprovedJourney,
+        QHSEejectedJourney,
+        PendingOnGBMJourneyApproval = 5,
+        JBMApprovedJourney,
+        GBMRejectedJourney,
+
+        PendingOnDriverStartJourney,
+        DriverStartedJourney,
+
+        DriverProceedNextCheckpoint,
+        DriverReachedCheckpoint,
+        PendingOnDriverCompleteCheckpointAssessment,
+        DriverCompletedCheckpointAssessemnt,
+
+        PendingOnJMCCheckpointApproval,
+        JMCApprovedCheckpoint,
+        JMCRejectedCheckpoint,
+        PendingOnQHSECheckpointApproval = 4,
+        QHSEApprovedCheckpoint,
+        QHSERejectedCheckpoint,
+        PendingOnGBMCheckpointApproval = 5,
+        GBMApprovedCheckpoint,
+        GBMRejectedCheckpoint,
+
+        PendingOnDriverCompletePostTripAssessment,
+        Completed,
+        Closed ,
+        Paused = 9,
+        Stopped =  8,
+>>>>>>> 8f59f2b4408339895165246436c292df67c84a91
     }
 
 }

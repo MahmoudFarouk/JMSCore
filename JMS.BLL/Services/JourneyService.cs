@@ -25,9 +25,9 @@ namespace JMS.BLL.Services
         {
             journey.CreationDate = DateTime.Now;
             if (journey.IsThirdParty)
-                journey.JourneyStatus = JourneyStatus.PendingOnDispatcherCompletion;
+                journey.JourneyStatus = JourneyStatus.PendingOnDispatcherApproval;
             else
-                journey.JourneyStatus = JourneyStatus.PendingOnJMCApproval;
+                journey.JourneyStatus = JourneyStatus.PendingOnJMCInitialApproval;
 
             if (journey.Checkpoints.Any())
             {
