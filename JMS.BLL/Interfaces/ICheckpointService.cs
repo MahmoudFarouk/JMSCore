@@ -15,11 +15,5 @@ namespace JMS.BLL.Interfaces
         public ServiceResponse UpdateCheckpoint(Checkpoint checkpoint);
 
         public ServiceResponse DeleteCheckpoint(int checkpointId);
-
-
-
-
-
-
     }
 }

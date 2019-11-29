@@ -84,6 +84,7 @@ namespace JMS.BLL.Services
 
 
         }
+
         public ServiceResponse<object> GetJourneyDetails(int journeyId)
         {
             var journey = _context.Journey.Find(journeyId);
@@ -245,8 +246,6 @@ namespace JMS.BLL.Services
 
         }
 
-
-
         public ServiceResponse CloseJourney(int journeyId)
         {
             var journey = _context.Journey.Find(journeyId);
@@ -263,10 +262,6 @@ namespace JMS.BLL.Services
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
 
-
-
-
-
         public ServiceResponse StopJourney(int journeyId)
         {
             var journey = _context.Journey.Find(journeyId);
@@ -275,8 +270,6 @@ namespace JMS.BLL.Services
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
 
-
-
         public ServiceResponse UpdateJourneyCheckpoint(int journeyUpdateId, JourneyStatus status)
         {
             var journey = _context.JourneyUpdate.Find(journeyUpdateId);
@@ -284,8 +277,6 @@ namespace JMS.BLL.Services
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
-
-
 
         public ServiceResponse<int> AddJourneyUpdate(JourneyUpdate JourneyUpdate)
         {
