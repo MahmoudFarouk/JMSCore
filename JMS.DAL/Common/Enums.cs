@@ -82,8 +82,6 @@ namespace JMS.DAL.Common.Enums
         Closed = 27,
         Paused = 28,
         Stopped = 29,
-        PendingOnDispatcherCompletion = 30,
-        PendingOnJMCApproval = 31,
         Approved = 32,
         Canceled = 33
     }

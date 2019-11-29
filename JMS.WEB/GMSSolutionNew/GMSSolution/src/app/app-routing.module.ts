@@ -10,9 +10,10 @@ import { NotificationsComponent } from './common/notifications/notifications.com
 import { HomeComponent } from './home/home.component';
 
 //Managers
+import { InitiateJourneyComponent } from './manager/initiate-journey/initiate-journey.component';
+import { CompleteJourneyInfoComponent } from './manager/complete-journey-info/complete-journey-info.component';
 import { JourneyApprovalComponent } from './manager/journey-approval/journey-approval.component';
 import { DriverSelectionComponent } from './manager/driver-selection/driver-selection.component';
-import { InitiateJourneyComponent } from './manager/initiate-journey/initiate-journey.component';
 import { MyRequestsComponent } from './manager/my-requests/my-requests.component';
 import { CurrentJourneysComponent } from './manager/current-journeys/current-journeys.component';
 import { JourneyCalendarComponent } from './manager/journey-calendar/journey-calendar.component';
@@ -44,10 +45,11 @@ const routes: Routes = [
     { path: 'forgetpassword', component: ForgetPasswordComponent },
     { path: 'reset-password', component: ResetPasswordComponent },
     { path: 'forgetchangepassword', component: ForgetchangepasswordComponent },
-    
-    
+
+
     //App Routes
     { path: 'initiate-journey', component: InitiateJourneyComponent, canActivate: [AuthGuard] },
+    { path: 'validate-journey', component: CompleteJourneyInfoComponent, canActivate: [AuthGuard] },
     { path: 'requests', component: MyRequestsComponent, canActivate: [AuthGuard] },
     { path: 'journeys', component: CurrentJourneysComponent, canActivate: [AuthGuard] },
     { path: 'journey-calendar', component: JourneyCalendarComponent, canActivate: [AuthGuard] },

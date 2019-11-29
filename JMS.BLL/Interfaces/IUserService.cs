@@ -35,6 +35,9 @@ namespace JMS.BLL.Interfaces
         public ServiceResponse EditUserWorkForce(UserWorkForce workforce);
         public ServiceResponse DeleteUserWorkForce(Guid workforceId);
 
-        public ServiceResponse<List<LookupModel<Guid>>> GetRoleUsers(UserRoles role);
+        public ServiceResponse<List<LookupModel<Guid>>> GetUsersByRole(UserRoles role);
+
+
+
     }
 }

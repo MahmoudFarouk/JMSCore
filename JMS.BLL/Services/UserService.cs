@@ -435,7 +435,8 @@ namespace JMS.BLL.Services
         }
 
 
-        public ServiceResponse<List<LookupModel<Guid>>> GetRoleUsers(UserRoles role)
+
+        public ServiceResponse<List<LookupModel<Guid>>> GetUsersByRole(UserRoles role)
         {
             ServiceResponse<List<LookupModel<Guid>>> response = new ServiceResponse<List<LookupModel<Guid>>>();
 
@@ -458,6 +459,7 @@ namespace JMS.BLL.Services
             }
             return response;
         }
+
 
 
     }

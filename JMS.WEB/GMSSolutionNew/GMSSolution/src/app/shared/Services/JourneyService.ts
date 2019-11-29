@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
 import { ServiceResponse } from '../../shared/Models/ServiceResponseModel';
 import { JourneyModel } from '../models/JourneyModel';
 import swal from "sweetalert2";
@@ -19,18 +18,17 @@ export class JourneyService {
 
         let requestUrl: string = `${environment.JMSApiURL}/checkpoint/getcheckpoints?fromLat=${fromLat}&fromLng=${fromLng}&toLat=${toLat}&toLng=${toLng}`;
 
-        return this.http.get<ServiceResponse<Checkpoint[]>>(requestUrl).pipe(retry(1), catchError(this.errorHandl));
+        return this.http.get<ServiceResponse<Checkpoint[]>>(requestUrl);
     }
 
     getDispatchers() {
         let requestUrl: string = `${environment.JMSApiURL}/user/getdispatchers`;
 
-        return this.http.get<ServiceResponse<LookupModel[]>>(requestUrl).pipe(retry(1), catchError(this.errorHandl));
+        return this.http.get<ServiceResponse<LookupModel[]>>(requestUrl);
     }
 
     initJourney(model) {
-        return this.http.post<ServiceResponse<any>>(`${environment.JMSApiURL}/journey/initiate`, model)
-            .pipe(retry(1), catchError(this.errorHandl));
+        return this.http.post<ServiceResponse<any>>(`${environment.JMSApiURL}/journey/initiate`, model);
     }
 
     GetJourneyInfo(id) {
@@ -47,6 +45,7 @@ export class JourneyService {
 
         return this.http.get<any>(`${environment.JMSApiURL}/journey/JourneySelectDriver?journeyId=${id}`);
     }
+<<<<<<< HEAD
 
     UpdateJourneyStatus(journeyId,status) {
 
@@ -65,4 +64,6 @@ export class JourneyService {
         console.log(errorMessage);
         return throwError(errorMessage);
     }
+=======
+>>>>>>> b79b7c92752be7bacd4d5d96c2562d7892011fe8
 }

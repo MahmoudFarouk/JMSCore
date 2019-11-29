@@ -322,7 +322,7 @@ namespace JMS.API.Controllers
         [Route("getdispatchers")]
         public IActionResult GetDispatchers()
         {
-            return Ok(_userService.GetRoleUsers(DAL.Common.Enums.UserRoles.Dispatcher));
+            return Ok(_userService.GetUsersByRole(DAL.Common.Enums.UserRoles.Dispatcher));
         }
 
 
