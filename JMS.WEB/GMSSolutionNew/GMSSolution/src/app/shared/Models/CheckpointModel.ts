@@ -5,5 +5,6 @@ export interface Checkpoint {
     latitude?: number;
     longitude?: number;
     isThirdParty: boolean;
-    isDeleted: boolean;
+    isFromOrTo:boolean;
+    isDeleted:boolean;
 }

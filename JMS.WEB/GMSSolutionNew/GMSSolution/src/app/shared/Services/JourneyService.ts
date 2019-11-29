@@ -29,7 +29,7 @@ export class JourneyService {
     }
 
     initJourney(model) {
-        return this.http.post(`${environment.JMSApiURL}/journey/initiate`, model)
+        return this.http.post<ServiceResponse<any>>(`${environment.JMSApiURL}/journey/initiate`, model)
             .pipe(retry(1), catchError(this.errorHandl));
     }
 

@@ -1,0 +1,114 @@
+<div class="mobileContainer initiateJourney">
+    <h2 class="text-center mainHeadSection">Complete Journey Info</h2>
+
+    <form #initJourneyForm="ngForm" ngNativeValidate>
+        <div class="initiateJourney">
+            <ul class="collapsible expandable">
+                <!--start Journey Assessment Section-->
+                <li class="active">
+                    <div class="collapsible-header">
+                        <p>Add Journey Assessment</p>
+                        <img src="../../assets/images/Jms_assets/ic_right_arrow.svg">
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="addAssessment">
+                            <div class="row">
+                                <div class="col-9 questionCont">
+                                    <div class="question">
+                                        is the cargo & lifting equipment / gears in good condition
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <ul class="actions">
+                                        <li>
+                                            <img src="../../assets/images/assets_icons/pencil-edit-button.svg">
+                                        </li>
+                                        <li>
+                                            <img src="../../assets/images/assets_icons/rubbish-bin.svg">
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                        <button class="submitAssessment">
+                            <img src="../../assets/images/Jms_assets/ic_plus.svg">
+                            <span>Add more assessment</span>
+                        </button>
+                    </div>
+                </li>
+                <!--end Journey Assessment Section-->
+                <!--start Journey Assessment Section-->
+                <li class="active">
+                    <div class="collapsible-header">
+                        <p>Add Vehicle Assessment</p>
+                        <img src="../../assets/images/Jms_assets/ic_right_arrow.svg">
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="addAssessment">
+                            <div class="row">
+                                <div class="col-9 questionCont">
+                                    <div class="question">
+                                        is the cargo & lifting equipment / gears in good condition
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <ul class="actions">
+                                        <li>
+                                            <img src="../../assets/images/assets_icons/pencil-edit-button.svg">
+                                        </li>
+                                        <li>
+                                            <img src="../../assets/images/assets_icons/rubbish-bin.svg">
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="addAssessment">
+                            <div class="row">
+                                <div class="col-9 questionCont">
+                                    <div class="question">
+                                        is the cargo & lifting equipment / gears in good condition
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <ul class="actions">
+                                        <li>
+                                            <img src="../../assets/images/assets_icons/pencil-edit-button.svg">
+                                        </li>
+                                        <li>
+                                            <img src="../../assets/images/assets_icons/rubbish-bin.svg">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="submitAssessment">
+                            <img src="../../assets/images/Jms_assets/ic_plus.svg">
+                            <span>Add more assessment</span>
+                        </button>
+                    </div>
+                </li>
+                <!--end Journey Assessment Section-->
+
+            </ul>
+
+            <!--[disabled]="!initJourneyForm.form.valid"-->
+            <button class="sumbitToInitiate" (click)="submitForm(initJourneyForm)">
+                Submit Journey
+            </button>
+
+
+
+
+
+
+
+            <!--<pre>{{journey | json}}</pre>-->
+
+        </div>
+
+    </form>
+
+</div>

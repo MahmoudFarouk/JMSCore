@@ -26,6 +26,8 @@ namespace JMS.API.Models
         public Level CargoSeverity { get; set; }
         public string CargoType { get; set; }
         public Guid UserId { get; set; }
+        public Guid? DispatcherId { get; set; }
+
         public bool IsThirdParty { get; set; }
         public List<Checkpoint> Checkpoints { get; set; }
     }

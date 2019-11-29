@@ -25,32 +25,34 @@ namespace JMS.BLL.Services
         public ServiceResponse InitiateJourney(Journey journey)
         {
             journey.CreationDate = DateTime.Now;
-            if (journey.IsThirdParty)
-                journey.JourneyStatus = JourneyStatus.PendingOnDispatcherApproval;
-            else
-                journey.JourneyStatus = JourneyStatus.PendingOnJMCInitialApproval;
 
-            if (journey.Checkpoints.Any())
+            journey.JourneyStatus = journey.IsThirdParty ? JourneyStatus.PendingOnDispatcherApproval : JourneyStatus.PendingOnJMCInitialApproval;
+
+            var fromCheckpoint = _context.Checkpoint.FirstOrDefault(c => c.Latitude == journey.FromLat && c.Longitude == journey.FromLng && c.IsThirdParty == journey.IsThirdParty);
+
+            foreach (var checkpoint in journey.Checkpoints)
             {
-                foreach (var checkpoint in journey.Checkpoints)
+                var dbCheckpoint = _context.Checkpoint.FirstOrDefault(c => c.Latitude == checkpoint.Latitude && c.Longitude == checkpoint.Longitude);
+
+                if (dbCheckpoint == null && checkpoint.Id == 0)
                 {
                     checkpoint.IsThirdParty = journey.IsThirdParty;
-
-                    if (checkpoint.Id == 0)
-                        _context.Add(checkpoint);
-
-                    journey.JourneyUpdates.Add(new JourneyUpdate
-                    {
-                        Checkpoint = checkpoint.Id == 0 ? checkpoint : null,
-                        CheckpointId = checkpoint.Id == 0 ? 0 : checkpoint.Id,
-                        Latitude = checkpoint.Latitude,
-                        Longitude = checkpoint.Longitude,
-                        Date = DateTime.Now,
-                        JourneyStatus = journey.JourneyStatus,
-                        IsJourneyCheckpoint = true,
-                        UserId = journey.UserId
-                    });
+                    _context.Add(checkpoint);
                 }
+                else
+                    checkpoint.Id = dbCheckpoint.Id;
+
+                journey.JourneyUpdates.Add(new JourneyUpdate
+                {
+                    Checkpoint = checkpoint.Id == 0 ? checkpoint : null,
+                    CheckpointId = checkpoint.Id == 0 ? 0 : checkpoint.Id,
+                    Latitude = checkpoint.Latitude,
+                    Longitude = checkpoint.Longitude,
+                    Date = DateTime.Now,
+                    JourneyStatus = journey.JourneyStatus,
+                    IsJourneyCheckpoint = true,
+                    UserId = journey.UserId
+                });
             }
 
             _context.Journey.Add(journey);
