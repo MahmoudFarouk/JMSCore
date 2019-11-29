@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using JMS.API.Constants;
 using JMS.API.Models;
+using JMS.BLL.Common;
 using JMS.BLL.Helper;
 using JMS.BLL.Interfaces;
 using JMS.DAL.Models;
@@ -66,6 +67,20 @@ namespace JMS.API.Controllers
         public IActionResult DeleteCheckpoint(int checkpointId)
         {
             return Ok(_checkpointService.DeleteCheckpoint(checkpointId));
+        }
+
+        [HttpGet]
+        [Authorize(Roles = ConstRole.Driver)]
+        [Route("getCheckpointsByJourneyId")]
+        public IActionResult GetCheckpointsByJourneyId(int journeyId)
+        {
+            try
+            {
+                return Ok(_checkpointService.GetCheckpointsByJourneyId(journeyId));
+            }catch(Exception ex)
+            {
+                return Ok(new ServiceResponse {Status=DAL.Common.Enums.ResponseStatus.ServerError,Exception=ex.ToString() });
+            }
         }
     }
 

@@ -26,9 +26,13 @@ export class DriverService{
         
     }
     
-    SubmitAssessments(journeyId,status,data){
-        return  this.http.post(`${environment.JMSApiURL}/driver/submitassessment?journeyId=${journeyId}&status=${status}`,data);
+    SubmitAssessments(journeyId,status,data,journeyUpdateId=null){
+        return  this.http.post(`${environment.JMSApiURL}/driver/submitassessment?journeyId=${journeyId}&ju=${journeyUpdateId}&status=${status}`,data);
 
+    }
+    GetCheckPointsByJourneyId(journeyId){
+        return  this.http.get(`${environment.JMSApiURL}/checkpoint/getCheckpointsByJourneyId?journeyid=${journeyId}`);
+        
     }
 
 }

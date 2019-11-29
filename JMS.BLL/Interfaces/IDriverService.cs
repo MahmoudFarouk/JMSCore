@@ -11,7 +11,7 @@ namespace JMS.BLL.Interfaces
     {
         public ServiceResponse<List<User>> GetDrivers(string driverName );
 
-        public ServiceResponse SubmitAssessment(int journeyId, JourneyStatus status, List<AssessmentResult> assessmentResult);
+        public ServiceResponse SubmitAssessment(int journeyId, int? journeyUpdateId, JourneyStatus status, List<AssessmentResult> assessmentResult);
 
         public ServiceResponse SubmitStatus(JourneyUpdate journeyUpdate);
 

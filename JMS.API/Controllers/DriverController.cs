@@ -46,9 +46,9 @@ namespace JMS.API.Controllers
         [HttpPost]
         [Authorize(Roles = ConstRole.Driver)]
         [Route("submitassessment")]
-        public IActionResult SubmitAssessment(int journeyId,JourneyStatus status, List<AssessmentResult> assessmentResult)
+        public IActionResult SubmitAssessment(int journeyId,int? ju,JourneyStatus status, List<AssessmentResult> assessmentResult)
         {
-            return Ok(_driverService.SubmitAssessment( journeyId,  status, assessmentResult));
+            return Ok(_driverService.SubmitAssessment( journeyId, ju, status, assessmentResult));
         }
 
 

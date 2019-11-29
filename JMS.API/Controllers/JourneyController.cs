@@ -319,6 +319,23 @@ namespace JMS.API.Controllers
             }
         }
 
+        [Route("updateJourneyStatus")]
+        [HttpPost]
+        public IActionResult UpdateJourneyStatus(int journeyId,JourneyStatus status)
+        {
+            try
+            {
+                var result = _journeyService.UpdateJourneyStatus(journeyId,status);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+            }
+
+        }
 
     }
 }

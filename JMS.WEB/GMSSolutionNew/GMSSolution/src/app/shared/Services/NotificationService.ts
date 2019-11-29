@@ -13,5 +13,8 @@ export class NotificationService{
         return  this.http.get(`${environment.JMSApiURL}/notification/getusernotifications`);
         
     }
+    AddNotification(notification){
+        return  this.http.post(`${environment.JMSApiURL}/notification/addnotification`,notification);
+    }
 
 }

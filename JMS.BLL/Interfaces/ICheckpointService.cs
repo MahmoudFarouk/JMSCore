@@ -16,6 +16,8 @@ namespace JMS.BLL.Interfaces
 
         public ServiceResponse DeleteCheckpoint(int checkpointId);
 
+        public ServiceResponse<List<JourneyUpdate>> GetCheckpointsByJourneyId(int journeyId);
+
 
 
 

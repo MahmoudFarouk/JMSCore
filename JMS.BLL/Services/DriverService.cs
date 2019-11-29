@@ -54,7 +54,7 @@ namespace JMS.BLL.Services
             return response;
         }
 
-        public ServiceResponse SubmitAssessment(int journeyId, JourneyStatus status, List<AssessmentResult> assessmentResult)
+        public ServiceResponse SubmitAssessment(int journeyId,int? journeyUpdateId, JourneyStatus status, List<AssessmentResult> assessmentResult)
         {
             ServiceResponse response = new ServiceResponse();
 
@@ -62,6 +62,11 @@ namespace JMS.BLL.Services
             {
                 var journey = _context.Journey.Find(journeyId);
                 journey.JourneyStatus = status;
+                if (journeyUpdateId.HasValue)
+                {
+                    var journeyUpdate = _context.JourneyUpdate.Find(journeyUpdateId);
+                    journeyUpdate.JourneyStatus = JourneyStatus.DriverCompletedCheckpointAssessemnt;
+                }
                 if (assessmentResult.Count > 0)
                     _context.AssessmentResult.AddRange(assessmentResult);
                 _context.SaveChanges();

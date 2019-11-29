@@ -48,6 +48,10 @@ export class JourneyService {
         return this.http.get<any>(`${environment.JMSApiURL}/journey/JourneySelectDriver?journeyId=${id}`);
     }
 
+    UpdateJourneyStatus(journeyId,status) {
+
+        return this.http.post<any>(`${environment.JMSApiURL}/journey/updateJourneyStatus?journeyId=${journeyId}&status=${status}`,{});
+    }
 
     private errorHandl(error) {
         let errorMessage = '';

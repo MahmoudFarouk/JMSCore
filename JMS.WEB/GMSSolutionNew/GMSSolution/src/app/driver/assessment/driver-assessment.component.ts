@@ -29,9 +29,10 @@ export class DriverAssessmentComponent implements OnInit {
     posttripassessments: any[];
     checkpointassessments: any[];
     vechCheckList: any[];
-    AllAssessments: any[];
+    AllAssessments: any[]; 
     currentUser:User;
-   
+    
+    ju=null;
     constructor(private authenticationService: AuthenticationService,private JourneyService: JourneyService, private DriverService: DriverService, private activatedRoute: ActivatedRoute) {
         this.currentUser = this.authenticationService.currentUserValue;
 
@@ -40,9 +41,10 @@ export class DriverAssessmentComponent implements OnInit {
         this.activatedRoute.queryParams.subscribe(params => {
             const journeyId = params['journeyId'];
             const checkPointId = params['checkPointId'];
+            const ju = params['ju'];
             this.journeyId = journeyId != undefined && journeyId != null && journeyId != '' ? journeyId : 0;
             this.checkPointId = checkPointId != undefined && checkPointId != null && checkPointId != '' ? checkPointId : 0;
-
+            this.ju=ju != undefined && ju != null && ju != '' ? ju : null;
         });
 
         this.getJourneyInfo()
@@ -88,7 +90,7 @@ export class DriverAssessmentComponent implements OnInit {
             }
             if (data.length > 0 && status != null) {
 
-                this.DriverService.SubmitAssessments(this.journeyId, status,data).toPromise().then((data) => {
+                this.DriverService.SubmitAssessments(this.journeyId, status,data,this.ju).toPromise().then((data) => {
                    this.journey.journeyStatus= null;
                 })
             }

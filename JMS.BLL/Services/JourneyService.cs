@@ -340,5 +340,12 @@ namespace JMS.BLL.Services
         {
             throw new NotImplementedException();
         }
+        public ServiceResponse UpdateJourneyStatus(int journeyId, JourneyStatus status)
+        {
+            var journey = _context.Journey.Find(journeyId);
+            journey.JourneyStatus = JourneyStatus.JMCApprovedJourney;
+            _context.SaveChanges();
+            return new ServiceResponse {Status=ResponseStatus.Success };
+        }
     }
 }

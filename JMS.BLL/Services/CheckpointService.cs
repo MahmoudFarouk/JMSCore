@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace JMS.BLL.Services
 {
@@ -121,6 +122,11 @@ namespace JMS.BLL.Services
             return response;
         }
 
+        public ServiceResponse<List<JourneyUpdate>> GetCheckpointsByJourneyId(int journeyId)
+        {
+            var result = _context.JourneyUpdate.Include(x => x.Checkpoint).Where(x => x.JourneyId == journeyId && x.CheckpointId != null).AsNoTracking().ToList();
+            return new ServiceResponse<List<JourneyUpdate>> {Data=result,Status=ResponseStatus.Success };
+        }
 
 
     }

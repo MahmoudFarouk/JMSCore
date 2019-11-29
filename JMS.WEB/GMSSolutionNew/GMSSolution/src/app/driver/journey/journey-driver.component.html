@@ -10,11 +10,11 @@
 <!--end title section-->
 <div class="mobileContainer">
     <section class="driverAndTripInfo">
-        <div class="nameAndDestination">
+        <!-- <div class="nameAndDestination">
             <h3>Mosaad Osamy</h3>
             <p>Kuwit City To Dubai City</p>
-        </div>
-        <div class="teamAndPassengers">
+        </div> -->
+        <!-- <div class="teamAndPassengers">
             <div class="row">
                 <div class="col-4 key">
                     TEAM
@@ -31,63 +31,41 @@
                     None
                 </div>
             </div>
-        </div>
+        </div> -->
         <ul class="journeyInfo">
-            <li>
+            <li *ngFor="let item of CheckPoints" style="border-bottom: 1px solid #e7e0e0;padding: 5px;">
                 <div class="info">
-                    <h4>Kuwit City</h4>
-                    <p>26TH SEP 14:36</p>
+                    <h4>{{item.checkpoint.name}}</h4>
                 </div>
-                <button class="notActive" disabled>
+                <button class="notActive" disabled *ngIf="showCheckedInButton(item)">
                     checked-in
                 </button>
-            </li>
-            <li class="infoWithNoDesc">
-                <div class="info">
-                    <h4>Flying Commercial</h4>
-                </div>
-            </li>
-            <li>
-                <div class="info">
-                    <h4>Cairo City</h4>
-                    <p>26TH SEP 14:36</p>
-                </div>
-                <button>
-                    check-in
-                </button>
-            </li>
-            <li class="infoWithNoDesc"> 
-                <div class="info">
-                    <h4>Driver</h4>
-                </div>
-            </li>
-            <li>
-                <div class="info">
-                    <h4>Dubai City</h4>
-                    <p>26TH SEP 14:36</p>
-                </div>
-                <button>
+                <button *ngIf="showCheckinButton(item)" (click)="checkin(item)">
                     check-in
                 </button>
             </li>
         </ul>
+        <button (click)="startJourney()" *ngIf="showStartJourney()" type="button" [disabled]="loading" class="sumbitToInitiate">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Start Journey
+        </button>
     </section>
 </div>
 
-<div class="mobileContainer">
+<div class="mobileContainer" *ngIf="!showStartJourney()">
     <section class="cheackInSection text-center">
         <div class=" infoAndCheckCont">
             <div class="row">
                 <div class="col-8 info">
-                    <h3>Check In - <span>Cairo City</span></h3>
-                    <p>Mohamed Sedky Soliman 3, Al Agouz, Giza, Egypt.</p>
+                    <h3>Check In - <span>City</span></h3>
+                    <p>{{currentCheckPoint.name}}</p>
                 </div>
-                <div class="col-4">
+                <!-- <div class="col-4">
                     <button class="checkInBtn">
                         <img src="assets/images/assets_icons/iconlocationon.svg">
                         <p>Check-in Point</p>
                     </button>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="buttonsAndPopUpsCont">
@@ -95,7 +73,7 @@
             <div class="row">
                 <div class="col-4 modalAndBtnCont">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary modalTrigger sendLocation" data-toggle="modal"
+                    <button (click)="setCurrentLocation()" type="button" class="btn btn-primary modalTrigger sendLocation" data-toggle="modal"
                         data-target="#exampleModal">
                         <img src="assets/images/assets_icons/ic_pin.svg">
                         <p>Send Location</p>
@@ -105,18 +83,25 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Send Location</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    ...
+                                    <agm-map 
+                                    [latitude]="latitude" 
+                                    [longitude]="longitude" 
+                                    [zoom]="zoom" >
+                                      <agm-marker 
+                                      [latitude]="latitude" 
+                                      [longitude]="longitude"></agm-marker>
+                                    </agm-map>
+                                    <p style="text-align:left">your location: {{address}}</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                  
+                                    <button (click)="sendLocation()" type="button" class="sumbitToInitiate" >Send Location</button>
                                 </div>
                             </div>
                         </div>
@@ -126,27 +111,25 @@
                 <div class="col-4 modalAndBtnCont">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary modalTrigger statusMessages" data-toggle="modal"
-                        data-target="#exampleModal">
+                        data-target="#exampleModal1">
                         <img src="assets/images/assets_icons/ic_status.svg">
                         <p>Status Messages</p>
                     </button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Status Message</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    ...
+                                   <textarea class="form-control" [(ngModel)]='statusMessage' placeholder="Status Message ..."></textarea>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button  (click)="sendMessage()" type="button" class="sumbitToInitiate" >Send Message</button>
                                 </div>
                             </div>
                         </div>
@@ -157,28 +140,26 @@
                 <div class="col-4 modalAndBtnCont">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary modalTrigger sendAlert" data-toggle="modal"
-                        data-target="#exampleModal">
+                        data-target="#exampleModal2">
                         <img src="assets/images/assets_icons/ic_alert.svg">
                         <p>Send Alert</p>
                     </button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Send Alert</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    ...
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
+                                    <textarea class="form-control" [(ngModel)]='alertMessage' placeholder="Alert ..."></textarea>
+                                 </div>
+                                 <div class="modal-footer">
+                                     <button  (click)="sendAlert()" type="button" class="sumbitToInitiate" >Send Alert</button>
+                                 </div>
                             </div>
                         </div>
                     </div>
@@ -188,27 +169,25 @@
                 <div class="col-4 modalAndBtnCont">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary modalTrigger callPhone" data-toggle="modal"
-                        data-target="#exampleModal">
+                        data-target="#exampleModal3">
                         <img src="assets/images/assets_icons/ic_call.svg">
                         <p>Call Center</p>
                     </button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Call Center</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    ...
+                                   <div style="text-align: center;border:1px solid;padding:5px;border-radius:5px;">19022</div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                        <a href="tel:19022" class="sumbitToInitiate">Call Now</a>
                                 </div>
                             </div>
                         </div>
@@ -217,8 +196,8 @@
 
                 <div class="col-4 modalAndBtnCont">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary modalTrigger pauseJourney" data-toggle="modal"
-                        data-target="#exampleModal">
+                    <button (click)="PauseJourney()" type="button" class="btn btn-primary modalTrigger pauseJourney" 
+                        >
                         <img src="assets/images/assets_icons/ic_pause.svg">
                         <p>Pause Journey</p>
                     </button>
@@ -248,12 +227,13 @@
 
                 <div class="col-4 modalAndBtnCont">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary modalTrigger closeJourney" data-toggle="modal"
-                        data-target="#exampleModal">
+                    <button (click)="CloseJourney()" type="button" class="btn btn-primary modalTrigger closeJourney" 
+                       >
                         <img src="assets/images/assets_icons/ic_close.svg">
                         <p>Close Journey</p>
                     </button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    <div style="background: transparent!important;
+                    height: 100%!important;max-height:100%!important" class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
