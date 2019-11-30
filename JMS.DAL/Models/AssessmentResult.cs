@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JMS.DAL.Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,6 +15,7 @@ namespace JMS.DAL.Models
         public Guid UserId { get; set; }
         public int? VehicleNo { get; set; }
         public int? JourneyUpdateId { get; set; }
+        public QuestionCategory Category { get; set; }
 
         public virtual JourneyUpdate JourneyUpdate { get; set; }
         public virtual AssessmentQuestion Question { get; set; }

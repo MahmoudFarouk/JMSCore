@@ -9,12 +9,6 @@ import { AuthenticationService } from '../shared/Services/AuthenticationService'
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    ShowLoginThings = false;
-    loading: boolean = false;
-    isCustomComponent: boolean = false;
-    isCurrentPage: boolean = false;
-    subscription: Subscription;
-    timer: Observable<any>;
     currentUser: User;
     data: any;
 
@@ -22,26 +16,7 @@ export class HomeComponent implements OnInit {
         this.currentUser = this.authenticationService.currentUserValue;
     }
     ngOnInit() {
-        this.isCustomComponent = false;
-        if (window.location.href.indexOf('/InitiateJourney') > -1
-            || window.location.href.indexOf('/DriverSelection') > -1
-            || window.location.href.indexOf('/JourneyStartingAndMonitoring') > -1
-            || window.location.href.indexOf('/JourneyApproval') > -1
-            || window.location.href.indexOf('/DriverAssessment') > -1) {
-            this.isCurrentPage = true;
-            this.isCustomComponent = true;
-        }
-        this.setTimer();
+       
     }
-    navigateToCustomPage(event) {
-        this.isCustomComponent = true;
-        this.isCurrentPage = true;
-    }
-    public setTimer() {
-        this.loading = true;
-        this.timer = timer(3000);
-        this.subscription = this.timer.subscribe(() => {
-            this.loading = false;
-        });
-    }
+    
 }

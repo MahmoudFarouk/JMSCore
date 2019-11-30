@@ -1,4 +1,4 @@
-<div *ngIf="isCustomComponent==false && isCurrentPage==false && loading==false">
+<div>
   <section id="homePage" class="text-center">
     <div class="mobileContainer">
       <h2 class="sectionHeader">Welcome <strong>{{currentUser.fullName}}</strong></h2>
@@ -70,5 +70,4 @@
     </div>
   </section>
 </div>
-<router-outlet *ngIf="isCustomComponent==true && isCurrentPage==true && loading==false"></router-outlet>
 <!--end home page actions-->

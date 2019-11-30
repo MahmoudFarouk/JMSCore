@@ -47,43 +47,33 @@ namespace JMS.DAL.Common.Enums
     public enum JourneyStatus
     {
         PendingOnJMCInitialApproval = 0,
-        PendingOnDispatcherApproval = 2,
+        PendingOnDispatcherApproval = 1,
 
-        PendingOnDriverSelection = 3,
-        JMCAssignedDriver = 1,
-        DispatcherAssignedDriver = 4,
+        PendingOnDriverSelection = 2,
 
-        PendingOnDriverCompletePreTripAssessment = 6,
-        DriverCompletedPreTripAssessment = 5,
-        PendingOnJMCApproveDriverPreTripAssessment = 7,
-        JMCApprovedDriver = 8,
-        JMCChangedDriver = 9,
+        PendingOnDriverCompletePreTripAssessment = 3,
 
-        PendingOnJMCJourneyApproval = 10,
-        JMCApprovedJourney = 11,
-        JMCRejectedJourney = 13,
-        PendingOnQHSEJourneyApproval = 21,
-        QHSEApprovedJourney = 15,
-        QHSEejectedJourney = 16,
-        PendingOnGBMJourneyApproval = 17,
-        JBMApprovedJourney = 18,
-        GBMRejectedJourney = 19,
+        //Journey Approval
+        PendingOnJMCApproveDriverPreTripAssessment = 4, //Risk Status Low, High, Medium
+        PendingOnGBMJourneyApprovalPreTripAssessment = 5, //Risk Status Medium
+        PendingOnQHSEJourneyApprovalPreTripAssessment = 6, //Risk Status High
 
-        PendingOnDriverStartJourney = 20,
-        DriverStartedJourney = 22,
+        JourneyRejected = 7,
 
-        DriverProceedNextCheckpoint = 23,
-        DriverReachedCheckpoint = 24,
-        PendingOnDriverCompleteCheckpointAssessment = 12,
-        DriverCompletedCheckpointAssessemnt = 25,
+        PendingOnDriverStartJourney = 8,
+        DriverStartedJourney = 9,
+        PendingOnDriverCompleteCheckpointAssessment = 10,
+        PendingOnJMCApproveDriverCheckpointAssessment = 11,
+
+        JourneyPaused = 12,
+        JourneyStopped = 13,
 
         PendingOnDriverCompletePostTripAssessment = 14,
-        Completed = 26,
-        Closed = 27,
-        Paused = 28,
-        Stopped = 29,
-        Approved = 32,
-        Canceled = 33
+
+        PendingOnJMCApproveDriverPostTripAssessment = 15,
+        PendingOnDispatcherApproveDriverPostTripAssessment = 16,
+
+        JourneyCompleted = 17,
     }
 
 }

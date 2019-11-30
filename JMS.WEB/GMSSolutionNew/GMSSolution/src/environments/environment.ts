@@ -4,13 +4,8 @@
 
 export const environment = {
   production: false,
-<<<<<<< HEAD
    //JMSApiURL:'https://jmsapi20191122034929.azurewebsites.net/api'
   JMSApiURL:'http://localhost:5991/api'
-=======
-  //JMSApiURL:'https://jmsapi20191122034929.azurewebsites.net/api'
-  JMSApiURL: 'http://localhost:5991/api'
->>>>>>> b79b7c92752be7bacd4d5d96c2562d7892011fe8
 };
 
 /*

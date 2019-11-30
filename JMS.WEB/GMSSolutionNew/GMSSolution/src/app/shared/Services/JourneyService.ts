@@ -45,7 +45,6 @@ export class JourneyService {
 
         return this.http.get<any>(`${environment.JMSApiURL}/journey/JourneySelectDriver?journeyId=${id}`);
     }
-<<<<<<< HEAD
 
     UpdateJourneyStatus(journeyId,status) {
 
@@ -64,6 +63,4 @@ export class JourneyService {
         console.log(errorMessage);
         return throwError(errorMessage);
     }
-=======
->>>>>>> b79b7c92752be7bacd4d5d96c2562d7892011fe8
 }
