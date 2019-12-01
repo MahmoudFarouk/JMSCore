@@ -35,7 +35,7 @@ export class JourneyInfoComponent implements OnInit {
         userId: "",
         journeyUpdates: null,
         checkpoints: null,
-        assesments: null,
+        assessmentQuestion: null,
         userFullname: ""
     };
 

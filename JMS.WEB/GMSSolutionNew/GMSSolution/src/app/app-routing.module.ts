@@ -49,7 +49,7 @@ const routes: Routes = [
 
     //App Routes
     { path: 'initiate-journey', component: InitiateJourneyComponent, canActivate: [AuthGuard] },
-    { path: 'validate-journey', component: CompleteJourneyInfoComponent, canActivate: [AuthGuard] },
+    { path: 'validate-journey/:id', component: InitiateJourneyComponent, canActivate: [AuthGuard] },
     { path: 'requests', component: MyRequestsComponent, canActivate: [AuthGuard] },
     { path: 'journeys', component: CurrentJourneysComponent, canActivate: [AuthGuard] },
     { path: 'journey-calendar', component: JourneyCalendarComponent, canActivate: [AuthGuard] },

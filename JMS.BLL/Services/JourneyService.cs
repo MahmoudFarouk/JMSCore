@@ -240,7 +240,7 @@ namespace JMS.BLL.Services
         public ServiceResponse ApproveJourney(int journeyId)
         {
             var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = JourneyStatus.JMCApprovedJourney;
+            journey.JourneyStatus = JourneyStatus.PendingOnDriverStartJourney;
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
 
@@ -249,7 +249,7 @@ namespace JMS.BLL.Services
         public ServiceResponse CloseJourney(int journeyId)
         {
             var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = JourneyStatus.Closed;
+            journey.JourneyStatus = JourneyStatus.JourneyCompleted;
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
@@ -257,7 +257,7 @@ namespace JMS.BLL.Services
         public ServiceResponse CompleteJourney(int journeyId)
         {
             var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = JourneyStatus.Completed;
+            journey.JourneyStatus = JourneyStatus.JourneyCompleted;
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
@@ -265,7 +265,7 @@ namespace JMS.BLL.Services
         public ServiceResponse StopJourney(int journeyId)
         {
             var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = JourneyStatus.Stopped;
+            journey.JourneyStatus = JourneyStatus.JourneyStopped;
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
@@ -334,9 +334,42 @@ namespace JMS.BLL.Services
         public ServiceResponse UpdateJourneyStatus(int journeyId, JourneyStatus status)
         {
             var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = JourneyStatus.JMCApprovedJourney;
+            journey.JourneyStatus = JourneyStatus.PendingOnDriverStartJourney;
             _context.SaveChanges();
-            return new ServiceResponse {Status=ResponseStatus.Success };
+            return new ServiceResponse { Status = ResponseStatus.Success };
         }
+
+
+        public ServiceResponse<Journey> GetAllJourneyInfo(int journeyId)
+        {
+            ServiceResponse<Journey> response = new ServiceResponse<Journey>();
+
+            try
+            {
+                var currentJourney = _context.Journey.AsNoTracking().Include(j => j.JourneyUpdates).FirstOrDefault(j => j.Id == journeyId && j.JourneyUpdates.All(u => u.IsJourneyCheckpoint));
+
+                currentJourney.Checkpoints = new LinkedList<Checkpoint>();
+                foreach (var update in currentJourney.JourneyUpdates)
+                {
+                    var checkpoint = _context.Checkpoint.Find(update.CheckpointId);
+                    currentJourney.Checkpoints.Add(checkpoint);
+                  
+                }
+
+                response.Data = currentJourney;
+
+
+                response.Status = ResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ResponseStatus.ServerError;
+
+                ExceptionLogger.LogException(ex);
+            }
+            return response;
+        }
+
     }
 }

@@ -14,7 +14,4 @@ export class JourneyApprovalComponent implements OnInit {
   ngOnInit() {
 
   }
-  public setTimer() {
-
-  }
 }

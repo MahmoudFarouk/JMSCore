@@ -321,11 +321,11 @@ namespace JMS.API.Controllers
 
         [Route("updateJourneyStatus")]
         [HttpPost]
-        public IActionResult UpdateJourneyStatus(int journeyId,JourneyStatus status)
+        public IActionResult UpdateJourneyStatus(int journeyId, JourneyStatus status)
         {
             try
             {
-                var result = _journeyService.UpdateJourneyStatus(journeyId,status);
+                var result = _journeyService.UpdateJourneyStatus(journeyId, status);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -335,6 +335,20 @@ namespace JMS.API.Controllers
 
             }
 
+        }
+
+
+        [HttpGet("")]
+        [Authorize(Roles = "Product Line,Dispatcher,JMC,QHSE,GBM,Operation Manager")]
+        [Route("getalljourneyinfo/{id}")]
+        public IActionResult GetAllJourneyInfo(int id)
+        {
+            var result = _journeyService.GetAllJourneyInfo(id);
+
+            if (result.Status == ResponseStatus.Success)
+                return Ok(result.Data);
+
+            return NotFound();
         }
 
     }

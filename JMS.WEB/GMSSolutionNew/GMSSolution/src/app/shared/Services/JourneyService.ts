@@ -51,16 +51,9 @@ export class JourneyService {
         return this.http.post<any>(`${environment.JMSApiURL}/journey/updateJourneyStatus?journeyId=${journeyId}&status=${status}`,{});
     }
 
-    private errorHandl(error) {
-        let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-            errorMessage = error.error.message;
-        } else {
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-        }
 
-        swal.fire("Error", "Sorry an error occured, Please try again or contact administration.", "error");
-        console.log(errorMessage);
-        return throwError(errorMessage);
+    getAllJourneyInfo(id) {
+        let requestUrl: string = `${environment.JMSApiURL}/journey/getalljourneyinfo/${id}`;
+        return this.http.get<JourneyModel>(requestUrl);
     }
 }

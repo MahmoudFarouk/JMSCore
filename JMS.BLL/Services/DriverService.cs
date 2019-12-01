@@ -65,7 +65,7 @@ namespace JMS.BLL.Services
                 if (journeyUpdateId.HasValue)
                 {
                     var journeyUpdate = _context.JourneyUpdate.Find(journeyUpdateId);
-                    journeyUpdate.JourneyStatus = JourneyStatus.DriverCompletedCheckpointAssessemnt;
+                    journeyUpdate.JourneyStatus = JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment;
                 }
                 if (assessmentResult.Count > 0)
                     _context.AssessmentResult.AddRange(assessmentResult);

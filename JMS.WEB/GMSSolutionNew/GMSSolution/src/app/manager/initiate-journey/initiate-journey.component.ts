@@ -6,8 +6,12 @@ import { JourneyService } from 'src/app/shared/Services/JourneyService';
 import swal from 'sweetalert2';
 import { LookupModel } from '../../shared/Models/LookupModel';
 import { Checkpoint } from '../../shared/models/CheckpointModel';
-import { JourneyUpdate } from '../../shared/models/JourneyUpdateModel';
 import { ResponseStatus } from 'src/app/shared/Enums/response-status.enum';
+import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from 'src/app/shared/Services/AuthenticationService';
+import { AssessmentQuestion } from '../../shared/models/AssessmentQuestionModel';
+import { QuestionCategory } from '../../shared/enums/question-category.enum';
+
 
 @Component({
   selector: 'app-initiate-journey',
@@ -19,33 +23,80 @@ import { ResponseStatus } from 'src/app/shared/Enums/response-status.enum';
 
 export class InitiateJourneyComponent implements OnInit {
 
-  journey = {
-    isTruckTransport: true,
-    isThirdParty: false,
-    cargoPriority: 0,
-    cargoSeverity: 0,
-    checkpoints: []
-  } as JourneyModel;
+  currentUserRole: string;
 
-  dispatchers: LookupModel[] = [];
-  selectedCheckpoint = {} as Checkpoint;
-  minDate= new Date();
-  
+  constructor(
+    private mapsAPI: MapsAPILoader,
+    private ngZone: NgZone,
+    private journeyService: JourneyService,
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private authenticationService: AuthenticationService) {
+    this.currentUserRole = this.authenticationService.currentUserValue.roles[0].name;
+  }
+
+  isReadOnly: boolean = false;
+  isValidateMode: boolean = false;
+  categories: number[] = [1, 2, 3];
+  question: string[] = [];
+  questionId: number = 0;
+  journey = {} as JourneyModel;
+
   //Egypt Coordinates
   defaultLat: number = 27.61;
   defaultLng: number = 30.32;
+
+  dispatchers: LookupModel[] = [];
+  selectedCheckpoint = {} as Checkpoint;
+  minDate = new Date();
 
   fromDestination;
   toDestination;
   waypoints = [];
 
-  constructor(private mapsAPI: MapsAPILoader, private ngZone: NgZone, private journeyService: JourneyService, private cd: ChangeDetectorRef) { }
 
   @ViewChild('fromDestinationInput', { read: ElementRef, static: false }) fromDestinationInput: ElementRef;
   @ViewChild('toDestinationInput', { read: ElementRef, static: false }) toDestinationInput: ElementRef;
   @ViewChild('checkpointAddressInput', { read: ElementRef, static: false }) checkpointAddressInput: ElementRef;
 
   ngOnInit() {
+
+    if (this.route.routeConfig.path.indexOf("initiate-journey") != -1) {
+      this.journey = {
+        isTruckTransport: true,
+        isThirdParty: false,
+        cargoPriority: 0,
+        cargoSeverity: 0,
+        checkpoints: []
+      };
+    }
+    else if (this.route.routeConfig.path.indexOf("validate-journey") != -1) {
+      let journeyId: string = this.route.snapshot.paramMap.get("id");
+
+      if (journeyId) {
+        this.journeyService.getAllJourneyInfo(journeyId).subscribe(response => {
+          this.journey = response;
+          this.journey.deliveryDate = new Date(response.deliveryDate);
+          this.journey.assessmentQuestion = [];
+          this.addDistination(this.journey.fromDestination, this.journey.fromLat, this.journey.fromLng, true);
+          this.addDistination(this.journey.toDestination, this.journey.toLat, this.journey.toLng, false);
+          this.isValidateMode = true;
+          this.getCheckpoints();
+        });
+      }
+      else {
+        let journeyId: string = this.route.snapshot.paramMap.get("id");
+        this.journeyService.getAllJourneyInfo(journeyId).subscribe(response => {
+          this.journey = response;
+          this.journey.deliveryDate = new Date(response.deliveryDate);
+          this.journey.assessmentQuestion = [];
+          this.addDistination(this.journey.fromDestination, this.journey.fromLat, this.journey.fromLng, true);
+          this.addDistination(this.journey.toDestination, this.journey.toLat, this.journey.toLng, false);
+          this.isReadOnly = true;          
+          this.getCheckpoints();
+        });;
+      }
+    }
 
     this.getDispatchers();
 
@@ -62,10 +113,7 @@ export class InitiateJourneyComponent implements OnInit {
             return;
           }
           else {
-            this.journey.fromDestination = place.formatted_address;
-            this.journey.fromLat = place.geometry.location.lat();
-            this.journey.fromLng = place.geometry.location.lng();
-            this.fromDestination = { lat: this.journey.fromLat, lng: this.journey.fromLng };
+            this.addDistination(place.formatted_address, place.geometry.location.lat(), place.geometry.location.lng(), true)
           }
 
           if (this.journey.fromLat && this.journey.fromLng && this.journey.toLat && this.journey.toLng)
@@ -79,10 +127,7 @@ export class InitiateJourneyComponent implements OnInit {
             return;
           }
           else {
-            this.journey.toDestination = place.formatted_address;
-            this.journey.toLat = place.geometry.location.lat();
-            this.journey.toLng = place.geometry.location.lng();
-            this.toDestination = { lat: this.journey.toLat, lng: this.journey.toLng };
+            this.addDistination(place.formatted_address, place.geometry.location.lat(), place.geometry.location.lng(), false)
           }
 
           if (this.journey.fromLat && this.journey.fromLng && this.journey.toLat && this.journey.toLng)
@@ -126,26 +171,46 @@ export class InitiateJourneyComponent implements OnInit {
     });
   }
 
+  addDistination(name, lat, lng, isFrom) {
+    if (isFrom) {
+      this.journey.fromDestination = name;
+      this.journey.fromLat = lat;
+      this.journey.fromLng = lng;
+      this.fromDestination = { lat: lat, lng: lng };
+    }
+    else {
+      this.journey.toDestination = name;
+      this.journey.toLat = lat;
+      this.journey.toLng = lng;
+      this.toDestination = { lat: lat, lng: lng };
+    }
+  }
+
   getCheckpoints() {
-    this.journeyService.getCheckpoints(this.journey.fromLat, this.journey.fromLng, this.journey.toLat, this.journey.toLng).subscribe(result => {
+    if (!this.isValidateMode)
+      this.journeyService.getCheckpoints(this.journey.fromLat, this.journey.fromLng, this.journey.toLat, this.journey.toLng).subscribe(result => {
+        this.journey.checkpoints = result.data;
 
-      this.journey.checkpoints = result.data;
+        let fromCheckpoint = {
+          latitude: this.journey.fromLat, longitude: this.journey.fromLng,
+          name: this.journey.fromDestination, isFromOrTo: true
+        } as Checkpoint;
 
-      let fromCheckpoint = {
-        latitude: this.journey.fromLat, longitude: this.journey.fromLng,
-        name: this.journey.fromDestination, isFromOrTo: true
-      } as Checkpoint;
+        let toCheckpoint = {
+          latitude: this.journey.toLat, longitude: this.journey.toLng,
+          name: this.journey.toDestination, isFromOrTo: true
+        } as Checkpoint;
 
-      let toCheckpoint = {
-        latitude: this.journey.toLat, longitude: this.journey.toLng,
-        name: this.journey.toDestination, isFromOrTo: true
-      } as Checkpoint;
+        this.journey.checkpoints.unshift(fromCheckpoint);
+        this.journey.checkpoints.push(toCheckpoint);
+      });
+    else {
+      this.journey.checkpoints[0].isFromOrTo = true;
+      this.journey.checkpoints[this.journey.checkpoints.length - 1].isFromOrTo = true;
+    }
 
-      this.journey.checkpoints.unshift(fromCheckpoint);
-      this.journey.checkpoints.push(toCheckpoint);
 
-      this.drawMapCheckpoints();
-    });
+    this.drawMapCheckpoints();
   }
 
   drawMapCheckpoints() {
@@ -181,6 +246,31 @@ export class InitiateJourneyComponent implements OnInit {
       this.dispatchers = result.data;
     });
   }
+
+  addQuestion(category: QuestionCategory, checkpointId?: number) {
+
+    if (this.question[category] != "") {
+      let currentQuestion = {
+        question: this.question[category],
+        category: category,
+        isThirdParty: this.journey.isThirdParty,
+        checkpointId: checkpointId,
+        id: ++this.questionId
+      } as AssessmentQuestion;
+
+      this.journey.assessmentQuestion.push(currentQuestion);
+
+      this.question[category] = "";
+    }
+  }
+
+  deleteQuestion(questionId) {
+    this.journey.assessmentQuestion = this.journey.assessmentQuestion.filter(function (question) {
+      return questionId != question.id;
+    });
+  }
+
+
 
   submitForm(form) {
 

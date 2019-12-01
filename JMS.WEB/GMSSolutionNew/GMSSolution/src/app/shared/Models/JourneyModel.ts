@@ -3,6 +3,7 @@ import { JourneyStatus } from '../enums/journey-status.enum';
 import { Level } from '../enums/level.enum';
 import { JourneyUpdate } from './JourneyUpdateModel';
 import { Checkpoint } from './CheckpointModel';
+import { AssessmentQuestion } from './AssessmentQuestionModel';
 
 export interface JourneyModel {
     id?: number;
@@ -26,5 +27,6 @@ export interface JourneyModel {
     isThirdParty?: boolean;
     journeyUpdates?: JourneyUpdate[];
     checkpoints?: Checkpoint[];
-    assesments?: any[]
+    //assesments?: AssessmentQuestion[]
+    assessmentQuestion?: AssessmentQuestion[]
 }

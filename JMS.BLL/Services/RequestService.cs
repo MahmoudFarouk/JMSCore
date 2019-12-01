@@ -60,7 +60,7 @@ namespace JMS.BLL.Services
         {
             return _context.Journey.Where(j =>
             j.JourneyStatus == JourneyStatus.PendingOnJMCInitialApproval ||
-            j.JourneyStatus == JourneyStatus.PendingOnJMCJourneyApproval ||
+            j.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPreTripAssessment ||
             j.JourneyStatus == JourneyStatus.PendingOnJMCInitialApproval
             //TODO the rest
             ).Select(j => new RequestModel

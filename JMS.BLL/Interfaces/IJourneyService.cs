@@ -40,9 +40,11 @@ namespace JMS.BLL.Interfaces
         public ServiceResponse<object> JourneyCheckPoints(int journeyId);
 
         public ServiceResponse UpdateJourneyStatus(int journeyId, JourneyStatus status);
-        
 
-       
+        public ServiceResponse<Journey> GetAllJourneyInfo(int journeyId);
+
+
+
 
     }
 }

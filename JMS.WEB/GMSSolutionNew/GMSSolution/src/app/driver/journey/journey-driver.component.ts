@@ -8,6 +8,7 @@ import { DriverService } from '../../shared/Services/DriverService';
 import { JourneyStatus } from '../../shared/enums/journey-status.enum';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import swal from "sweetalert2";
+
 declare var $:any;
 @Component({
   selector: 'app-journey-driver',

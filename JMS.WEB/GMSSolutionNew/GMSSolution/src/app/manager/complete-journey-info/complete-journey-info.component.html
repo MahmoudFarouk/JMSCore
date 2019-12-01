@@ -3,6 +3,7 @@
 
     <form #initJourneyForm="ngForm" ngNativeValidate>
         <div class="initiateJourney">
+            <app-initiate-journey></app-initiate-journey>
             <ul class="collapsible expandable">
                 <!--start Journey Assessment Section-->
                 <li class="active">
@@ -98,12 +99,6 @@
             <button class="sumbitToInitiate" (click)="submitForm(initJourneyForm)">
                 Submit Journey
             </button>
-
-
-
-
-
-
 
             <!--<pre>{{journey | json}}</pre>-->
 

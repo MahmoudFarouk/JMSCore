@@ -13,8 +13,8 @@
           <div class="collapsible-body">
             <div class="input-group mainInputComp">
               <!-- Journey Title -->
-              <input type="text" class="form-control" placeholder="Title*" name="journeyTitle" #journeyTitle="ngModel"
-                [(ngModel)]="journey.title" required>
+              <input type="text" class="form-control bgLight" [disabled]="isValidateMode" placeholder="Title*"
+                name="journeyTitle" #journeyTitle="ngModel" [(ngModel)]="journey.title" required>
             </div>
             <div *ngIf="journeyTitle.invalid && (journeyTitle.dirty || journeyTitle.touched)"
               class="alert alert-danger customAlert">
@@ -22,9 +22,9 @@
             </div>
             <div class="input-group mainInputComp">
               <!-- From Distination -->
-              <input type="text" class="form-control" placeholder="Journey From*" autocorrect="off" autocapitalize="off"
-                spellcheck="false" name="fromDestination" required #fromDestinationInput="ngModel"
-                [(ngModel)]="journey.fromDestination">
+              <input type="text" class="form-control bgLight" [disabled]="isValidateMode" placeholder="Journey From*"
+                autocorrect="off" autocapitalize="off" spellcheck="false" name="fromDestination" required
+                #fromDestinationInput="ngModel" [(ngModel)]="journey.fromDestination">
               <div class="input-group-prepend">
                 <span class="input-group-text">
                   <img src="../../assets/images/Jms_assets/ic_pin.svg">
@@ -37,9 +37,9 @@
             </div>
             <div class="input-group mainInputComp" [hidden]="!journey.fromDestination">
               <!-- To Distination -->
-              <input type="text" class="form-control bgLight" placeholder="Journey To*" autocorrect="off"
-                autocapitalize="off" spellcheck="false" name="toDestination" #toDestinationInput="ngModel" required
-                [(ngModel)]="journey.toDestination">
+              <input type="text" class="form-control bgLight" [disabled]="isValidateMode" placeholder="Journey To*"
+                autocorrect="off" autocapitalize="off" spellcheck="false" name="toDestination"
+                #toDestinationInput="ngModel" required [(ngModel)]="journey.toDestination">
               <div class="input-group-prepend">
                 <span class="input-group-text">
                   <img src="../../assets/images/Jms_assets/ic_pin.svg">
@@ -78,10 +78,7 @@
                   </div>
                 </div>
 
-                <!--Draggable Checkpoints
-                {{waypoints|json}}
-                <br />
-                {{journey.checkpoints|json}}-->
+                <!-- Draggable Checkpoints -->
                 <div cdkDropList *ngIf="waypoints.length>0" class="example-list"
                   (cdkDropListDropped)="reArrangeCheckpoints($event)">
                   <span *ngIf="waypoints.length>1">Drag and Drop to Reorder</span>
@@ -89,7 +86,9 @@
                     <div class="example-box" *ngIf="!checkpoint.isFromOrTo" cdkDrag>
                       {{checkpoint.name}}
                       <a (click)="deleteCheckpoint(checkpoint.latitude,checkpoint.longitude)"
-                        href="javascript:void(0);">X</a>
+                        href="javascript:void(0);">
+                        <img _ngcontent-bjd-c3="" src="../../assets/images/assets_icons/rubbish-bin.svg">
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -132,7 +131,7 @@
             </div>
 
             <!-- Is Third Party -->
-            <div class="radioButtonsGroup">
+            <div class="radioButtonsGroup" *ngIf="!isValidateMode">
               <p>Is It Company Vehicle?</p>
               <div class="radioButtonsGroupCon">
                 <div>
@@ -150,7 +149,7 @@
               </div>
             </div>
             <!--DispatcherId-->
-            <div class="input-group mainInputComp" *ngIf="journey.isThirdParty">
+            <div class="input-group mainInputComp" *ngIf="journey.isThirdParty && !isValidateMode">
               <p>Dispatcher</p>
               <select class="custom-select d-block w-100" id="drpDispatchers" name="drpDispatchers" required
                 #drpDispatchers="ngModel" [(ngModel)]="journey.dispatcherId">
@@ -243,6 +242,43 @@
           </div>
         </li>
         <!--end Cargo Details Section-->
+
+        <!--start Journey Assessment Section-->
+        <div *ngIf="isValidateMode">
+          <li class="active" *ngFor="let category of categories">
+            <div class="collapsible-header">
+              <p *ngIf="category == 1">Vehicle Checklist</p>
+              <p *ngIf="category == 2">Pre-Trip Assessment</p>
+              <p *ngIf="category == 3">Post-Trip Assessment</p>
+              <img src="../../assets/images/Jms_assets/ic_right_arrow.svg">
+            </div>
+            <div class="collapsible-body">
+              <div class="addAssessment">
+                <div class="row">
+                  <div class="col-12 questionCont">
+                    <div *ngFor="let question of journey.assessmentQuestion">
+                      <div class="example-box" *ngIf="question.category==category">
+                        {{question.question}}
+                        <a (click)="deleteQuestion(question.id)" href="javascript:void(0);">
+                          <img _ngcontent-bjd-c3="" src="../../assets/images/assets_icons/rubbish-bin.svg">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mainInputComp">
+                <input type="text" class="form-control" placeholder="Enter question and click add or press enter" name="question"
+                   [(ngModel)]="question[category]">
+              </div>
+              <button (click)="addQuestion(category)" href="javascript:void(0);" class="submitAssessment">
+                <img src="../../assets/images/Jms_assets/ic_plus.svg">
+                <span>Add Question</span>
+              </button>
+            </div>
+          </li>
+        </div>
+        <!--end Journey Assessment Section-->
       </ul>
 
       <button class="sumbitToInitiate" (click)="submitForm(initJourneyForm)">
