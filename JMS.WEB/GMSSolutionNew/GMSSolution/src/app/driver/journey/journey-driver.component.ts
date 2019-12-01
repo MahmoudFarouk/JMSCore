@@ -58,7 +58,7 @@ export class JourneyDriverComponent implements OnInit {
     return !this.showStartJourney() && item.id == this.NextCheckPointId;
   }
   showCheckedInButton(item) {
-    return !this.showStartJourney() && item.journeyStatus == JourneyStatus.JourneyCompleted;
+    return !this.showStartJourney() && item.journeyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment;
 
   }
   getJourneyInfo() {
@@ -99,6 +99,7 @@ export class JourneyDriverComponent implements OnInit {
     });
   }
   checkin(item) {
+    debugger;
     this.router.navigate(['/driver/assessment'], { queryParams: { journeyId: this.journeyId, checkPointId: item.checkpointId, ju: item.id } });
   }
   private setCurrentLocation() {

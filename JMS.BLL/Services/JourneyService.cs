@@ -112,12 +112,13 @@ namespace JMS.BLL.Services
             }
             else if (journey.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment)
             {
-                var checkpoint = _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journeyId && x.CheckpointId != null && x.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment);
+                var checkpoint = _context.JourneyUpdate.Where(x => x.JourneyId == journeyId && x.CheckpointId != null && x.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment).OrderByDescending(x=>x.Id).FirstOrDefault();
                 assesments = _context.AssessmentQuestion.
                     Where(x => x.JourneyId == journeyId && ((x.Category == QuestionCategory.CheckpointAssessment && x.CheckpointId == checkpoint.CheckpointId) || x.Category == QuestionCategory.VehicleChecklist)).
                     Include(x => x.AssessmentResult)
                     .Include(z => z.Checkpoint).Select(x => new AssessmentQuestion
                     {
+                        Checkpoint=x.Checkpoint,
                         Category = x.Category,
                         CheckpointId = x.CheckpointId,
                         Id = x.Id,
@@ -125,7 +126,7 @@ namespace JMS.BLL.Services
                         JourneyId = x.JourneyId,
                         Question = x.Question,
                         Weight = x.Weight,
-                        AssessmentResult = x.AssessmentResult.Where(c =>  c.CheckPointId == checkpoint.Id && (c.Question.Category == QuestionCategory.CheckpointAssessment) || c.Question.Category == QuestionCategory.VehicleChecklist)
+                        AssessmentResult = x.AssessmentResult.Where(c=>c.Category==QuestionCategory.CheckpointAssessment&&c.CheckPointId==checkpoint.CheckpointId)
                     }).AsNoTracking().ToList();
             }
             else if (journey.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment ||
@@ -277,10 +278,18 @@ namespace JMS.BLL.Services
         public ServiceResponse UpdateJourneyStatus(int journeyId, JourneyStatus status)
         {
             var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = status;
-            var countjourneyUpdates = _context.JourneyUpdate.Where(x => x.JourneyStatus != JourneyStatus.PendingOnDriverCompleteCheckpointAssessment).Count();
+            var countjourneyUpdates = _context.JourneyUpdate.Where(x =>x.JourneyStatus== JourneyStatus.PendingOnDriverCompleteCheckpointAssessment&&x.JourneyId==journeyId).Count();
+            if (journey.JourneyStatus==JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment&&countjourneyUpdates==1)
+            {
+                var ju = _context.JourneyUpdate.Where(x => x.JourneyStatus == JourneyStatus.PendingOnDriverCompleteCheckpointAssessment && x.JourneyId == journeyId).FirstOrDefault();
+                ju.JourneyStatus = JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment;
+                journey.JourneyStatus = JourneyStatus.PendingOnDriverCompletePostTripAssessment;
+            }
+            else
+                journey.JourneyStatus = status;
+            
             if (countjourneyUpdates == 0)
-                journey.JourneyStatus = JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment;
+                journey.JourneyStatus = JourneyStatus.PendingOnDriverCompletePostTripAssessment;
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
         }

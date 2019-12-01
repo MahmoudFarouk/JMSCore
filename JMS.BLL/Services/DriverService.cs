@@ -62,7 +62,7 @@ namespace JMS.BLL.Services
             {
                 var journey = _context.Journey.Find(journeyId);
                 journey.JourneyStatus = status;
-
+                
                 if (journeyUpdateId.HasValue && journeyUpdateId.Value != 0)
                 {
                     var journeyUpdate = _context.JourneyUpdate.Find(journeyUpdateId);
