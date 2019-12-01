@@ -37,7 +37,7 @@ namespace JMS.API.Controllers
         }
 
         [HttpGet("")]
-        [Authorize(Roles = "Product Line,Dispatcher,JMC,QHSE,GBM,Operation Manager")]
+        [Authorize(Roles = "Product Line,Dispatcher,JMC,QHSE,GBM,Operation Manager,Driver")]
         [Route("getrequests")]
         public IActionResult GetRequests()
         {

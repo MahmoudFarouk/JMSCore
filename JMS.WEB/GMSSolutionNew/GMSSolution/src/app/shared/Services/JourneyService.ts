@@ -31,6 +31,10 @@ export class JourneyService {
         return this.http.post<ServiceResponse<any>>(`${environment.JMSApiURL}/journey/initiate`, model);
     }
 
+    validateJourney(model) {
+        return this.http.post<ServiceResponse<any>>(`${environment.JMSApiURL}/journey/validate`, model);
+    }
+
     GetJourneyInfo(id) {
         return this.http.get<JourneyModel>(`${environment.JMSApiURL}/journey/journeyInfo?id=${id}`);
     }

@@ -185,7 +185,7 @@ export class JourneyApprovalComponent implements OnInit {
         if (this.RiskStatus == 'low') {
           this.JourneyService.UpdateJourneyStatus(this.JourneyId, JourneyStatus.PendingOnDriverStartJourney).toPromise().then((data) => {
             debugger;
-            Swal.fire('', 'Driver approved successfully', 'success');
+            Swal.fire('Driver approved successfully', 'Notification Sent to the Driver to Start the Journey', 'success');
             this.router.navigate(['/']);
           }, (error) => {
 
@@ -193,7 +193,7 @@ export class JourneyApprovalComponent implements OnInit {
         } else if (this.RiskStatus == 'meduim') {
           this.JourneyService.UpdateJourneyStatus(this.JourneyId, JourneyStatus.PendingOnGBMJourneyApprovalPreTripAssessment).toPromise().then((data) => {
             debugger;
-            Swal.fire('', 'Driver approved successfully', 'success');
+            Swal.fire('Driver approved successfully By JMC', 'Journey is Pending on GBM Approval', 'success');
             this.router.navigate(['/']);
           }, (error) => {
 
@@ -201,7 +201,7 @@ export class JourneyApprovalComponent implements OnInit {
         } else if (this.RiskStatus == 'high') {
           this.JourneyService.UpdateJourneyStatus(this.JourneyId, JourneyStatus.PendingOnQHSEJourneyApprovalPreTripAssessment).toPromise().then((data) => {
             debugger;
-            Swal.fire('', 'Driver approved successfully', 'success');
+            Swal.fire('Driver approved successfully By JMC', 'Journey is Pending on QHSE Approval', 'success');
             this.router.navigate(['/']);
           }, (error) => {
 
@@ -211,7 +211,7 @@ export class JourneyApprovalComponent implements OnInit {
       case JourneyStatus.PendingOnGBMJourneyApprovalPreTripAssessment:
         this.JourneyService.UpdateJourneyStatus(this.JourneyId, JourneyStatus.PendingOnDriverStartJourney).toPromise().then((data) => {
           debugger;
-          Swal.fire('', 'Driver approved successfully', 'success');
+          Swal.fire('Driver approved successfully', 'Notification Sent to the Driver to Start the Journey', 'success');
           this.router.navigate(['/']);
         }, (error) => {
 
@@ -220,7 +220,7 @@ export class JourneyApprovalComponent implements OnInit {
       case JourneyStatus.PendingOnQHSEJourneyApprovalPreTripAssessment:
         this.JourneyService.UpdateJourneyStatus(this.JourneyId, JourneyStatus.PendingOnDriverStartJourney).toPromise().then((data) => {
           debugger;
-          Swal.fire('', 'Driver approved successfully', 'success');
+          Swal.fire('Driver approved successfully', 'Notification Sent to the Driver to Start the Journey', 'success');
           this.router.navigate(['/']);
         }, (error) => {
 

@@ -30,22 +30,56 @@ export class MyRequestsComponent implements OnInit {
 
   navigateToRequest(request: RequestModel) {
 
-    if (this.currentUser.roles[0].name == "JMC")
+    if (this.currentUser.roles[0].name == "JMC" || this.currentUser.roles[0].name == "Operation Manager" || this.currentUser.roles[0].name == "QHSE" || this.currentUser.roles[0].name == "GBM")
       switch (request.status) {
         case JourneyStatus.PendingOnJMCInitialApproval:
           this.router.navigate([`/validate-journey/${request.journeyId}`]);
+          break;
+        case JourneyStatus.DriverStartedJourney:
+        case JourneyStatus.JourneyCompleted:
+        case JourneyStatus.JourneyRejected:
+          this.router.navigate([`/journey/${request.journeyId}`]);
+          break;
+        case JourneyStatus.PendingOnDriverSelection:
+          this.router.navigate([`/driver-selection/`], { queryParams: { journeyId: request.journeyId } });
+          break;
         case JourneyStatus.PendingOnJMCApproveDriverPreTripAssessment:
+        case JourneyStatus.PendingOnGBMJourneyApprovalPreTripAssessment:
+        case JourneyStatus.PendingOnQHSEJourneyApprovalPreTripAssessment:
+        case JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment:
+        case JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment:
+        case JourneyStatus.JourneyPaused:
+        case JourneyStatus.JourneyStopped:
           this.router.navigate([`/journeyapproval/`], { queryParams: { journeyId: request.journeyId } });
+          break;
+      }
 
+    if (this.currentUser.roles[0].name == "Dipsatcher")
+      switch (request.status) {
+        case JourneyStatus.PendingOnDispatcherApproval:
+          this.router.navigate([`/validate-journey/${request.journeyId}`]);
+          break;
+        case JourneyStatus.PendingOnDriverSelection:
+          this.router.navigate([`/driver-selection/`], { queryParams: { journeyId: request.journeyId } });
+          break;
+        case JourneyStatus.PendingOnDispatcherApproveDriverPostTripAssessment:
+          this.router.navigate([`/journeyapproval/`], { queryParams: { journeyId: request.journeyId } });
+          break;
       }
 
     if (this.currentUser.roles[0].name == "Driver")
       switch (request.status) {
-        case JourneyStatus.PendingOnJMCApproveDriverPreTripAssessment:
+        case JourneyStatus.PendingOnDriverCompletePreTripAssessment:
+        case JourneyStatus.PendingOnDriverCompletePostTripAssessment:
+        case JourneyStatus.PendingOnDriverCompleteCheckpointAssessment:
           this.router.navigate([`/driver/assessment/`], { queryParams: { journeyId: request.journeyId } });
+          break;
         case JourneyStatus.PendingOnDriverStartJourney:
           this.router.navigate([`/driver/journey/`], { queryParams: { journeyId: request.journeyId } });
+          break;
       }
+
+
 
   }
 }

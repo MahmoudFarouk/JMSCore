@@ -79,11 +79,11 @@ export class DriverSelectionComponent implements OnInit {
       if (result.status === 1) {
 
         this.journeyUpdateId = result.data;
-        swal.fire("", "Driver assigned successfully", "success");
+        swal.fire("Driver assigned successfully", "Notification Sent to the driver to Complete the Assessment", "success");
         this.router.navigate(['/']);
       }
     } else {
-      swal.fire("", "Please, Enter vehicle numbet", "error");
+      swal.fire("", "Please, Enter vehicle number", "error");
 
     }
   }

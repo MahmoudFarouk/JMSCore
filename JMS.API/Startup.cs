@@ -22,6 +22,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using Newtonsoft.Json;
+using Microsoft.OpenApi.Models;
 
 namespace JMS.API
 {
@@ -45,6 +46,16 @@ namespace JMS.API
 
             services.AddMvc(option => option.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "JMS API",
+                });
+            });
+
+
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new Info { Title = "WebAPI", Version = "v1" });
@@ -59,38 +70,38 @@ namespace JMS.API
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.Events = new JwtBearerEvents
                 {
-                    OnTokenValidated = context =>
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.Events = new JwtBearerEvents
                     {
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                        var userId = Guid.Parse(context.Principal.Identity.Name);
-                        var user = userService.GetById(userId);
-                        if (user == null||!user.IsActive)
-                        {
-                            // return unauthorized if user no longer exists
-                            context.Fail("Unauthorized");
-                        }
-                        
-                        return Task.CompletedTask;
+                        OnTokenValidated = context =>
+                    {
+                    var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                    var userId = Guid.Parse(context.Principal.Identity.Name);
+                    var user = userService.GetById(userId);
+                    if (user == null || !user.IsActive)
+                    {
+                    // return unauthorized if user no longer exists
+                    context.Fail("Unauthorized");
                     }
-                };
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
+
+                    return Task.CompletedTask;
+                }
+                    };
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
@@ -128,12 +139,12 @@ namespace JMS.API
 
             app.UseMvc();
 
-            //app.UseSwagger();
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.RoutePrefix = "swagger/ui";
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI(v1)");
-            //});
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = string.Empty;
+                c.SwaggerEndpoint("./swagger/v1/swagger.json", "JMS API V1");
+            });
 
         }
     }

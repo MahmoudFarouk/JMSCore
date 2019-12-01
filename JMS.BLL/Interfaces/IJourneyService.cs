@@ -12,6 +12,8 @@ namespace JMS.BLL.Interfaces
     {
         public ServiceResponse InitiateJourney(Journey journey);
 
+        public ServiceResponse ValidateJourney(Journey journey);
+
         public ServiceResponse UpdateJourney(Journey journey);
 
         public ServiceResponse<object> GetJourneyDetails(int journeyId);

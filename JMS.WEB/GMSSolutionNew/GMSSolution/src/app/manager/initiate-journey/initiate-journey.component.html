@@ -245,7 +245,9 @@
 
         <!--start Journey Assessment Section-->
         <div *ngIf="isValidateMode">
-          <li class="active" *ngFor="let category of categories">
+
+        
+          <li class="active" *ngFor="let category of [1,2,3]; let i=index">
             <div class="collapsible-header">
               <p *ngIf="category == 1">Vehicle Checklist</p>
               <p *ngIf="category == 2">Pre-Trip Assessment</p>
@@ -257,7 +259,7 @@
                 <div class="row">
                   <div class="col-12 questionCont">
                     <div *ngFor="let question of journey.assessmentQuestion">
-                      <div class="example-box" *ngIf="question.category==category">
+                      <div class="example-box" *ngIf="question.category == category">
                         {{question.question}}
                         <a (click)="deleteQuestion(question.id)" href="javascript:void(0);">
                           <img _ngcontent-bjd-c3="" src="../../assets/images/assets_icons/rubbish-bin.svg">
@@ -268,15 +270,48 @@
                 </div>
               </div>
               <div class="input-group mainInputComp">
-                <input type="text" class="form-control" placeholder="Enter question and click add or press enter" name="question"
-                   [(ngModel)]="question[category]">
+                <input type="text" class="form-control" placeholder="Enter question and click add"
+                  id="question{{category}}" name="question{{category}}" [(ngModel)]="question[category]">
               </div>
-              <button (click)="addQuestion(category)" href="javascript:void(0);" class="submitAssessment">
+              <button (click)="addQuestion(category)" id="btnAddQuestion{{category}}" name="btnAddQuestion{{category}}" class="submitAssessment">
                 <img src="../../assets/images/Jms_assets/ic_plus.svg">
                 <span>Add Question</span>
               </button>
             </div>
           </li>
+
+          <li class="active" *ngFor="let checkpoint of journey.checkpoints; let i=index">
+              <div class="collapsible-header">
+                <p>Checkpoint {{checkpoint.name}} Assessment</p>
+                <img src="../../assets/images/Jms_assets/ic_right_arrow.svg">
+              </div>
+              <div class="collapsible-body">
+                <div class="addAssessment">
+                  <div class="row">
+                    <div class="col-12 questionCont">
+                      <div *ngFor="let question of journey.assessmentQuestion">
+                        <div class="example-box" *ngIf="question.checkpointId == checkpoint.id">
+                            {{question.question}}
+                          <a (click)="deleteQuestion(question.id)" href="javascript:void(0);">
+                            <img _ngcontent-bjd-c3="" src="../../assets/images/assets_icons/rubbish-bin.svg">
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="input-group mainInputComp">
+                  <input type="text" class="form-control" placeholder="Enter question and click add"
+                    id="question{{checkpoint.id}}" name="question{{checkpoint.id}}" [(ngModel)]="question[checkpoint.id]">
+                </div>
+
+                <button (click)="addQuestion(0,checkpoint.id)" id="btnAddQuestion{{checkpoint.id}}" name="btnAddQuestion{{checkpoint.id}}" class="submitAssessment">
+                  <img src="../../assets/images/Jms_assets/ic_plus.svg">
+                  <span>Add Question</span>
+                </button>
+              </div>
+            </li>
+
         </div>
         <!--end Journey Assessment Section-->
       </ul>

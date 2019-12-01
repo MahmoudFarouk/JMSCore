@@ -58,6 +58,38 @@ namespace JMS.API.Controllers
             }
 
         }
+
+        [HttpPost]
+        [Route("validate")]
+        public IActionResult Validate(JourneyModel model)
+        {
+
+            try
+            {
+
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<JourneyModel, Journey>();
+                });
+                IMapper iMapper = config.CreateMapper();
+
+                var journey = iMapper.Map<JourneyModel, Journey>(model);
+
+                journey.UserId = Guid.Parse(User.Identity.Name);
+                var result = _journeyService.ValidateJourney(journey);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+            }
+
+        }
+
+
         [HttpPost]
         [Route("update")]
         public IActionResult Update(JourneyModel model)

@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/Services/AuthenticationService';
 import { AssessmentQuestion } from '../../shared/models/AssessmentQuestionModel';
 import { QuestionCategory } from '../../shared/enums/question-category.enum';
+import { JourneyStatus } from 'src/app/shared/enums/journey-status.enum';
+import { ignoreElements } from 'rxjs/operators';
 
 
 @Component({
@@ -38,9 +40,10 @@ export class InitiateJourneyComponent implements OnInit {
 
   isReadOnly: boolean = false;
   isValidateMode: boolean = false;
+  question: any[] = [];
   categories: number[] = [1, 2, 3];
-  question: string[] = [];
   questionId: number = 0;
+
   journey = {} as JourneyModel;
 
   //Egypt Coordinates
@@ -252,22 +255,38 @@ export class InitiateJourneyComponent implements OnInit {
     });
   }
 
-  addQuestion(category: QuestionCategory, checkpointId?: number) {
+  addQuestion(category: number, checkpointId?: number) {
+    let currentQuestion = {} as AssessmentQuestion;
 
     if (this.question[category] != "") {
-      let currentQuestion = {
+      currentQuestion = {
         question: this.question[category],
+        category: category,
+        isThirdParty: this.journey.isThirdParty,
+        id: ++this.questionId
+      } as AssessmentQuestion;
+
+      this.question[category] = "";
+    }
+    else if (this.question[checkpointId] != "") {
+      currentQuestion = {
+        question: this.question[checkpointId],
         category: category,
         isThirdParty: this.journey.isThirdParty,
         checkpointId: checkpointId,
         id: ++this.questionId
       } as AssessmentQuestion;
 
+      this.question[checkpointId] = "";
+    }
+
+    if (currentQuestion.question)
       this.journey.assessmentQuestion.push(currentQuestion);
 
-      this.question[category] = "";
-    }
+    
   }
+
+
 
   deleteQuestion(questionId) {
     this.journey.assessmentQuestion = this.journey.assessmentQuestion.filter(function (question) {
@@ -279,7 +298,7 @@ export class InitiateJourneyComponent implements OnInit {
 
   submitForm(form) {
 
-    if (form.valid)
+    if (form.valid || this.isValidateMode)
       swal.queue([{
         title: this.isValidateMode ? 'Submit Journey' : 'Initiate Journey',
         text: this.isValidateMode ? "Are you sure you want to submit this Journey?" : "Are you sure you want to initiate this Journey?",
@@ -291,19 +310,18 @@ export class InitiateJourneyComponent implements OnInit {
         preConfirm: () => {
           if (this.isValidateMode) {
 
-            this.router.navigate([`/driver-selection`],{queryParams:{journeyId:this.journeyId}});
-            //TODO (Change Status to Pending on Driver Selection)
-            return this.journeyService.initJourney(this.journey).subscribe(response => {
+            //TODO: UpdateJourney
+            this.journey.journeyStatus = JourneyStatus.PendingOnDriverSelection;
+            return this.journeyService.validateJourney(this.journey).subscribe(response => {
               if (response.status == ResponseStatus.Success)
                 swal.fire({
-                  title: 'Success',
+                  title: 'Journey Submitted Sucessfully',
                   icon: 'success',
-                  text: 'Journey Submitted Sucessfully.',
+                  text: 'Proceed to Driver Selection.',
                   allowOutsideClick: false
                 }).then(end => {
-
                   if (end)
-                    this.router.navigate([`/driver-selection?journeyId=${this.journeyId}`]);
+                    this.router.navigate([`/driver-selection`], { queryParams: { journeyId: response.message } });
                 });
             })
           } else {

@@ -30,5 +30,6 @@ namespace JMS.API.Models
 
         public bool IsThirdParty { get; set; }
         public List<Checkpoint> Checkpoints { get; set; }
+        public List<AssessmentQuestion> AssessmentQuestion { get; set; }
     }
 }

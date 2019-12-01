@@ -21,12 +21,16 @@
                 <h6>Delivery Date:</h6>
                 <p> {{request.deliveryDate | date:'dd/mm/yyyy'}}</p>
             </div>
+            <div class="info">
+                <h6>Status:</h6>
+                <p> {{request.status}}</p>
+            </div>
 
             <button class="mainButtonStyle" (click)="navigateToRequest(request)">
                 View Request
             </button>
-            <a class="mainButtonStyle"  href="/journeymontoring?journeyId={{request.journeyId}}">
-                View JourneyUpdates
+            <a class="mainButtonStyle" href="/journeymontoring?journeyId={{request.journeyId}}">
+                View Journey Updates
             </a>
         </div>
     </div>
