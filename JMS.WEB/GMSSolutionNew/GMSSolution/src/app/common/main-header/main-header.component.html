@@ -19,10 +19,10 @@ Login, Forget Password, Reset Password => Logo Only
         <img src="assets/images/Jms_assets/trackingSystemLogo.svg">
       </a>
     </div>
-    <a *ngIf="currentUser" class="notificationsNumberNavIcon">
+    <a style="cursor:pointer;" *ngIf="currentUser" class="notificationsNumberNavIcon" (click)="navigateToNotifications()">
       <img src="assets/images/Jms_assets/ic_notifications-button.svg">
-      <span class="notificationsNumber">
-        <span>5</span>
+      <span *ngIf="Notifications.length>0" class="notificationsNumber">
+        <span>{{Notifications.length}}</span>
       </span>
     </a>
   </div>

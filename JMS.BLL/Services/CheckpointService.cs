@@ -124,7 +124,7 @@ namespace JMS.BLL.Services
 
         public ServiceResponse<List<JourneyUpdate>> GetCheckpointsByJourneyId(int journeyId)
         {
-            var result = _context.JourneyUpdate.Include(x => x.Checkpoint).Where(x => x.JourneyId == journeyId && x.CheckpointId != null).AsNoTracking().ToList();
+            var result = _context.JourneyUpdate.Include(x => x.Checkpoint).Where(x => x.JourneyId == journeyId && x.CheckpointId != null&&x.IsJourneyCheckpoint).AsNoTracking().ToList();
             return new ServiceResponse<List<JourneyUpdate>> {Data=result,Status=ResponseStatus.Success };
         }
 

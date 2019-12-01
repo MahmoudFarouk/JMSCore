@@ -15,7 +15,8 @@ namespace JMS.DAL.Models
         public Guid UserId { get; set; }
         public int? VehicleNo { get; set; }
         public int? JourneyUpdateId { get; set; }
-        public QuestionCategory Category { get; set; }
+        public QuestionCategory? Category { get; set; }
+        public int? CheckPointId { get; set; }
 
         public virtual JourneyUpdate JourneyUpdate { get; set; }
         public virtual AssessmentQuestion Question { get; set; }

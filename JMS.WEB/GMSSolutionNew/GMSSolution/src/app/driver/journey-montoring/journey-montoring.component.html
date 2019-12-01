@@ -1,0 +1,44 @@
+   
+   <app-journey-info></app-journey-info>
+   <!--start journeyMonitoring Section-->
+    <div class="mobileContainer journeyMonitoring">
+            <ul class="collapsible expandable">
+                <li class="active">
+                    <div class="collapsible-header">
+                        <p>Journey Name: {{journeyMontroings[0].journey.title}}</p>
+                        <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+                    </div>
+    
+                    <!--fixed-->
+                    <div class="collapsible-body" style="display:block">
+                        <div class="row point">
+                            <div class="col-3">
+                                <span class="time">Time</span>
+                            </div>
+                            <div class="col-2">
+                                <img src="assets/images/icons/ic_pin_black.svg">
+                            </div>
+                            <div class="col-7">
+                                <span class="info">Note</span>
+                            </div>
+                        </div>
+                        <!--fixed-->
+    
+    
+                        <!--repeat from here-->
+                        <div class="row point" *ngFor="let item of journeyMontroings">
+                            <div class="col-3">
+                                <span class="time">{{item.date | date:'dd/MM/yyyy hh:mm a'}}</span>
+                            </div>
+                            <div class="col-2">
+                                <img src="assets/images/assets_icons/ic_drive.svg">
+                            </div>
+                            <div class="col-7">
+                                <span class="info">{{item.statusMessage}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--END journeyMonitoring section-->

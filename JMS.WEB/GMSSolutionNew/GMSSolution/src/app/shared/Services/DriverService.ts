@@ -26,7 +26,7 @@ export class DriverService{
         
     }
     
-    SubmitAssessments(journeyId,status,data,journeyUpdateId=null){
+    SubmitAssessments(journeyId,status,data,journeyUpdateId=0){
         return  this.http.post(`${environment.JMSApiURL}/driver/submitassessment?journeyId=${journeyId}&ju=${journeyUpdateId}&status=${status}`,data);
 
     }

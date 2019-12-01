@@ -20,17 +20,12 @@ namespace JMS.BLL.Interfaces
 
         public ServiceResponse AssignJourneyDriverVehicle(int journeyId, Guid driverId, string vehcileNo);
 
-        public ServiceResponse ApproveJourney(int journeyId);
-
-        public ServiceResponse CloseJourney(int journeyId);
 
         public ServiceResponse UpdateJourneyCheckpoint(int journeyUpdateId, JourneyStatus status);
 
-        public ServiceResponse StopJourney(int journeyId);
 
-        public ServiceResponse CompleteJourney(int journeyId);
 
-        public ServiceResponse<int> AddJourneyUpdate(JourneyUpdate JourneyUpdate);
+        public ServiceResponse<int> AssaignDreiverJourneyUpdate(JourneyUpdate JourneyUpdate);
         public Journey GetById(int id);
         public JourneyUpdate GetJourneyUpdateDriverInfo(int journeyId);
         public ServiceResponse<List<Journey>> GetUserRequests(UserRoles userRole);
@@ -40,6 +35,10 @@ namespace JMS.BLL.Interfaces
         public ServiceResponse<object> JourneyCheckPoints(int journeyId);
 
         public ServiceResponse UpdateJourneyStatus(int journeyId, JourneyStatus status);
+
+        public ServiceResponse AddJourneyUpdate(JourneyUpdate JourneyUpdate);
+
+        public ServiceResponse<List<JourneyUpdate>> GetJourneyMontoring(int journeyId);
 
         public ServiceResponse<Journey> GetAllJourneyInfo(int journeyId);
 

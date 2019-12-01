@@ -29,11 +29,11 @@ export class DriverAssessmentComponent implements OnInit {
     posttripassessments: any[];
     checkpointassessments: any[];
     vechCheckList: any[];
-    AllAssessments: any[]; 
-    currentUser:User;
-    
-    ju=null;
-    constructor(private authenticationService: AuthenticationService,private JourneyService: JourneyService, private DriverService: DriverService, private activatedRoute: ActivatedRoute) {
+    AllAssessments: any[];
+    currentUser: User;
+
+    ju = 0;
+    constructor(private authenticationService: AuthenticationService, private JourneyService: JourneyService, private DriverService: DriverService, private activatedRoute: ActivatedRoute) {
         this.currentUser = this.authenticationService.currentUserValue;
 
     }
@@ -44,7 +44,7 @@ export class DriverAssessmentComponent implements OnInit {
             const ju = params['ju'];
             this.journeyId = journeyId != undefined && journeyId != null && journeyId != '' ? journeyId : 0;
             this.checkPointId = checkPointId != undefined && checkPointId != null && checkPointId != '' ? checkPointId : 0;
-            this.ju=ju != undefined && ju != null && ju != '' ? ju : null;
+            this.ju = ju != undefined && ju != null && ju != '' ? ju : 0;
         });
 
         this.getJourneyInfo()
@@ -66,32 +66,61 @@ export class DriverAssessmentComponent implements OnInit {
         return this.showPretripAssessment() || this.showPosttripAssessment() || this.showCheckpointAssessment();
     }
     Submit() {
+        debugger;
         var isvalid = this.validate();
         if (isvalid) {
             var data = [];
             for (var i in this.AllAssessments) {
                 var item = this.AllAssessments[i];
-                data.push({UserId:this.currentUser.id, QuestionId: item.id, IsYes: item.IsYes, Comment: '' });
+                var category = null;
+                switch (this.journey.journeyStatus) {
+                    case JourneyStatus.PendingOnDriverCompletePreTripAssessment:
+                        category = QuestionCategory.PreTrip;
+
+                        break;
+                    case JourneyStatus.PendingOnDriverCompletePostTripAssessment:
+                        category = QuestionCategory.PostTrip;
+
+                        break;
+                    case JourneyStatus.PendingOnDriverCompleteCheckpointAssessment:
+                        category = QuestionCategory.CheckpointAssessment;
+                        break;
+                    default:
+                        break;
+                }
+                data.push({ UserId: this.currentUser.id, QuestionId: item.id, IsYes: item.IsYes, Comment: '', Category: category,CheckPointId:this.checkPointId });
             }
             var status: any = null;
             switch (this.journey.journeyStatus) {
                 case JourneyStatus.PendingOnDriverCompletePreTripAssessment:
-                    status = JourneyStatus.DriverCompletedPreTripAssessment
+                    status = JourneyStatus.PendingOnJMCApproveDriverPreTripAssessment
+
                     break;
                 case JourneyStatus.PendingOnDriverCompletePostTripAssessment:
-                    status = JourneyStatus.Completed
+                    if (this.journey.isThirdParty)
+                        status = JourneyStatus.PendingOnDispatcherApproveDriverPostTripAssessment
+                    else
+                        status = JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment
                     break;
                 case JourneyStatus.PendingOnDriverCompleteCheckpointAssessment:
-                    status = JourneyStatus.DriverCompletedCheckpointAssessemnt
+                    status = JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment
                     break;
-
                 default:
                     break;
             }
             if (data.length > 0 && status != null) {
 
-                this.DriverService.SubmitAssessments(this.journeyId, status,data,this.ju).toPromise().then((data) => {
-                   this.journey.journeyStatus= null;
+                this.DriverService.SubmitAssessments(this.journeyId, status, data, this.ju).toPromise().then((data) => {
+                    this.journey.journeyStatus = null;
+                    swal.fire({
+                        title: 'Success',
+                        icon: 'success',
+                        text: 'Your assessment sent successfully',
+                        allowOutsideClick: false
+                    }).then(end => {
+                        if (end)
+                            window.location.href = '.';
+                    });
                 })
             }
         }

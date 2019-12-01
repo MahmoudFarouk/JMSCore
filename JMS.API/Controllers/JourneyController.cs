@@ -115,70 +115,7 @@ namespace JMS.API.Controllers
             }
 
         }
-        [Route("approve")]
-        public IActionResult ApproveJourney(int journeyId)
-        {
-            try
-            {
-                var result = _journeyService.ApproveJourney(journeyId);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                ex.LogException();
-                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
 
-            }
-
-        }
-        [Route("close")]
-        public IActionResult CloseJourney(int journeyId)
-        {
-            try
-            {
-                var result = _journeyService.CloseJourney(journeyId);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                ex.LogException();
-                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
-
-            }
-
-        }
-        [Route("complete")]
-        public IActionResult CompleteJourney(int journeyId)
-        {
-            try
-            {
-                var result = _journeyService.CompleteJourney(journeyId);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                ex.LogException();
-                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
-
-            }
-
-        }
-        [Route("stop")]
-        public IActionResult StopJourney(int journeyId)
-        {
-            try
-            {
-                var result = _journeyService.StopJourney(journeyId);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                ex.LogException();
-                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
-
-            }
-
-        }
         [Route("updateJourneyCheckpoint")]
         public IActionResult UpdateJourneyCheckpoint(int journeyUpdateId, JourneyStatus status)
         {
@@ -209,7 +146,7 @@ namespace JMS.API.Controllers
                 IMapper iMapper = config.CreateMapper();
                 var journeyUpdate = iMapper.Map<JourneyUpdateModel, JourneyUpdate>(model);
                 journeyUpdate.UserId = Guid.Parse(User.Identity.Name);
-                var result = _journeyService.AddJourneyUpdate(journeyUpdate);
+                var result = _journeyService.AssaignDreiverJourneyUpdate(journeyUpdate);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -261,7 +198,7 @@ namespace JMS.API.Controllers
                 IMapper iMapper = config.CreateMapper();
                 var journeyUpdate = iMapper.Map<JourneyUpdateModel, JourneyUpdate>(model);
                 journeyUpdate.UserId = Guid.Parse(User.Identity.Name);
-                var result = _journeyService.AddJourneyUpdate(journeyUpdate);
+                var result = _journeyService.AssaignDreiverJourneyUpdate(journeyUpdate);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -337,6 +274,40 @@ namespace JMS.API.Controllers
 
         }
 
+        [HttpPost]
+        [Route("addJourneyUpdate1")]
+        public IActionResult AddJourneyUpdate(JourneyUpdate JourneyUpdate)
+        {
+            try
+            {
+                var result = _journeyService.AddJourneyUpdate(JourneyUpdate);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+            }
+
+        }
+
+        [Route("GetJourneyMontoring")]
+        [HttpGet]
+        public IActionResult GetJourneyMontoring(int journeyId)
+        {
+            try
+            {
+                return Ok(_journeyService.GetJourneyMontoring(journeyId));
+
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+        }
+
 
         [HttpGet("")]
         [Authorize(Roles = "Product Line,Dispatcher,JMC,QHSE,GBM,Operation Manager")]
@@ -351,5 +322,6 @@ namespace JMS.API.Controllers
             return NotFound();
         }
 
+        }
     }
 }

@@ -40,7 +40,7 @@ import { JourneyDetailsComponent } from './common/journey-details/journey-detail
 //Driver
 import { JourneyDriverComponent } from './driver/journey/journey-driver.component';
 import { DriverAssessmentComponent } from './driver/assessment/driver-assessment.component';
-import { JourneyClosureComponent } from './driver/journey-closure/journey-closure.component';
+import { JourneyMontroing } from './driver/journey-montoring/journey-montoring.component';
 
 //Admin
 import { AdminDashboardComponent } from './admin/dashboard/admin-dashboard.component';
@@ -65,7 +65,7 @@ import { CompleteJourneyInfoComponent } from './manager/complete-journey-info/co
     DriverSelectionComponent,
     JourneyApprovalComponent,
     DriverAssessmentComponent,
-    JourneyClosureComponent,
+    JourneyMontroing,
     AdminDashboardComponent,
     UsersManagementComponent,
     TeamManagementComponent,
