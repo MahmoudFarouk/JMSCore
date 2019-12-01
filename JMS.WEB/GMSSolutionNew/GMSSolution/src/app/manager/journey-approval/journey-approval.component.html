@@ -1,0 +1,187 @@
+<!--start journeyApproval Section-->
+<div class="mobileContainer journeyApproval">
+    <h2 class="text-center mainHeadSection">Journey Approval</h2>
+    <ul class="collapsible expandable">
+        <li class="active">
+            <div class="collapsible-header">
+                <p>Journey Details</p>
+                <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+            </div>
+            <div class="collapsible-body">
+                <div class="detail">
+                    <h3>Title: </h3>
+                    <p>{{journey.data.title}}</p>
+                </div>
+                <div class="detail">
+                    <img src="assets/images/Jms_assets/ic_pin.svg">
+                    <h3>Destination From: </h3>
+                    <p>{{journey.data.fromDestination}}</p>
+                </div>
+                <div class="detail">
+                    <img src="assets/images/Jms_assets/ic_pin.svg">
+                    <h3>Destination To: </h3>
+                    <p>{{journey.data.toDestination}}</p>
+                </div>
+                <div class="detail">
+                    <img src="assets/images/Jms_assets/ic_calendar.svg">
+                    <h3>Date Of Delivery: </h3>
+                    <p>{{journey.data.deliveryDate | date:'dd/MM/yyyy' }}</p>
+                </div>
+
+                <div class="detail">
+                    <img src="assets/images/Jms_assets/ic_driver_black.svg">
+                    <h3>Status: </h3>
+                    <p>{{getGourneyStatus(journey.data.journeyStatus)}}</p>
+                </div>
+            </div>
+        </li>
+
+        <li class="active">
+            <div class="collapsible-header">
+                <p>Cargo Details</p>
+                <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+            </div>
+            <div class="collapsible-body">
+                <div class="detail">
+
+                    <h3>Cargo Type: </h3>
+                    <p>{{journey.data.cargoType}}</p>
+                </div>
+                <div class="detail">
+                    <h3>Weight: </h3>
+                    <p>{{journey.data.cargoWeight}} KG</p>
+                </div>
+                <div class="detail">
+                    <h3>Priority Degree: </h3>
+                    <p>{{getLevelStatus(journey.data.cargoPriority)}} </p>
+                </div>
+                <div class="detail">
+                    <h3>Severity Degree: </h3>
+                    <p>{{getLevelStatus(journey.data.cargoSeverity)}} </p>
+                </div>
+            </div>
+        </li>
+
+        <li class="active" *ngIf="showDriverAssessment()">
+            <div class="collapsible-header">
+                <p>Driver Assessment</p>
+                <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+            </div>
+            <div class="collapsible-body drivAss">
+                <div class="detail" *ngFor="let item of PretripAssessmeent">
+                    <div class="row">
+                        <div class="col-9">
+                            <p>
+                                {{item.question}}
+                            </p>
+                        </div>
+                        <div class="col-3">
+                            <button *ngIf='item.assessmentResult.length>0&&item.assessmentResult[0].isYes' class="yes" disabled>
+                                YES
+                            </button>
+                            <button *ngIf='item.assessmentResult.length>0&&!item.assessmentResult[0].isYes' class="no" disabled>
+                                NO
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="active" *ngIf="showCheckPoint()">
+                <div class="collapsible-header">
+                    <p>Checkpoint: {{getchekPointName()}}</p>
+                    <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+                </div>
+                <div class="collapsible-body drivAss">
+                    <div class="detail" *ngFor="let item of CheckPointAssessment">
+                        <div class="row">
+                            <div class="col-9">
+                                <p>
+                                    {{item.question}}
+                                </p>
+                            </div>
+                            <div class="col-3">
+                                <button *ngIf='item.assessmentResult.length>0&&item.assessmentResult[0].isYes' class="yes" disabled>
+                                    YES
+                                </button>
+                                <button *ngIf='item.assessmentResult.length>0&&!item.assessmentResult[0].isYes' class="no" disabled>
+                                    NO
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="active" *ngIf="showpostTrip()">
+                    <div class="collapsible-header">
+                        <p>Pos Trip Assessment}</p>
+                        <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+                    </div>
+                    <div class="collapsible-body drivAss">
+                        <div class="detail" *ngFor="let item of PosTripAssessment">
+                            <div class="row">
+                                <div class="col-9">
+                                    <p>
+                                        {{item.question}}
+                                    </p>
+                                </div>
+                                <div class="col-3">
+                                    <button *ngIf='item.assessmentResult.length>0&&item.assessmentResult[0].isYes' class="yes" disabled>
+                                        YES
+                                    </button>
+                                    <button *ngIf='item.assessmentResult.length>0&&!item.assessmentResult[0].isYes' class="no" disabled>
+                                        NO
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+        <li class="active" *ngIf="showVechileCheckList()">
+            <div class="collapsible-header">
+                <p>Vehicle Checklist</p>
+                <img src="assets/images/Jms_assets/ic_right_arrow.svg">
+            </div>
+            <div class="collapsible-body drivAss">
+                <div class="detail" *ngFor="let item of VechileCheckList">
+                    <div class="row">
+                        <div class="col-9">
+                            <p>
+                                {{item.question}}
+                            </p>
+                        </div>
+                        <div class="col-3">
+                            <button *ngIf='item.assessmentResult.length>0&&item.assessmentResult[0].isYes' class="yes" disabled>
+                                YES
+                            </button>
+                            <button *ngIf='item.assessmentResult.length>0&&!item.assessmentResult[0].isYes' class="no" disabled>
+                                NO
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="row" *ngIf="showDriverAssessment()">
+        <div class="col-6">
+            <button class="sumbitToInitiate " (click)="approveDriver()">
+                Accept Driver
+            </button>
+        </div>
+        <div class="col-6">
+            <button class="changeDriver" (click)="changeDriver()">
+                Change Driver
+            </button>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="showApprove()">
+
+        <div class="col-12">
+            <button class="sumbitToInitiate" (click)="approve()">
+                Approve
+            </button>
+        </div>
+    </div>
+</div>

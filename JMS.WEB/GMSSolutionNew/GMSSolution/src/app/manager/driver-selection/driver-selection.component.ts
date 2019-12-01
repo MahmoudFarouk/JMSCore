@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DriverModel } from 'src/app/shared/models/DriverModel';
 import { DriverService } from 'src/app/shared/Services/DriverService';
 import { JourneyService } from 'src/app/shared/Services/JourneyService';
-
+import swal from "sweetalert2";
 @Component({
   selector: 'app-driver-selection',
   templateUrl: './driver-selection.component.html',
@@ -17,12 +17,14 @@ export class DriverSelectionComponent implements OnInit {
   subscription: Subscription;
   timer: Observable<any>;
   Drivers: DriverModel[];
-  
+
   slectedDriver: any = {};
-  JourneyId: number =0;
-  journeyUpdateId:number=0;
-  keyword:string="";
-  constructor(private DriverService: DriverService, private JourneyService: JourneyService, private activatedRoute: ActivatedRoute) {
+  JourneyId: number = 0;
+  journeyUpdateId: number = 0;
+  keyword: string = "";
+  constructor(private DriverService: DriverService,
+    private JourneyService: JourneyService,
+    private activatedRoute: ActivatedRoute, private router: Router) {
 
   }
   ngOnInit() {
@@ -35,13 +37,13 @@ export class DriverSelectionComponent implements OnInit {
     //this.setTimer();
     this.loading = true;
     this.DriverService.GetDrivers().toPromise().then((data: any) => {
-      
+
       this.Drivers = data.data;
       this.JourneyService.GetJourneySelectDriver(this.JourneyId).toPromise().then((data: any) => {
         debugger;
         this.slectedDriver.id = data.data.DriverId
-        this.journeyUpdateId=data.data.Id;
-        
+        this.journeyUpdateId = data.data.Id;
+
       }, (error) => {
         this.loading = false;
       });
@@ -51,9 +53,9 @@ export class DriverSelectionComponent implements OnInit {
     });
 
   }
-   Search($event){
+  Search($event) {
     this.DriverService.GetDrivers(this.keyword).toPromise().then((data: any) => {
-    
+
       this.Drivers = data.data;
     });
   }
@@ -61,31 +63,28 @@ export class DriverSelectionComponent implements OnInit {
     return this.slectedDriver !== null && this.slectedDriver.id === item.id && (item.VechNo === undefined || item.VechNo === null || item.VechNo === '');
   }
   public async selectClick(item: DriverModel) {
-   
+
     this.slectedDriver.id = item.id;
     if (item.VechNo !== undefined && item.VechNo !== '' && item.VechNo !== null) {
       this.loading = true;
 
       var result = await this.JourneyService.AssignDriverToJourney({
-        Id:this.journeyUpdateId,
+        Id: this.journeyUpdateId,
         JourneyId: this.JourneyId,
         DriverId: this.slectedDriver.id,
-        VehicleNo: item.VechNo
-
+        VehicleNo: item.VechNo,
+        StatusMessage:item.fullName
       }) as any;
       debugger;
       if (result.status === 1) {
-        
-        this.journeyUpdateId=result.data;
-        
-        alert("Driver assigned successfully");
-      } else {
-        alert("Server Error");
-      }
-      this.loading = false;
 
+        this.journeyUpdateId = result.data;
+        swal.fire("", "Driver assigned successfully", "success");
+        this.router.navigate(['/']);
+      }
     } else {
-      alert('please enter Vehicle.No')
+      swal.fire("", "Please, Enter vehicle numbet", "error");
+
     }
   }
   public setTimer() {

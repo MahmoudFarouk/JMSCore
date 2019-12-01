@@ -22,6 +22,6 @@ namespace JMS.DAL.Models
         public virtual Checkpoint Checkpoint { get; set; }
         public virtual Journey Journey { get; set; }
 
-        public virtual ICollection<AssessmentResult> AssessmentResult { get; set; }
+        public virtual IEnumerable<AssessmentResult> AssessmentResult { get; set; }
     }
 }

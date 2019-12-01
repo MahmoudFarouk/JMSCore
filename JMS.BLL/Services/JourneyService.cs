@@ -88,103 +88,64 @@ namespace JMS.BLL.Services
         public ServiceResponse<object> GetJourneyDetails(int journeyId)
         {
             var journey = _context.Journey.Find(journeyId);
-            var assesements = _context.AssessmentQuestion.Where(x => x.JourneyId == journeyId).Include(x => x.AssessmentResult).ToList().Select(c =>
-                new
-                {
-                    c.Category,
-                    c.Question,
-                    Assessments = c.AssessmentResult.Select(x => new { x.IsYes })
-                }
-                ).GroupBy(x => x.Category);
+            var assesments = new List<AssessmentQuestion>();
 
-            //var journeyUpdates = _context.JourneyUpdate.Include(x => x.Checkpoint).Include(x => x.AssessmentResult).Where(x => x.JourneyId == journeyId).ToList();
-            //var _journeyUpdates = new List<JourneyUpdateModel>();
-            //var _checkpoints = new List<CheckPointModel>();
-            //var _assessmentQuestion = new List<AssessmentQuestionModel>();
-            //for (int i = 0; i < journeyUpdates.Count(); i++)
-            //{
-            //    var journeyUpdate = journeyUpdates[i];
+            if (journey.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPreTripAssessment ||
+                journey.JourneyStatus == JourneyStatus.PendingOnGBMJourneyApprovalPreTripAssessment ||
+                journey.JourneyStatus == JourneyStatus.PendingOnQHSEJourneyApprovalPreTripAssessment)
+            {
 
-            //    if (journeyUpdate.CheckpointId != null)
-            //    {
-            //        _checkpoints.Add(new CheckPointModel
-            //        {
-            //            Id = journeyUpdate.Checkpoint.Id,
-            //            IsThirdParty = journeyUpdate.Checkpoint.IsThirdParty,
-            //            Lat = journeyUpdate.Checkpoint.Latitude.HasValue ? journeyUpdate.Checkpoint.Latitude.Value : default(double?),
-            //            Lng = journeyUpdate.Checkpoint.Longitude.HasValue ? journeyUpdate.Checkpoint.Longitude.Value : default(double?),
-            //            Name = journeyUpdate.Checkpoint.Name
-            //        });
-            //    }
-            //    var AssessmentResults = journeyUpdate.AssessmentResult.ToList();
-            //    for (var x = 0; x < AssessmentResults.Count; x++)
-            //    {
-            //        var assessmentResult = AssessmentResults[x];
-            //        var question = _context.AssessmentQuestion.Find(assessmentResult.QuestionId);
-            //        var _question = _assessmentQuestion.Where(x => x.Id == assessmentResult.QuestionId).FirstOrDefault();
-            //        if (_question != null)
-            //        {
-            //            _question.AssessmentResults.Add(new AssessmentResultModel
-            //            {
-            //                Comment = assessmentResult.Comment,
-            //                Id = assessmentResult.Id,
-            //                IsYes = assessmentResult.IsYes,
-            //                JourneyUpdateId = assessmentResult.JourneyUpdateId,
-            //                QuestionId = assessmentResult.QuestionId,
-            //                SubmittedBy = assessmentResult.UserId,
-            //                SubmittedByname = assessmentResult.UserId != null ? _context.Users.Find(assessmentResult.UserId).FullName : "",
-            //                VehicleNo = assessmentResult.VehicleNo
-            //            });
-            //        }
-            //        else
-            //        {
-            //            var _assessResults = new List<AssessmentResultModel>();
-            //            _assessResults.Add(new AssessmentResultModel
-            //            {
-            //                Comment = assessmentResult.Comment,
-            //                Id = assessmentResult.Id,
-            //                IsYes = assessmentResult.IsYes,
-            //                JourneyUpdateId = assessmentResult.JourneyUpdateId,
-            //                QuestionId = assessmentResult.QuestionId,
-            //                SubmittedBy = assessmentResult.UserId,
-            //                SubmittedByname = assessmentResult.UserId != null ? _context.Users.Find(assessmentResult.UserId).FullName : "",
-            //                VehicleNo = assessmentResult.VehicleNo
-            //            });
-            //            _assessmentQuestion.Add(new AssessmentQuestionModel
-            //            {
-            //                AssessmentResults = _assessResults,
-            //                Category = question.Category,
-            //                CheckpointId = question.CheckpointId,
-            //                Id = question.Id,
-            //                IsThirdParty = question.IsThirdParty,
-            //                Question = question.Question,
-            //                Weight = question.Weight
-            //            });
-            //        }
-            //    }
-            //    _journeyUpdates.Add(new JourneyUpdateModel
-            //    {
-            //        CheckpointId = journeyUpdate.CheckpointId,
-            //        Date = journeyUpdate.Date,
-            //        DriverId = journeyUpdate.DriverId.ToString(),
-            //        Drivername = journeyUpdate.DriverId != null ? _context.Users.Find(journeyUpdate.DriverId).FullName : "",
-            //        Id = journeyUpdate.Id,
-            //        IsAlert = journeyUpdate.IsAlert,
-            //        IsDriverStatus = journeyUpdate.IsDriverStatus,
-            //        IsJourneyCheckpoint = journeyUpdate.IsJourneyCheckpoint,
-            //        JourneyId = journeyUpdate.JourneyId,
-            //        JourneyStatus = journeyUpdate.JourneyStatus,
-            //        Latitude = journeyUpdate.Latitude.HasValue ? journeyUpdate.Latitude.Value : default(double?),
-            //        Longitude = journeyUpdate.Longitude.HasValue ? journeyUpdate.Longitude.Value : default(double?),
-            //        RiskLevel = journeyUpdate.RiskLevel,
-            //        StatusMessage = journeyUpdate.StatusMessage,
-            //        VehicleNo = journeyUpdate.VehicleNo,
-            //        AssessmentQuestions = _assessmentQuestion,
+                assesments = _context.AssessmentQuestion.Where(x => x.JourneyId == journeyId && (x.Category == QuestionCategory.PreTrip || x.Category == QuestionCategory.VehicleChecklist)).Include(x => x.AssessmentResult).Select(
+                    x => new AssessmentQuestion
+                    {
+                        Category = x.Category,
+                        CheckpointId = x.CheckpointId,
+                        Id = x.Id,
+                        IsThirdParty = x.IsThirdParty,
+                        JourneyId = x.JourneyId,
+                        Question = x.Question,
+                        Weight = x.Weight,
+                        AssessmentResult = x.AssessmentResult.Where(c => c.Category == QuestionCategory.PreTrip)
+                    }
+                    ).AsNoTracking().ToList();
+            }
+            else if (journey.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment)
+            {
+                var checkpoint = _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journeyId && x.CheckpointId != null && x.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment);
+                assesments = _context.AssessmentQuestion.
+                    Where(x => x.JourneyId == journeyId && (x.Category == QuestionCategory.CheckpointAssessment || x.Category == QuestionCategory.VehicleChecklist) && x.CheckpointId == checkpoint.Id).
+                    Include(x => x.AssessmentResult)
+                    .Include(z => z.Checkpoint).Select(x => new AssessmentQuestion
+                    {
+                        Category = x.Category,
+                        CheckpointId = x.CheckpointId,
+                        Id = x.Id,
+                        IsThirdParty = x.IsThirdParty,
+                        JourneyId = x.JourneyId,
+                        Question = x.Question,
+                        Weight = x.Weight,
+                        AssessmentResult = x.AssessmentResult.Where(c => c.Category == QuestionCategory.CheckpointAssessment && c.CheckPointId == checkpoint.Id)
+                    }).AsNoTracking().ToList();
+            }
+            else if (journey.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment ||
+               journey.JourneyStatus == JourneyStatus.PendingOnDispatcherApproveDriverPostTripAssessment)
+            {
 
-            //    });
+                assesments = _context.AssessmentQuestion.Where(x => x.JourneyId == journeyId && (x.Category == QuestionCategory.PostTrip || x.Category == QuestionCategory.VehicleChecklist)).Include(x => x.AssessmentResult).Select(
+                    x => new AssessmentQuestion
+                    {
+                        Category = x.Category,
+                        CheckpointId = x.CheckpointId,
+                        Id = x.Id,
+                        IsThirdParty = x.IsThirdParty,
+                        JourneyId = x.JourneyId,
+                        Question = x.Question,
+                        Weight = x.Weight,
+                        AssessmentResult = x.AssessmentResult.Where(c => c.Category == QuestionCategory.PostTrip)
+                    }
+                    ).AsNoTracking().ToList();
+            }
 
-
-            //}
             var details = new
             {
                 CargoPriority = journey.CargoPriority,
@@ -206,13 +167,16 @@ namespace JMS.BLL.Services
                 ToLng = journey.ToLng.HasValue ? journey.ToLng.Value : default(double?),
                 UserId = journey.UserId,
                 UserFullname = journey.UserId != null ? _context.Users.Find(journey.UserId).FullName : "",
-                Assesments = assesements
-                //JourneyUpdates = _journeyUpdates,
-                //CheckPoints = _checkpoints
+                Assesments = assesments
+
 
 
             };
-            return new ServiceResponse<object> { Data = details, Status = ResponseStatus.Success };
+            return new ServiceResponse<object>
+            {
+                Data = details,
+                Status = ResponseStatus.Success
+            };
         }
         public ServiceResponse<PageResult<Journey>> GetJourneys(DateTime? date, PagingProperties pagingProperties)
         {
@@ -237,39 +201,6 @@ namespace JMS.BLL.Services
             return new ServiceResponse { Status = ResponseStatus.Success };
 
         }
-        public ServiceResponse ApproveJourney(int journeyId)
-        {
-            var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = JourneyStatus.JMCApprovedJourney;
-            _context.SaveChanges();
-            return new ServiceResponse { Status = ResponseStatus.Success };
-
-        }
-
-        public ServiceResponse CloseJourney(int journeyId)
-        {
-            var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = JourneyStatus.Closed;
-            _context.SaveChanges();
-            return new ServiceResponse { Status = ResponseStatus.Success };
-        }
-
-        public ServiceResponse CompleteJourney(int journeyId)
-        {
-            var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = JourneyStatus.Completed;
-            _context.SaveChanges();
-            return new ServiceResponse { Status = ResponseStatus.Success };
-        }
-
-        public ServiceResponse StopJourney(int journeyId)
-        {
-            var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = JourneyStatus.Stopped;
-            _context.SaveChanges();
-            return new ServiceResponse { Status = ResponseStatus.Success };
-        }
-
         public ServiceResponse UpdateJourneyCheckpoint(int journeyUpdateId, JourneyStatus status)
         {
             var journey = _context.JourneyUpdate.Find(journeyUpdateId);
@@ -278,13 +209,19 @@ namespace JMS.BLL.Services
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
 
-        public ServiceResponse<int> AddJourneyUpdate(JourneyUpdate JourneyUpdate)
+        public ServiceResponse<int> AssaignDreiverJourneyUpdate(JourneyUpdate JourneyUpdate)
         {
+            var journey = _context.Journey.Find(JourneyUpdate.JourneyId);
+            journey.JourneyStatus = JourneyStatus.PendingOnDriverCompletePreTripAssessment;
+            _context.Notification.Add(new Notification {CreationTime=DateTime.Now,
+                Text="Journey from "+journey.FromDestination+" to "+journey.ToDestination+" Assaigned to you",UserId=JourneyUpdate.DriverId.Value });
             if (JourneyUpdate.Id > 0)
             {
                 var item = _context.JourneyUpdate.Find(JourneyUpdate.Id);
                 item.VehicleNo = JourneyUpdate.VehicleNo;
                 item.DriverId = JourneyUpdate.DriverId;
+                item.StatusMessage = JourneyUpdate.StatusMessage;
+                item.Date = DateTime.Now;
                 _context.SaveChanges();
                 return new ServiceResponse<int> { Data = item.Id, Status = ResponseStatus.Success };
             }
@@ -334,9 +271,25 @@ namespace JMS.BLL.Services
         public ServiceResponse UpdateJourneyStatus(int journeyId, JourneyStatus status)
         {
             var journey = _context.Journey.Find(journeyId);
-            journey.JourneyStatus = JourneyStatus.JMCApprovedJourney;
+            journey.JourneyStatus = status;
+            var countjourneyUpdates = _context.JourneyUpdate.Where(x => x.JourneyStatus != JourneyStatus.PendingOnDriverCompleteCheckpointAssessment).Count();
+            if (countjourneyUpdates == 0)
+                journey.JourneyStatus = JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment;
             _context.SaveChanges();
-            return new ServiceResponse {Status=ResponseStatus.Success };
+            return new ServiceResponse { Status = ResponseStatus.Success };
+        }
+        public ServiceResponse AddJourneyUpdate(JourneyUpdate JourneyUpdate)
+        {
+            JourneyUpdate.Date = DateTime.Now;
+            _context.JourneyUpdate.Add(JourneyUpdate);
+            _context.SaveChanges();
+
+            return new ServiceResponse { Status = ResponseStatus.Success };
+        }
+        public ServiceResponse<List<JourneyUpdate>> GetJourneyMontoring(int journeyId)
+        {
+            var data = _context.JourneyUpdate.Where(x => x.JourneyId == journeyId && !x.IsJourneyCheckpoint).Include(x=>x.Journey).AsNoTracking().ToList();
+            return new ServiceResponse<List<JourneyUpdate>> {Data=data, Status = ResponseStatus.Success };
         }
     }
 }

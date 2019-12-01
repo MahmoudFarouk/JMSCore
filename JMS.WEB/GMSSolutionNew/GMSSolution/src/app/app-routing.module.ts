@@ -21,7 +21,7 @@ import { JourneyDetailsComponent } from './common/journey-details/journey-detail
 
 //Drivers
 import { DriverAssessmentComponent } from './driver/assessment/driver-assessment.component';
-import { JourneyClosureComponent } from './driver/journey-closure/journey-closure.component';
+
 import { JourneyDriverComponent } from './driver/journey/journey-driver.component';
 
 //Admin
@@ -33,6 +33,7 @@ import { CheckpointManagementComponent } from './admin/checkpoints/checkpoint-ma
 import { ReportsComponent } from './admin/reports/reports.component';
 import { ForgetPasswordComponent } from './common/forget-password/forget-password.component';
 import { ForgetchangepasswordComponent } from './common/forgetchangepassword/forgetchangepassword.component';
+import { JourneyMontroing } from './driver/journey-montoring/journey-montoring.component';
 
 
 const routes: Routes = [
@@ -58,7 +59,7 @@ const routes: Routes = [
     { path: 'driver-selection', component: DriverSelectionComponent, canActivate: [AuthGuard] },
     { path: 'journeyapproval', component: JourneyApprovalComponent },
     { path: 'driver/assessment', component: DriverAssessmentComponent, canActivate: [AuthGuard] },
-    { path: 'journeyclosure', component: JourneyClosureComponent },
+    { path: 'journeymontoring', component: JourneyMontroing },
     { path: 'checkpointmanagement', component: CheckpointManagementComponent },
     { path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard] },
     { path: 'journeydetails', component: JourneyDetailsComponent, canActivate: [AuthGuard] },

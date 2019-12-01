@@ -23,7 +23,7 @@ export class NotificationsComponent implements OnInit {
     this.NotificationService.GetNotifications().toPromise().then((data: any) => {
      
       this.Notifications = data.data;
-      this.setTimer();
+      //this.setTimer();
       this.loading = false;
     }, (error) => { 
       this.loading = false;
@@ -41,6 +41,6 @@ export class NotificationsComponent implements OnInit {
       }, (error) => { 
        
       });
-    });
+    }); 
   }
 }

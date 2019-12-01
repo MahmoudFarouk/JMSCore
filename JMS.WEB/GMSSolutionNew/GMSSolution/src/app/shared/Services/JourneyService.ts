@@ -50,6 +50,13 @@ export class JourneyService {
 
         return this.http.post<any>(`${environment.JMSApiURL}/journey/updateJourneyStatus?journeyId=${journeyId}&status=${status}`,{});
     }
+    AddJourneyUpdate(data){
+        return this.http.post<any>(`${environment.JMSApiURL}/journey/addJourneyUpdate1`,data);
+
+    }
+    GetJourneyMontoring(journeyId) {
+        return this.http.get<any>(`${environment.JMSApiURL}/journey/GetJourneyMontoring?journeyId=${journeyId}`);
+    }
 
     private errorHandl(error) {
         let errorMessage = '';
