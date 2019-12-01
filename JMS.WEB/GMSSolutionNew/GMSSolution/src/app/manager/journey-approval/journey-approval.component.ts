@@ -60,7 +60,7 @@ export class JourneyApprovalComponent implements OnInit {
   }
   RiskStatus = '';
   showVechileCheckList() {
-    return this.showDriverAssessment() || this.showCheckPoint()||this.showpostTrip();
+    return this.showDriverAssessment() || this.showCheckPoint() || this.showpostTrip();
   }
   showDriverAssessment() {
 
@@ -77,10 +77,10 @@ export class JourneyApprovalComponent implements OnInit {
     return (this.journey.data.journeyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment && userRole == "JMC")
   }
   showpostTrip() {
-    var userRole = this.currentUser.roles[0].name;    
+    var userRole = this.currentUser.roles[0].name;
     return (this.journey.data.journeyStatus == JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment && userRole == "JMC")
-    || (this.journey.data.journeyStatus == JourneyStatus.PendingOnDispatcherApproveDriverPostTripAssessment && userRole == "Dispatcher")
-    
+      || (this.journey.data.journeyStatus == JourneyStatus.PendingOnDispatcherApproveDriverPostTripAssessment && userRole == "Dispatcher")
+
 
   }
 
@@ -94,8 +94,8 @@ export class JourneyApprovalComponent implements OnInit {
     }
     return false
   }
-  getchekPointName(){
-    return this.CheckPointAssessment.length>0? this.CheckPointAssessment[0].checkpoint.name:'';
+  getchekPointName() {
+    return this.CheckPointAssessment.length > 0 ? this.CheckPointAssessment[0].checkpoint.name : '';
   }
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -149,9 +149,10 @@ export class JourneyApprovalComponent implements OnInit {
             break;
           case JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment:
             this.AllAssesments = this.journey.data.assesments;
+            debugger;
             this.CheckPointAssessment = this.AllAssesments.filter(x => x.category == QuestionCategory.CheckpointAssessment);
             this.VechileCheckList = this.AllAssesments.filter(x => x.category == QuestionCategory.VehicleChecklist);
-
+            console.log(this.VechileCheckList)
             break;
           case JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment:
             this.AllAssesments = this.journey.data.assesments;
