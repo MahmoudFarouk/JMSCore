@@ -54,7 +54,7 @@ namespace JMS.BLL.Services
             return response;
         }
 
-        public ServiceResponse SubmitAssessment(int journeyId,int? journeyUpdateId, JourneyStatus status, List<AssessmentResult> assessmentResult)
+        public ServiceResponse SubmitAssessment(int journeyId, int? journeyUpdateId, JourneyStatus status, List<AssessmentResult> assessmentResult)
         {
             ServiceResponse response = new ServiceResponse();
 
@@ -62,11 +62,11 @@ namespace JMS.BLL.Services
             {
                 var journey = _context.Journey.Find(journeyId);
                 journey.JourneyStatus = status;
-                
-                if (journeyUpdateId.HasValue&& journeyUpdateId.Value!=0)
+
+                if (journeyUpdateId.HasValue && journeyUpdateId.Value != 0)
                 {
                     var journeyUpdate = _context.JourneyUpdate.Find(journeyUpdateId);
-                    journeyUpdate.JourneyStatus = JourneyStatus.JourneyCompleted;
+                    journeyUpdate.JourneyStatus = JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment;
                 }
                 if (assessmentResult.Count > 0)
                     _context.AssessmentResult.AddRange(assessmentResult);
@@ -145,7 +145,7 @@ namespace JMS.BLL.Services
             return response;
         }
 
-        public ServiceResponse<List<AssessmentQuestion>> GetCheckpointAssessment(int checkpointId, bool includeResults = false)
+        public ServiceResponse<List<AssessmentQuestion>> GetCheckpointAssessment(int checkpointId, int journeyId, bool includeResults = false)
         {
             ServiceResponse<List<AssessmentQuestion>> response = new ServiceResponse<List<AssessmentQuestion>>();
 
@@ -153,10 +153,10 @@ namespace JMS.BLL.Services
             {
                 if (includeResults)
                     response.Data = _context.AssessmentQuestion.Include(a => a.AssessmentResult).AsNoTracking()
-                        .Where(q => q.Category == QuestionCategory.CheckpointAssessment || q.Category == QuestionCategory.VehicleChecklist && q.CheckpointId == checkpointId).ToList();
+                        .Where(q => q.JourneyId == journeyId && ((q.Category == QuestionCategory.CheckpointAssessment && q.CheckpointId == checkpointId) || q.Category == QuestionCategory.VehicleChecklist)).ToList();
                 else
                     response.Data = _context.AssessmentQuestion
-                            .Where(q => q.Category == QuestionCategory.CheckpointAssessment || q.Category == QuestionCategory.VehicleChecklist && q.CheckpointId == checkpointId).ToList();
+                        .Where(q => q.JourneyId == journeyId && ((q.Category == QuestionCategory.CheckpointAssessment && q.CheckpointId == checkpointId) || q.Category == QuestionCategory.VehicleChecklist)).ToList();
 
                 response.Status = ResponseStatus.Success;
             }

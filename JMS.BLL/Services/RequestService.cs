@@ -62,7 +62,7 @@ namespace JMS.BLL.Services
             j.JourneyStatus == JourneyStatus.PendingOnJMCInitialApproval ||
             j.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment ||
             j.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPreTripAssessment||
-            j.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment
+            j.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment 
             //TODO the rest
             ).Select(j => new RequestModel
             {

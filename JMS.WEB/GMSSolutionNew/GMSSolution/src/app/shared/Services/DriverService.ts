@@ -21,8 +21,8 @@ export class DriverService{
         return  this.http.get(`${environment.JMSApiURL}/driver/getposttripassessment?journeyid=${journeyId}`);
         
     }
-    GetCheckpointAssessment(checkPointId){
-        return  this.http.get(`${environment.JMSApiURL}/driver/getcheckpointassessment?checkpointid=${checkPointId}`);
+    GetCheckpointAssessment(checkPointId,journeyId){
+        return  this.http.get(`${environment.JMSApiURL}/driver/getcheckpointassessment?checkpointid=${checkPointId}&journeyId=${journeyId}`);
         
     }
     

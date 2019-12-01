@@ -28,7 +28,7 @@ export class JourneyApprovalComponent implements OnInit {
   VechileCheckList: any[];
   PretripAssessmeent: any[];
   PosTripAssessment: any[];
-  CheckPointAssessment: any[];
+  CheckPointAssessment: any[] = [];
   data: JourneyModel = {
     "id": 0,
     "title": null,
@@ -105,7 +105,7 @@ export class JourneyApprovalComponent implements OnInit {
     });
     this.JourneyService.GetJourneyDetails(this.JourneyId).toPromise().then((data: any) => {
 
-      if (data.data.status = 1) {
+      if (data.status = 1) {
         this.journey = data;
         var status = this.journey.data.journeyStatus;
         switch (status) {
@@ -149,19 +149,19 @@ export class JourneyApprovalComponent implements OnInit {
             break;
           case JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment:
             this.AllAssesments = this.journey.data.assesments;
-            this.PretripAssessmeent = this.AllAssesments.filter(x => x.category == QuestionCategory.CheckpointAssessment);
+            this.CheckPointAssessment = this.AllAssesments.filter(x => x.category == QuestionCategory.CheckpointAssessment);
             this.VechileCheckList = this.AllAssesments.filter(x => x.category == QuestionCategory.VehicleChecklist);
 
             break;
           case JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment:
             this.AllAssesments = this.journey.data.assesments;
-            this.PretripAssessmeent = this.AllAssesments.filter(x => x.category == QuestionCategory.PostTrip);
+            this.PosTripAssessment = this.AllAssesments.filter(x => x.category == QuestionCategory.PostTrip);
             this.VechileCheckList = this.AllAssesments.filter(x => x.category == QuestionCategory.VehicleChecklist);
 
             break;
           case JourneyStatus.PendingOnDispatcherApproveDriverPostTripAssessment:
             this.AllAssesments = this.journey.data.assesments;
-            this.PretripAssessmeent = this.AllAssesments.filter(x => x.category == QuestionCategory.PostTrip);
+            this.PosTripAssessment = this.AllAssesments.filter(x => x.category == QuestionCategory.PostTrip);
             this.VechileCheckList = this.AllAssesments.filter(x => x.category == QuestionCategory.VehicleChecklist);
 
             break;

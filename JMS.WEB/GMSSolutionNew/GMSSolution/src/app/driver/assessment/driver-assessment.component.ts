@@ -174,7 +174,7 @@ export class DriverAssessmentComponent implements OnInit {
     }
     getCheckPointAssessment() {
         if (this.journey.journeyStatus == JourneyStatus.PendingOnDriverCompleteCheckpointAssessment && this.checkPointId > 0)
-            this.DriverService.GetCheckpointAssessment(this.checkPointId).toPromise().then((data: any) => {
+            this.DriverService.GetCheckpointAssessment(this.checkPointId,this.journeyId).toPromise().then((data: any) => {
                 this.AllAssessments = data.data
                 this.checkpointassessments = this.AllAssessments.filter(x => x.category == QuestionCategory.CheckpointAssessment);
                 this.vechCheckList = this.AllAssessments.filter(x => x.category == QuestionCategory.VehicleChecklist);

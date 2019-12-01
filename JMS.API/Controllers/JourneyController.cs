@@ -305,7 +305,7 @@ namespace JMS.API.Controllers
             {
                 ex.LogException();
                 return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
-
+            }
         }
 
 
@@ -322,6 +322,5 @@ namespace JMS.API.Controllers
             return NotFound();
         }
 
-        }
     }
 }

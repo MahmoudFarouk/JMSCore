@@ -46,9 +46,9 @@ namespace JMS.API.Controllers
         [HttpPost]
         [Authorize(Roles = ConstRole.Driver)]
         [Route("submitassessment")]
-        public IActionResult SubmitAssessment(int journeyId,int? ju,JourneyStatus status, List<AssessmentResult> assessmentResult)
+        public IActionResult SubmitAssessment(int journeyId, int? ju, JourneyStatus status, List<AssessmentResult> assessmentResult)
         {
-            return Ok(_driverService.SubmitAssessment( journeyId, ju, status, assessmentResult));
+            return Ok(_driverService.SubmitAssessment(journeyId, ju, status, assessmentResult));
         }
 
 
@@ -79,9 +79,9 @@ namespace JMS.API.Controllers
         [HttpGet()]
         [Authorize(Roles = ConstRole.Driver)]
         [Route("getcheckpointassessment")]
-        public IActionResult GetJourneyAssessment(int checkpointid)
+        public IActionResult GetJourneyAssessment(int checkpointid, int journeyId)
         {
-            return Ok(_driverService.GetCheckpointAssessment(checkpointid, false));
+            return Ok(_driverService.GetCheckpointAssessment(checkpointid, journeyId, false));
         }
 
         [HttpGet()]
@@ -103,9 +103,9 @@ namespace JMS.API.Controllers
         [HttpGet()]
         [Authorize(Roles = ConstRole.Driver)]
         [Route("getcheckpointassessmentresult/{checkpointid}")]
-        public IActionResult GetCheckpointAssessmentResult(int checkpointid)
+        public IActionResult GetCheckpointAssessmentResult(int checkpointid, int journeyId)
         {
-            return Ok(_driverService.GetCheckpointAssessment(checkpointid, true));
+            return Ok(_driverService.GetCheckpointAssessment(checkpointid, journeyId, true));
         }
 
 

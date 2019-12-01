@@ -22,9 +22,12 @@
                 <p> {{request.deliveryDate | date:'dd/mm/yyyy'}}</p>
             </div>
 
-            <button class="mainButtonStyle"  (click)="router.navigate(['/']);">
+            <button class="mainButtonStyle" (click)="navigateToRequest(request)">
                 View Request
             </button>
+            <a class="mainButtonStyle"  href="/journeymontoring?journeyId={{request.journeyId}}">
+                View JourneyUpdates
+            </a>
         </div>
     </div>
 </div>

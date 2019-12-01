@@ -7,7 +7,7 @@ import swal from 'sweetalert2';
 import { LookupModel } from '../../shared/Models/LookupModel';
 import { Checkpoint } from '../../shared/models/CheckpointModel';
 import { ResponseStatus } from 'src/app/shared/Enums/response-status.enum';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/Services/AuthenticationService';
 import { AssessmentQuestion } from '../../shared/models/AssessmentQuestionModel';
 import { QuestionCategory } from '../../shared/enums/question-category.enum';
@@ -31,6 +31,7 @@ export class InitiateJourneyComponent implements OnInit {
     private journeyService: JourneyService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private router: Router,
     private authenticationService: AuthenticationService) {
     this.currentUserRole = this.authenticationService.currentUserValue.roles[0].name;
   }
@@ -54,6 +55,8 @@ export class InitiateJourneyComponent implements OnInit {
   toDestination;
   waypoints = [];
 
+  journeyId: string;
+
 
   @ViewChild('fromDestinationInput', { read: ElementRef, static: false }) fromDestinationInput: ElementRef;
   @ViewChild('toDestinationInput', { read: ElementRef, static: false }) toDestinationInput: ElementRef;
@@ -69,12 +72,14 @@ export class InitiateJourneyComponent implements OnInit {
         cargoSeverity: 0,
         checkpoints: []
       };
+
+      this.getDispatchers();
     }
     else if (this.route.routeConfig.path.indexOf("validate-journey") != -1) {
-      let journeyId: string = this.route.snapshot.paramMap.get("id");
+      this.journeyId = this.route.snapshot.paramMap.get("id");
 
-      if (journeyId) {
-        this.journeyService.getAllJourneyInfo(journeyId).subscribe(response => {
+      if (this.journeyId) {
+        this.journeyService.getAllJourneyInfo(this.journeyId).subscribe(response => {
           this.journey = response;
           this.journey.deliveryDate = new Date(response.deliveryDate);
           this.journey.assessmentQuestion = [];
@@ -92,13 +97,11 @@ export class InitiateJourneyComponent implements OnInit {
           this.journey.assessmentQuestion = [];
           this.addDistination(this.journey.fromDestination, this.journey.fromLat, this.journey.fromLng, true);
           this.addDistination(this.journey.toDestination, this.journey.toLat, this.journey.toLng, false);
-          this.isReadOnly = true;          
+          this.isReadOnly = true;
           this.getCheckpoints();
         });;
       }
     }
-
-    this.getDispatchers();
 
     this.mapsAPI.load().then(() => {
       let fromDestination = new google.maps.places.Autocomplete(this.fromDestinationInput.nativeElement, {});
@@ -203,14 +206,16 @@ export class InitiateJourneyComponent implements OnInit {
 
         this.journey.checkpoints.unshift(fromCheckpoint);
         this.journey.checkpoints.push(toCheckpoint);
+        this.drawMapCheckpoints();
+
       });
     else {
       this.journey.checkpoints[0].isFromOrTo = true;
       this.journey.checkpoints[this.journey.checkpoints.length - 1].isFromOrTo = true;
+      this.drawMapCheckpoints();
     }
 
 
-    this.drawMapCheckpoints();
   }
 
   drawMapCheckpoints() {
@@ -276,26 +281,45 @@ export class InitiateJourneyComponent implements OnInit {
 
     if (form.valid)
       swal.queue([{
-        title: 'Initiate Journey',
-        text: "Are you sure you want to initiate this Journey?",
+        title: this.isValidateMode ? 'Submit Journey' : 'Initiate Journey',
+        text: this.isValidateMode ? "Are you sure you want to submit this Journey?" : "Are you sure you want to initiate this Journey?",
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: 'Yes',
         cancelButtonText: 'No',
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return this.journeyService.initJourney(this.journey).subscribe(response => {
-            if (response.status == ResponseStatus.Success)
-              swal.fire({
-                title: 'Success',
-                icon: 'success',
-                text: 'Journey Intiated Sucessfully.',
-                allowOutsideClick: false
-              }).then(end => {
-                if (end)
-                  window.location.href = '.';
-              });
-          })
+          if (this.isValidateMode) {
+
+            this.router.navigate([`/driver-selection`],{queryParams:{journeyId:this.journeyId}});
+            //TODO (Change Status to Pending on Driver Selection)
+            return this.journeyService.initJourney(this.journey).subscribe(response => {
+              if (response.status == ResponseStatus.Success)
+                swal.fire({
+                  title: 'Success',
+                  icon: 'success',
+                  text: 'Journey Submitted Sucessfully.',
+                  allowOutsideClick: false
+                }).then(end => {
+
+                  if (end)
+                    this.router.navigate([`/driver-selection?journeyId=${this.journeyId}`]);
+                });
+            })
+          } else {
+            return this.journeyService.initJourney(this.journey).subscribe(response => {
+              if (response.status == ResponseStatus.Success)
+                swal.fire({
+                  title: 'Success',
+                  icon: 'success',
+                  text: 'Journey Intiated Sucessfully.',
+                  allowOutsideClick: false
+                }).then(end => {
+                  if (end)
+                    window.location.href = '.';
+                });
+            })
+          }
         }
       }]);
 

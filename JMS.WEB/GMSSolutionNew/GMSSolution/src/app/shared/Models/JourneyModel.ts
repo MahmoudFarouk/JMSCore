@@ -27,6 +27,6 @@ export interface JourneyModel {
     isThirdParty?: boolean;
     journeyUpdates?: JourneyUpdate[];
     checkpoints?: Checkpoint[];
-    //assesments?: AssessmentQuestion[]
+    assesments?: AssessmentQuestion[]
     assessmentQuestion?: AssessmentQuestion[]
 }
