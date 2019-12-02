@@ -335,7 +335,7 @@ namespace JMS.BLL.Services
             else
                 journey.JourneyStatus = status;
 
-            if (countjourneyUpdates == 0)
+            if (countjourneyUpdates == 0&&journey.JourneyStatus!=JourneyStatus.PendingOnDriverCompletePreTripAssessment)
                 journey.JourneyStatus = JourneyStatus.PendingOnDriverCompletePostTripAssessment;
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
