@@ -72,14 +72,11 @@ export class MyRequestsComponent implements OnInit {
         case JourneyStatus.PendingOnDriverCompletePreTripAssessment:
         case JourneyStatus.PendingOnDriverCompletePostTripAssessment:
         case JourneyStatus.PendingOnDriverCompleteCheckpointAssessment:
-          this.router.navigate([`/driver/assessment/`], { queryParams: { journeyId: request.journeyId } });
-          break;
+        // this.router.navigate([`/driver/assessment/`], { queryParams: { journeyId: request.journeyId } });
+        // break;
         case JourneyStatus.PendingOnDriverStartJourney:
           this.router.navigate([`/driver/journey/`], { queryParams: { journeyId: request.journeyId } });
           break;
       }
-
-
-
   }
 }

@@ -339,3 +339,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /JMS.WEB/package-lock.json
+/JMS.WEB/GMSSolutionNew/GMSSolution/jms1.12
