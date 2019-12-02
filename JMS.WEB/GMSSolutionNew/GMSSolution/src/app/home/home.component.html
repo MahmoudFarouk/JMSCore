@@ -20,12 +20,12 @@
         </div>
 
 
-        <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMC' || currentUser.roles[0].name == 'QHSE' ||currentUser.roles[0].name == 'GBM'">
+        <!-- <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMC' || currentUser.roles[0].name == 'QHSE' ||currentUser.roles[0].name == 'GBM'">
           <div id="dvMyRequests" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/calendar" >
-            <img src="assets/images/Jms_assets/ic_trip.svg">
+            <img src="assets/images/Jms_assets/ic_calendar.svg">
             <h2>Journey Calendar</h2>
           </div>
-        </div>
+        </div> -->
 
         <div class="col-6" *ngIf="currentUser.roles[0].name == 'Driver'">
           <div id="Pending_Jou_0" class="homePageAction pendingJourney" routerLinkActive="active" routerLink="/driver/journey" >

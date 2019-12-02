@@ -9,4 +9,5 @@ export interface AssessmentQuestion {
     isThirdParty: boolean;
     checkpointId: number;
     assessmentResults: AssessmentResult[];
+    assessmentResult: AssessmentResult[];
 }

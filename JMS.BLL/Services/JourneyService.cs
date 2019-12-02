@@ -105,7 +105,7 @@ namespace JMS.BLL.Services
 
             _context.Journey.Add(journey);
             _context.SaveChanges();
-            return new ServiceResponse { Status = ResponseStatus.Success , Message=journey.Id.ToString()};
+            return new ServiceResponse { Status = ResponseStatus.Success, Message = journey.Id.ToString() };
         }
 
 
@@ -158,13 +158,13 @@ namespace JMS.BLL.Services
             }
             else if (journey.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment)
             {
-                var checkpoint = _context.JourneyUpdate.Where(x => x.JourneyId == journeyId && x.CheckpointId != null && x.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment).OrderByDescending(x=>x.Id).FirstOrDefault();
+                var checkpoint = _context.JourneyUpdate.Where(x => x.JourneyId == journeyId && x.CheckpointId != null && x.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment).OrderByDescending(x => x.Id).FirstOrDefault();
                 assesments = _context.AssessmentQuestion.
                     Where(x => x.JourneyId == journeyId && ((x.Category == QuestionCategory.CheckpointAssessment && x.CheckpointId == checkpoint.CheckpointId) || x.Category == QuestionCategory.VehicleChecklist)).
                     Include(x => x.AssessmentResult)
                     .Include(z => z.Checkpoint).Select(x => new AssessmentQuestion
                     {
-                        Checkpoint=x.Checkpoint,
+                        Checkpoint = x.Checkpoint,
                         Category = x.Category,
                         CheckpointId = x.CheckpointId,
                         Id = x.Id,
@@ -172,7 +172,7 @@ namespace JMS.BLL.Services
                         JourneyId = x.JourneyId,
                         Question = x.Question,
                         Weight = x.Weight,
-                        AssessmentResult = x.AssessmentResult.Where(c=>c.Category==QuestionCategory.CheckpointAssessment&&c.CheckPointId==checkpoint.CheckpointId)
+                        AssessmentResult = x.AssessmentResult.Where(c => c.Category == QuestionCategory.CheckpointAssessment && c.CheckPointId == checkpoint.CheckpointId)
                     }).AsNoTracking().ToList();
             }
             else if (journey.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment ||
@@ -325,8 +325,8 @@ namespace JMS.BLL.Services
         public ServiceResponse UpdateJourneyStatus(int journeyId, JourneyStatus status)
         {
             var journey = _context.Journey.Find(journeyId);
-            var countjourneyUpdates = _context.JourneyUpdate.Where(x =>x.JourneyStatus== JourneyStatus.PendingOnDriverCompleteCheckpointAssessment&&x.JourneyId==journeyId).Count();
-            if (journey.JourneyStatus==JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment&&countjourneyUpdates==1)
+            var countjourneyUpdates = _context.JourneyUpdate.Where(x => x.JourneyStatus == JourneyStatus.PendingOnDriverCompleteCheckpointAssessment && x.JourneyId == journeyId).Count();
+            if (journey.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment && countjourneyUpdates == 1)
             {
                 var ju = _context.JourneyUpdate.Where(x => x.JourneyStatus == JourneyStatus.PendingOnDriverCompleteCheckpointAssessment && x.JourneyId == journeyId).FirstOrDefault();
                 ju.JourneyStatus = JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment;
@@ -334,7 +334,7 @@ namespace JMS.BLL.Services
             }
             else
                 journey.JourneyStatus = status;
-            
+
             if (countjourneyUpdates == 0)
                 journey.JourneyStatus = JourneyStatus.PendingOnDriverCompletePostTripAssessment;
             _context.SaveChanges();
@@ -354,19 +354,21 @@ namespace JMS.BLL.Services
             ServiceResponse<Journey> response = new ServiceResponse<Journey>();
 
             try
+
             {
-                var currentJourney = _context.Journey.AsNoTracking().Include(j => j.JourneyUpdates).FirstOrDefault(j => j.Id == journeyId && j.JourneyUpdates.All(u => u.IsJourneyCheckpoint));
+                var currentJourney = _context.Journey.AsNoTracking().Include(j => j.JourneyUpdates).Include(j => j.AssessmentQuestion).ThenInclude(q=>q.AssessmentResult).FirstOrDefault(j => j.Id == journeyId);
 
                 currentJourney.Checkpoints = new LinkedList<Checkpoint>();
                 foreach (var update in currentJourney.JourneyUpdates)
                 {
-                    var checkpoint = _context.Checkpoint.Find(update.CheckpointId);
-                    currentJourney.Checkpoints.Add(checkpoint);
-
+                    if (update.IsJourneyCheckpoint)
+                    {
+                        var checkpoint = _context.Checkpoint.Find(update.CheckpointId);
+                        currentJourney.Checkpoints.Add(checkpoint);
+                    }                    
                 }
 
                 response.Data = currentJourney;
-
 
                 response.Status = ResponseStatus.Success;
             }

@@ -1,17 +1,7 @@
-<!--start navbar-->
-<!--end navbar-->
 
-<!--
-Login, Forget Password, Reset Password => Logo Only
- -->
-
-<!--start navbar-->
 <nav class="menuAndNotificationNav">
-    <h3  (click)="logout()">
-    <a style="color:black">Logout</a>
-  </h3>
   <div class="mobileContainer d-flex justify-content-between align-items-center">
-    <a data-target="slide-out" class="sidenav-trigger">
+    <a href="javascript:void(0);" [attr.data-target]="sideNavElement"  class="sidenav-trigger" *ngIf="currentUser">
       <img src="assets/images/Jms_assets/ic_menu.svg">
     </a>
     <div class="text-center w-100">
@@ -19,7 +9,8 @@ Login, Forget Password, Reset Password => Logo Only
         <img src="assets/images/Jms_assets/trackingSystemLogo.svg">
       </a>
     </div>
-    <a style="cursor:pointer;" *ngIf="currentUser" class="notificationsNumberNavIcon" (click)="navigateToNotifications()">
+    <a style="cursor:pointer;" *ngIf="currentUser" class="notificationsNumberNavIcon"
+      (click)="navigateToNotifications()">
       <img src="assets/images/Jms_assets/ic_notifications-button.svg">
       <span *ngIf="Notifications.length>0" class="notificationsNumber">
         <span>{{Notifications.length}}</span>
@@ -30,34 +21,35 @@ Login, Forget Password, Reset Password => Logo Only
 <!--end navbar-->
 
 <!--start aside menu-->
-<aside id="slide-out" class="sidenav">
+
+<aside  id="slideout" name="slideout" class="sidenav" >
   <div class="userInfo">
     <img src="assets/images/Jms_assets/user.svg">
-    <h2>Amar Omar</h2>
+    <h2>{{currentUser.fullName}}</h2>
     <button>
-      Product Line
+      {{currentUser.roles[0].name}}
     </button>
   </div>
   <ul>
-    <li>
+    <li *ngIf="currentUser.roles[0].name == 'Product Line'" routerLinkActive="active" routerLink="/initiate-journey">
       <img src="assets/images/Jms_assets/ic_plus_black.svg">
       <h3>Initiate Journy</h3>
     </li>
-    <li>
-      <img src="assets/images/Jms_assets/ic_calendar.svg">
-      <h3>Journey Calendar</h3>
-    </li>
-    <li class="selected">
-      <img src="assets/images/Jms_assets/ic_pending_black.svg">
-      <h3>Pending Journey</h3>
-    </li>
-    <li>
-      <img src="assets/images/Jms_assets/ic_trip_black.svg">
+    <li *ngIf="currentUser.roles[0].name != 'Product Line' && currentUser.roles[0].name != 'JMS Admin'"  routerLinkActive="active" routerLink="/requests">
+      <img src="assets/images/Jms_assets/ic_trip_black.svg" >
       <h3>My Requests</h3>
     </li>
+    <!-- <li *ngIf="currentUser.roles[0].name != 'Product Line' && currentUser.roles[0].name != 'JMS Admin' && currentUser.roles[0].name != 'Dispatcher'"  routerLinkActive="active" routerLink="/calendar">
+      <img src="assets/images/Jms_assets/ic_calendar.svg">
+      <h3>Journey Calendar</h3>
+    </li> -->
+    <li *ngIf="currentUser.roles[0].name == 'Driver'" routerLinkActive="active" routerLink="/driver/journey" >
+      <img src="assets/images/Jms_assets/ic_pending_black.svg">
+      <h3>Current Journey</h3>
+    </li>
     <li>
-      <!--<img src="assets/images/icons/Logout.svg">-->
       <h3 *ngIf="currentUser" (click)="logout()">
+        <img src="assets/images/Jms_assets/ic_logout.svg">
         <a>Logout</a>
       </h3>
     </li>

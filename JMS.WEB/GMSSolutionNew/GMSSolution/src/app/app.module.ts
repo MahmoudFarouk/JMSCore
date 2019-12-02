@@ -11,12 +11,12 @@ import { ErrorInterceptor } from './shared/Helpers/error.interceptor'
 import { AuthGuard } from './shared/Helpers/auth.guard';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatRadioModule } from '@angular/material/radio';
 import { BlockUIModule } from 'ng-block-ui';
 import { BlockUIHttpModule } from 'ng-block-ui/http';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { MatSidenavModule, MatRadioModule } from '@angular/material';
 
 
 //Common
@@ -95,6 +95,7 @@ import { CompleteJourneyInfoComponent } from './manager/complete-journey-info/co
     BlockUIHttpModule.forRoot(),
     SweetAlert2Module.forRoot(),
     DragDropModule,
+    MatSidenavModule,
     MatRadioModule,
     AgmDirectionModule,
     AgmCoreModule.forRoot({

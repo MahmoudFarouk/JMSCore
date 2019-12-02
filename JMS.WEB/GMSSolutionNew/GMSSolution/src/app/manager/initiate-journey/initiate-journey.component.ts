@@ -38,8 +38,10 @@ export class InitiateJourneyComponent implements OnInit {
     this.currentUserRole = this.authenticationService.currentUserValue.roles[0].name;
   }
 
-  isReadOnly: boolean = false;
+  pageTitle: string;
+  isEditMode: boolean = false;
   isValidateMode: boolean = false;
+  isReadOnly: boolean = false;
   question: any[] = [];
   categories: number[] = [1, 2, 3];
   questionId: number = 0;
@@ -68,6 +70,8 @@ export class InitiateJourneyComponent implements OnInit {
   ngOnInit() {
 
     if (this.route.routeConfig.path.indexOf("initiate-journey") != -1) {
+
+      this.pageTitle = "Initiate Journey";
       this.journey = {
         isTruckTransport: true,
         isThirdParty: false,
@@ -76,9 +80,13 @@ export class InitiateJourneyComponent implements OnInit {
         checkpoints: []
       };
 
+      this.isEditMode = true;
       this.getDispatchers();
     }
     else if (this.route.routeConfig.path.indexOf("validate-journey") != -1) {
+
+      this.pageTitle = "Validate Journey";
+
       this.journeyId = this.route.snapshot.paramMap.get("id");
 
       if (this.journeyId) {
@@ -92,18 +100,19 @@ export class InitiateJourneyComponent implements OnInit {
           this.getCheckpoints();
         });
       }
-      else {
-        let journeyId: string = this.route.snapshot.paramMap.get("id");
-        this.journeyService.getAllJourneyInfo(journeyId).subscribe(response => {
-          this.journey = response;
-          this.journey.deliveryDate = new Date(response.deliveryDate);
-          this.journey.assessmentQuestion = [];
-          this.addDistination(this.journey.fromDestination, this.journey.fromLat, this.journey.fromLng, true);
-          this.addDistination(this.journey.toDestination, this.journey.toLat, this.journey.toLng, false);
-          this.isReadOnly = true;
-          this.getCheckpoints();
-        });;
-      }
+    }
+    else {
+      this.pageTitle = "Journey Details";
+
+      this.journeyId = this.route.snapshot.paramMap.get("id");
+      this.journeyService.getAllJourneyInfo(this.journeyId).subscribe(response => {
+        this.journey = response;
+        this.journey.deliveryDate = new Date(response.deliveryDate);
+        this.addDistination(this.journey.fromDestination, this.journey.fromLat, this.journey.fromLng, true);
+        this.addDistination(this.journey.toDestination, this.journey.toLat, this.journey.toLng, false);
+        this.isReadOnly = true;
+        this.getCheckpoints();
+      });;
     }
 
     this.mapsAPI.load().then(() => {
@@ -193,7 +202,7 @@ export class InitiateJourneyComponent implements OnInit {
   }
 
   getCheckpoints() {
-    if (!this.isValidateMode)
+    if (this.isEditMode)
       this.journeyService.getCheckpoints(this.journey.fromLat, this.journey.fromLng, this.journey.toLat, this.journey.toLng).subscribe(result => {
         this.journey.checkpoints = result.data;
 
@@ -283,7 +292,7 @@ export class InitiateJourneyComponent implements OnInit {
     if (currentQuestion.question)
       this.journey.assessmentQuestion.push(currentQuestion);
 
-    
+
   }
 
 
@@ -340,6 +349,21 @@ export class InitiateJourneyComponent implements OnInit {
           }
         }
       }]);
+
+  }
+
+  viewUpdates() {
+    this.router.navigate([`/journeymontoring/`], { queryParams: { journeyId: this.journeyId } });
+  }
+
+  getResult(question: AssessmentQuestion) {
+    let result = question.assessmentResult;
+    if (!this.isEditMode && result &&result[0])
+      if (result[0].isYes)
+        return "Yes"
+      else
+        return "No"
+    else return "Not Answered Yet";
 
   }
 }
