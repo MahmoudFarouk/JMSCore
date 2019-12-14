@@ -99,7 +99,7 @@ import { CompleteJourneyInfoComponent } from './manager/complete-journey-info/co
     MatRadioModule,
     AgmDirectionModule,
     AgmCoreModule.forRoot({
-      apiKey: "",
+      apiKey: "AIzaSyD1mqYsV0ShwvvIaKU3MOr9CJelaCdAb7I",
       libraries: ["places"],
       language: "ar",
       region: "EG"

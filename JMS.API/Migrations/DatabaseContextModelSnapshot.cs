@@ -60,6 +60,12 @@ namespace JMS.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CheckPointId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
@@ -204,7 +210,7 @@ namespace JMS.API.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ToDistination")
+                    b.Property<string>("ToDestination")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("ToLat")
@@ -482,7 +488,7 @@ namespace JMS.API.Migrations
                         .HasForeignKey("CheckpointId");
 
                     b.HasOne("JMS.DAL.Models.Journey", "Journey")
-                        .WithMany("JourneyUpdate")
+                        .WithMany("JourneyUpdates")
                         .HasForeignKey("JourneyId");
 
                     b.HasOne("JMS.DAL.Models.User", "User")

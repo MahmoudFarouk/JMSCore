@@ -51,7 +51,7 @@ namespace JMS.BLL.Services
                     Latitude = checkpoint.Latitude,
                     Longitude = checkpoint.Longitude,
                     Date = DateTime.Now,
-                    JourneyStatus = journey.JourneyStatus,
+                    JourneyStatus = JourneyStatus.PendingOnDriverCompleteCheckpointAssessment,
                     IsJourneyCheckpoint = true,
                     UserId = journey.UserId
                 });

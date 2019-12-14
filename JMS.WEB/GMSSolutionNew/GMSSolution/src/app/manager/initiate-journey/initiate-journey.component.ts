@@ -202,25 +202,27 @@ export class InitiateJourneyComponent implements OnInit {
   }
 
   getCheckpoints() {
-    if (this.isEditMode)
-      this.journeyService.getCheckpoints(this.journey.fromLat, this.journey.fromLng, this.journey.toLat, this.journey.toLng).subscribe(result => {
-        this.journey.checkpoints = result.data;
+    debugger;
+    if (this.isEditMode) {
+      // this.journeyService.getCheckpoints(this.journey.fromLat, this.journey.fromLng, this.journey.toLat, this.journey.toLng).subscribe(result => {
+      //   this.journey.checkpoints = result.data;
+      this.journey.checkpoints = [];
+      let fromCheckpoint = {
+        latitude: this.journey.fromLat, longitude: this.journey.fromLng,
+        name: this.journey.fromDestination, isFromOrTo: true
+      } as Checkpoint;
 
-        let fromCheckpoint = {
-          latitude: this.journey.fromLat, longitude: this.journey.fromLng,
-          name: this.journey.fromDestination, isFromOrTo: true
-        } as Checkpoint;
+      let toCheckpoint = {
+        latitude: this.journey.toLat, longitude: this.journey.toLng,
+        name: this.journey.toDestination, isFromOrTo: true
+      } as Checkpoint;
 
-        let toCheckpoint = {
-          latitude: this.journey.toLat, longitude: this.journey.toLng,
-          name: this.journey.toDestination, isFromOrTo: true
-        } as Checkpoint;
+      this.journey.checkpoints.unshift(fromCheckpoint);
+      this.journey.checkpoints.push(toCheckpoint);
+      this.drawMapCheckpoints();
 
-        this.journey.checkpoints.unshift(fromCheckpoint);
-        this.journey.checkpoints.push(toCheckpoint);
-        this.drawMapCheckpoints();
-
-      });
+      //});
+    }
     else {
       this.journey.checkpoints[0].isFromOrTo = true;
       this.journey.checkpoints[this.journey.checkpoints.length - 1].isFromOrTo = true;
@@ -358,7 +360,7 @@ export class InitiateJourneyComponent implements OnInit {
 
   getResult(question: AssessmentQuestion) {
     let result = question.assessmentResult;
-    if (!this.isEditMode && result &&result[0])
+    if (!this.isEditMode && result && result[0])
       if (result[0].isYes)
         return "Yes"
       else
