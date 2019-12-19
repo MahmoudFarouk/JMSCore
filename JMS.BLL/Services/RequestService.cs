@@ -58,6 +58,11 @@ namespace JMS.BLL.Services
         private List<RequestModel> GetJMCRequests()
         {
             return _context.Journey.Where(j =>
+            //khamis
+                        j.JourneyStatus == JourneyStatus.PendingOnDriverStartJourney ||
+                        j.JourneyStatus == JourneyStatus.DriverStartedJourney ||
+                        j.JourneyStatus == JourneyStatus.PendingOnDriverCompletePreTripAssessment ||
+                  //khamis
                         j.JourneyStatus == JourneyStatus.PendingOnJMCInitialApproval ||
                         j.JourneyStatus == JourneyStatus.PendingOnDriverSelection ||
                         j.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPreTripAssessment ||
