@@ -312,6 +312,7 @@ namespace JMS.API.Controllers
         {
             try
             {
+                JourneyUpdate.CheckpointId = null;
                 var result = _journeyService.AddJourneyUpdate(JourneyUpdate);
                 return Ok(result);
             }

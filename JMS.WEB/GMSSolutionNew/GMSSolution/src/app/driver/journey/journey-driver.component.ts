@@ -165,8 +165,11 @@ export class JourneyDriverComponent implements OnInit {
       Latitude:this.latitude,
       Longitude:this.longitude
     }).toPromise().then((data) => {
-      $(".modal").modal('hide');
-      swal.fire("", "Your location sent successfully", "success");
+      swal.fire("", "Your location sent successfully", "success").then(()=>{
+        $("#closeLoc").click();
+
+      });
+      
     })
 
   }
@@ -179,8 +182,11 @@ export class JourneyDriverComponent implements OnInit {
         UserId: this.currentUser.id,
         IsDriverStatus: true
       }).toPromise().then((data) => {
-        $(".modal").modal('hide');
-        swal.fire("", "Your message sent successfully", "success");
+       
+        swal.fire("", "Your message sent successfully", "success").then(()=>{
+          $("#closeStatus").click();
+  
+        });
       });
 
     } else {
@@ -197,8 +203,11 @@ export class JourneyDriverComponent implements OnInit {
         UserId: this.currentUser.id,
         IsAlert: true
       }).toPromise().then((data) => {
-        $(".modal").modal('hide');
-        swal.fire("", "Your alert sent successfully", "success");
+       
+        swal.fire("", "Your alert sent successfully", "success").then(()=>{
+          $("#closeAlert").click();
+  
+        });;
       });
 
     } else {

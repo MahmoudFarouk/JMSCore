@@ -60,7 +60,7 @@ export class JourneyService {
     }
     GetJourneyMontoring(journeyId) {
         return this.http.get<any>(`${environment.JMSApiURL}/journey/GetJourneyMontoring?journeyId=${journeyId}`);
-    }
+    } 
 
 
     getAllJourneyInfo(id) {
