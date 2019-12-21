@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { JourneyService } from './../../shared/Services/JourneyService';
 import { JourneyModel } from '../../shared/models/JourneyModel';
 import { JourneyUpdate } from '../../shared/models/JourneyUpdateModel';
+import { JourneyStatus } from '../../shared/enums/journey-status.enum';
+import { General } from '../../shared/Helpers/General';
 
 @Component({
     selector: 'app-journey-info',
@@ -55,5 +57,8 @@ export class JourneyInfoComponent implements OnInit {
 
         }, (error) => { this.loading = false });
     }
+    getStatusName(status: JourneyStatus) {
+        return  General.GetStatusName(status)
+        }
 
 }

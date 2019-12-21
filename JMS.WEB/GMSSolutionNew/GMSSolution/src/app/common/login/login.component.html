@@ -9,10 +9,10 @@
                         <img src="assets/images/Jms_assets/ic_user.svg">
                     </span>
                 </div>
-                <input placeholder="Enter Username" type="text" formControlName="username" class="form-control"
+                <input placeholder="Enter Email" type="text" formControlName="username" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
                 <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                    <div *ngIf="f.username.errors.required">Username is required</div>
+                    <div *ngIf="f.username.errors.required">Email is required</div>
                 </div>
             </div>
             <div class="input-group mainInputComp">

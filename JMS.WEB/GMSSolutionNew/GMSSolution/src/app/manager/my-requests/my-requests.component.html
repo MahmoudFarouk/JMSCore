@@ -23,7 +23,7 @@
             </div>
             <div class="info">
                 <h6>Status:</h6>
-                <p> {{request.status}}</p>
+                <p> {{getStatusName(request.status)}}</p> 
             </div>
             <button class="mainButtonStyle" (click)="navigateToRequest(request)">
                 View Request

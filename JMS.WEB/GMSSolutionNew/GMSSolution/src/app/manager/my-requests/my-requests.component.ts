@@ -6,6 +6,7 @@ import { JourneyStatus } from 'src/app/shared/enums/journey-status.enum';
 import { AuthenticationService } from 'src/app/shared/Services/AuthenticationService';
 import { User } from 'src/app/shared/models/UserModel';
 import { UserRoles } from 'src/app/shared/Enums/user-roles.enum';
+import { General } from '../../shared/Helpers/General';
 
 @Component({
   selector: 'app-my-requests',
@@ -72,11 +73,14 @@ export class MyRequestsComponent implements OnInit {
         case JourneyStatus.PendingOnDriverCompletePreTripAssessment:
         case JourneyStatus.PendingOnDriverCompletePostTripAssessment:
           this.router.navigate([`/driver/assessment/`], { queryParams: { journeyId: request.journeyId } });
-         break;
+          break;
         case JourneyStatus.PendingOnDriverCompleteCheckpointAssessment:
         case JourneyStatus.PendingOnDriverStartJourney:
           this.router.navigate([`/driver/journey/`], { queryParams: { journeyId: request.journeyId } });
           break;
       }
+  }
+  getStatusName(status: JourneyStatus) {
+  return  General.GetStatusName(status)
   }
 }

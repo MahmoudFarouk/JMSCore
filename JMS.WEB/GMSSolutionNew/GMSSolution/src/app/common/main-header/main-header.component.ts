@@ -6,7 +6,7 @@ import { Subscription, Observable, timer } from 'rxjs';
 import { NotificationModel } from '../../shared/models/NotificationModel';
 import { NotificationService } from '../../shared/Services/NotificationService';
 import * as M from 'materialize-css'
-
+declare var $:any;
 @Component({
   selector: 'app-main-header',
   templateUrl: './main-header.component.html',
@@ -73,7 +73,11 @@ export class MainHeaderComponent implements OnInit, AfterViewInit  {
   // }
 
   logout() {
-    this.authenticationService.logout();
+    this.authenticationService.logout(); 
+  //  document.getElementById('slideout').style.transform="translateX(-105%)";
+  //  document.body.style.overflow=null;
+  // $(".sidenav-overlay").hide();
+  $(".sidenav-overlay").click(); 
     this.router.navigate(['/login']);
   }
 

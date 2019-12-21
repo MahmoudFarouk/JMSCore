@@ -345,7 +345,13 @@ export class InitiateJourneyComponent implements OnInit {
                   allowOutsideClick: false
                 }).then(end => {
                   if (end)
-                    window.location.href = '.';
+                  {
+                    //this.authenticationService.logout();
+                    //this.router.navigate(['/login']);
+                    this.router.navigate(['/'])
+                    
+                   
+                  }
                 });
             })
           }

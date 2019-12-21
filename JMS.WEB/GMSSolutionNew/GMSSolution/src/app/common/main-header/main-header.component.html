@@ -22,7 +22,7 @@
 
 <!--start aside menu-->
 
-<aside  id="slideout" name="slideout" class="sidenav" >
+<aside  id="slideout" name="slideout" class="sidenav"  >
   <div class="userInfo">
     <img src="assets/images/Jms_assets/user.svg">
     <h2>{{currentUser.fullName}}</h2>
@@ -31,9 +31,10 @@
     </button>
   </div>
   <ul>
-    <li *ngIf="currentUser.roles[0].name == 'Product Line'" routerLinkActive="active" routerLink="/initiate-journey">
+    <li *ngIf="currentUser.roles[0].name == 'Product Line'" (click)="router.navigate(['/initiate-journey'])" routerLinkActive="active" routerLink="/initiate-journey">
+     
       <img src="assets/images/Jms_assets/ic_plus_black.svg">
-      <h3>Initiate Journy</h3>
+      <h3>Initiate Journey</h3>
     </li>
     <li *ngIf="currentUser.roles[0].name != 'Product Line' && currentUser.roles[0].name != 'JMS Admin'"  routerLinkActive="active" routerLink="/requests">
       <img src="assets/images/Jms_assets/ic_trip_black.svg" >

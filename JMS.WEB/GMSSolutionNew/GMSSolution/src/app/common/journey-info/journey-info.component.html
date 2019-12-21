@@ -19,6 +19,10 @@
                 <img src="assets/images/Jms_assets/ic_calendar.svg">
                 <span>Date Of Delivery: {{Journey.deliveryDate | date:'dd/MM/yyyy'}}</span>
             </li>
+            <li>
+                <img src="assets/images/Jms_assets/ic_status.svg">
+                <span>Status: {{getStatusName(Journey.journeyStatus)}}</span>
+            </li>
         </ul>
     </section>
 </div>

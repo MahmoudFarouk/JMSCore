@@ -57,24 +57,24 @@ namespace JMS.BLL.Services
 
         private List<RequestModel> GetJMCRequests()
         {
-            return _context.Journey.Where(j =>
-            //khamis
-                        j.JourneyStatus == JourneyStatus.PendingOnDriverStartJourney ||
-                        j.JourneyStatus == JourneyStatus.DriverStartedJourney ||
-                        j.JourneyStatus == JourneyStatus.PendingOnDriverCompletePreTripAssessment ||
-                  //khamis
-                        j.JourneyStatus == JourneyStatus.PendingOnJMCInitialApproval ||
-                        j.JourneyStatus == JourneyStatus.PendingOnDriverSelection ||
-                        j.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPreTripAssessment ||
-                        j.JourneyStatus == JourneyStatus.PendingOnQHSEJourneyApprovalPreTripAssessment ||
-                        j.JourneyStatus == JourneyStatus.PendingOnGBMJourneyApprovalPreTripAssessment ||
-                        j.JourneyStatus == JourneyStatus.DriverStartedJourney ||
-                        j.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment ||
-                        j.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment ||
-                        j.JourneyStatus == JourneyStatus.JourneyCompleted ||
-                        j.JourneyStatus == JourneyStatus.JourneyPaused ||
-                        j.JourneyStatus == JourneyStatus.JourneyStopped
-            ).Select(j => new RequestModel
+            return _context.Journey/*.Where(j =>
+            ////khamis
+            //            j.JourneyStatus == JourneyStatus.PendingOnDriverStartJourney ||
+            //            j.JourneyStatus == JourneyStatus.DriverStartedJourney ||
+            //            j.JourneyStatus == JourneyStatus.PendingOnDriverCompletePreTripAssessment ||
+            //      //khamis
+            //            j.JourneyStatus == JourneyStatus.PendingOnJMCInitialApproval ||
+            //            j.JourneyStatus == JourneyStatus.PendingOnDriverSelection ||
+            //            j.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPreTripAssessment ||
+            //            j.JourneyStatus == JourneyStatus.PendingOnQHSEJourneyApprovalPreTripAssessment ||
+            //            j.JourneyStatus == JourneyStatus.PendingOnGBMJourneyApprovalPreTripAssessment ||
+            //            j.JourneyStatus == JourneyStatus.DriverStartedJourney ||
+            //            j.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverCheckpointAssessment ||
+            //            j.JourneyStatus == JourneyStatus.PendingOnJMCApproveDriverPostTripAssessment ||
+            //            j.JourneyStatus == JourneyStatus.JourneyCompleted ||
+            //            j.JourneyStatus == JourneyStatus.JourneyPaused ||
+            //            j.JourneyStatus == JourneyStatus.JourneyStopped
+            )*/.Select(j => new RequestModel
             {
                 JourneyId = j.Id,
                 JourneyTitle = j.Title,
