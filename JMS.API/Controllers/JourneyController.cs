@@ -355,5 +355,55 @@ namespace JMS.API.Controllers
             return NotFound();
         }
 
+        [Route("updateJourneyRiskStatus")]
+        [HttpPost]
+        public IActionResult UpdateJourneyRiskStatus(int journeyId, bool? isNight, RiskStatus? status)
+        {
+            try
+            {
+                var result = _journeyService.UpdateJourneyRiskStatus(journeyId,isNight, status);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+            }
+        }
+        [Route("rejectJourney")]
+        [HttpPost]
+        public IActionResult RejectJourney(int journeyId,string comment)
+        {
+            try
+            {
+                var result = _journeyService.RejectJourney(journeyId, comment);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+            }
+        }
+
+        [Route("getCurrentJourney")]
+        [HttpGet]
+        public IActionResult CurrentJourney()
+        {
+            try
+            {
+                var driverId = Guid.Parse(User.Identity.Name);
+                var result = _journeyService.GetDriverCurrentJourney(driverId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+            }
+        }
     }
 }

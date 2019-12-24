@@ -43,7 +43,10 @@ namespace JMS.BLL.Interfaces
         public ServiceResponse<List<JourneyUpdate>> GetJourneyMontoring(int journeyId);
 
         public ServiceResponse<Journey> GetAllJourneyInfo(int journeyId);
+        public ServiceResponse UpdateJourneyRiskStatus(int journeyId, bool? isNight, RiskStatus? status);
+        public ServiceResponse RejectJourney(int journeyId,string commnent);
 
+        public ServiceResponse<Journey> GetDriverCurrentJourney(Guid driverId);
 
 
 

@@ -28,7 +28,7 @@
         </div> -->
 
         <div class="col-6" *ngIf="currentUser.roles[0].name == 'Driver'">
-          <div id="Pending_Jou_0" class="homePageAction pendingJourney" routerLinkActive="active" routerLink="/driver/journey" >
+          <div id="Pending_Jou_0" class="homePageAction pendingJourney" (click)="CurrentJourny()">
             <img src="assets/images/Jms_assets/ic_pending.svg">
             <h2>Current Journey</h2>
           </div>

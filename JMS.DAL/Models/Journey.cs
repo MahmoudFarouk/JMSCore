@@ -32,10 +32,10 @@ namespace JMS.DAL.Models
         public bool IsThirdParty { get; set; }
         public Guid? DispatcherId { get; set; }
         public DateTime CreationDate { get; set; }
-
-
+        public bool? IsNight { get; set; }
+        public RiskStatus? RiskStatus { get; set; }
+        public string RecjectReason { get; set; }
         public virtual User User { get; set; }
-
         [ForeignKey("DispatcherId")]
         [InverseProperty("DispatcherJourneys")]
         public virtual User Dispatcher { get; set; }
@@ -44,6 +44,11 @@ namespace JMS.DAL.Models
 
         [NotMapped]
         public virtual ICollection<Checkpoint> Checkpoints { get; set; }
-
+    }
+    public enum RiskStatus
+    {
+        Low,
+        Meduim,
+        High
     }
 }

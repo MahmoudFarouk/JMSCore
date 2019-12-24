@@ -11,6 +11,6 @@ namespace JMS.API.Models
         public string Text { get; set; }
         public bool IsRead { get; set; }
         public DateTime CreationTime { get; set; }
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
     }
 }

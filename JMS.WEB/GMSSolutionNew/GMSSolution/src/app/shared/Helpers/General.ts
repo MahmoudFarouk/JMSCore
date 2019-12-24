@@ -29,7 +29,7 @@ export class General{
         case JourneyStatus.PendingOnGBMJourneyApprovalPreTripAssessment:
           return "Pending On GBM Journey Approval PreTrip Assessment ";
         case JourneyStatus.PendingOnQHSEJourneyApprovalPreTripAssessment:
-          return "Pending O nQHSE Journey Approval PreTrip Assessment ";
+          return "Pending On QHSE Journey Approval PreTrip Assessment ";
         case JourneyStatus.JourneyRejected:
           return "Journey Rejected ";
   

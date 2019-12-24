@@ -67,7 +67,7 @@ export class DriverSelectionComponent implements OnInit {
     this.slectedDriver.id = item.id;
     if (item.VechNo !== undefined && item.VechNo !== '' && item.VechNo !== null) {
       this.loading = true;
-
+ 
       var result = await this.JourneyService.AssignDriverToJourney({
         Id: this.journeyUpdateId,
         JourneyId: this.JourneyId,

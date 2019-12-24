@@ -33,6 +33,32 @@
                     <h3>Status: </h3>
                     <p>{{getGourneyStatus(journey.data.journeyStatus)}}</p>
                 </div>
+                <div class="detail" *ngIf='journey.data.journeyStatus==7'>
+                    <img src="assets/images/Jms_assets/ic_driver_black.svg">
+                    <h3>Reject Reason: </h3>
+                    <p>{{journey.data.recjectReason}}</p>
+                </div>
+
+                
+                <div class="detail">
+                    <img src="assets/images/Jms_assets/ic_driver_black.svg">
+                    <h3>Driver: </h3>
+                    <p>{{journey.data.driverName}}</p>
+                </div>
+                <div class="detail">
+                   
+                    <h3>Risk Status: </h3>
+                    <p *ngIf="!showSelectRiskStatusAndDrivernight()">{{getRiskStatus(journey.data.riskStatus)}}</p>
+                    <br />
+                    <div *ngIf="showSelectRiskStatusAndDrivernight()">
+                    <input style="position: relative;opacity: 1;pointer-events: visible;"  value="0" type="radio" name="rskSt"  [(ngModel)]="journey.data.riskStatus" >Low<br />
+                    <input style="position: relative;opacity: 1;pointer-events: visible;"  value="1" type="radio" name="rskSt"  [(ngModel)]="journey.data.riskStatus" >Meduim<br />
+                    <input style="position: relative;opacity: 1;pointer-events: visible;"  value="2" type="radio" name="rskSt"  [(ngModel)]="journey.data.riskStatus" >High<br />
+                </div>
+                </div>
+                <div class="detail">
+                    <input style="position: relative;opacity: 1;pointer-events: visible;" [disabled]="!showSelectRiskStatusAndDrivernight()"  type="checkbox" name="vehicle1" value="true"  [(ngModel)]="journey.data.isNight" >Is Night Driving<br>
+                </div>
             </div>
         </li>
 
@@ -134,7 +160,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                     </div>
                 </li>
         <li class="active" *ngIf="showVechileCheckList()">
@@ -164,16 +190,22 @@
         </li>
     </ul>
     <div class="row" *ngIf="showDriverAssessment()">
-        <div class="col-6">
+        <div class="col-4">
             <button class="sumbitToInitiate " (click)="approveDriver()">
                 Accept Driver
             </button>
         </div>
-        <div class="col-6">
+        <div class="col-4">
             <button class="changeDriver" (click)="changeDriver()">
                 Change Driver
             </button>
         </div>
+        <div class="col-4">
+            <button class="changeDriver" (click)="RejectJourney()" style="background-color:red;">
+                Reject Journey
+            </button>
+        </div>
+        
     </div>
 
     <div class="row" *ngIf="showApprove()">
@@ -182,6 +214,34 @@
             <button class="sumbitToInitiate" (click)="approve()">
                 Approve
             </button>
+        </div>
+    </div>
+    
+    
+</div>
+
+<div class="col-4 modalAndBtnCont">
+    <!-- Button trigger modal -->
+    <button style="display: none;" type="button" id="modalReason" class="btn btn-primary modalTrigger sendAlert" data-toggle="modal"
+        data-target="#exampleModal2">
+    </button>
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Write your reason</h5>
+                    <button id="closeAlert" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <textarea class="form-control" [(ngModel)]='alertMessage' placeholder="Reson ..."></textarea>
+                 </div>
+                 <div class="modal-footer">
+                     <button  (click)="sendAlert()" type="button" class="sumbitToInitiate" >Reject</button>
+                 </div>
+            </div>
         </div>
     </div>
 </div>

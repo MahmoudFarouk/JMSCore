@@ -28,5 +28,9 @@ export interface JourneyModel {
     journeyUpdates?: JourneyUpdate[];
     checkpoints?: Checkpoint[];
     assesments?: AssessmentQuestion[]
-    assessmentQuestion?: AssessmentQuestion[]
+    assessmentQuestion?: AssessmentQuestion[],
+    riskStatus?:number,
+    isNight?:boolean,
+    driverName?:string,
+    recjectReason?:string
 }

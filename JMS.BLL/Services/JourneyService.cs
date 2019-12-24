@@ -193,7 +193,7 @@ namespace JMS.BLL.Services
                     }
                     ).AsNoTracking().ToList();
             }
-
+            var jupDriver = _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journey.Id && x.DriverId != null);
             var details = new
             {
                 CargoPriority = journey.CargoPriority,
@@ -215,7 +215,11 @@ namespace JMS.BLL.Services
                 ToLng = journey.ToLng.HasValue ? journey.ToLng.Value : default(double?),
                 UserId = journey.UserId,
                 UserFullname = journey.UserId != null ? _context.Users.Find(journey.UserId).FullName : "",
-                Assesments = assesments
+                Assesments = assesments,
+                journey.RiskStatus,
+                journey.IsNight,
+                DriverName = jupDriver != null ? _context.Users.Find(jupDriver.DriverId).FullName : "",
+                journey.RecjectReason
 
 
 
@@ -267,7 +271,10 @@ namespace JMS.BLL.Services
             {
                 CreationTime = DateTime.Now,
                 Text = "Journey from " + journey.FromDestination + " to " + journey.ToDestination + " Assaigned to you",
-                UserId = JourneyUpdate.DriverId.Value
+                UserId = JourneyUpdate.DriverId.Value,
+                Role = UserRoles.Driver,
+                NotificationType = NotificationType.JourneyInfo,
+                JourneyId = journey.Id
             });
             if (JourneyUpdate.Id > 0)
             {
@@ -335,7 +342,7 @@ namespace JMS.BLL.Services
             else
                 journey.JourneyStatus = status;
 
-            if (countjourneyUpdates == 0&&journey.JourneyStatus!=JourneyStatus.PendingOnDriverCompletePreTripAssessment)
+            if (countjourneyUpdates == 0 && journey.JourneyStatus != JourneyStatus.PendingOnDriverCompletePreTripAssessment)
                 journey.JourneyStatus = JourneyStatus.PendingOnDriverCompletePostTripAssessment;
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
@@ -356,7 +363,7 @@ namespace JMS.BLL.Services
             try
 
             {
-                var currentJourney = _context.Journey.AsNoTracking().Include(j => j.JourneyUpdates).Include(j => j.AssessmentQuestion).ThenInclude(q=>q.AssessmentResult).FirstOrDefault(j => j.Id == journeyId);
+                var currentJourney = _context.Journey.AsNoTracking().Include(j => j.JourneyUpdates).Include(j => j.AssessmentQuestion).ThenInclude(q => q.AssessmentResult).FirstOrDefault(j => j.Id == journeyId);
 
                 currentJourney.Checkpoints = new LinkedList<Checkpoint>();
                 foreach (var update in currentJourney.JourneyUpdates)
@@ -365,7 +372,7 @@ namespace JMS.BLL.Services
                     {
                         var checkpoint = _context.Checkpoint.Find(update.CheckpointId);
                         currentJourney.Checkpoints.Add(checkpoint);
-                    }                    
+                    }
                 }
 
                 response.Data = currentJourney;
@@ -389,8 +396,30 @@ namespace JMS.BLL.Services
         }
 
 
+        public ServiceResponse UpdateJourneyRiskStatus(int journeyId, bool? isNight, RiskStatus? status)
+        {
+            var journey = _context.Journey.Find(journeyId);
+            journey.RiskStatus = status;
+            journey.IsNight = isNight;
+            _context.SaveChanges();
+            return new ServiceResponse { Status = ResponseStatus.Success };
 
+        }
+        public ServiceResponse RejectJourney(int journeyId, string rejectReason)
+        {
+            var journey = _context.Journey.Find(journeyId);
+            journey.RecjectReason = rejectReason;
+            journey.JourneyStatus = JourneyStatus.JourneyRejected;
+            _context.SaveChanges();
+            return new ServiceResponse { Status = ResponseStatus.Success };
+        }
 
+        public ServiceResponse<Journey> GetDriverCurrentJourney(Guid driverId)
+        {
+            var journey = _context.Journey.Where(x => x.JourneyStatus != JourneyStatus.JourneyCompleted && x.JourneyStatus != JourneyStatus.JourneyRejected && x.JourneyStatus != JourneyStatus.JourneyClosed && x.JourneyUpdates.Any(c => c.DriverId == driverId)).OrderBy(x=>x.CreationDate).AsNoTracking().FirstOrDefault();
+
+            return new ServiceResponse<Journey> { Data = journey, Status = ResponseStatus.Success };
+        }
 
 
 

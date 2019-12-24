@@ -50,21 +50,33 @@ export class JourneyService {
         return this.http.get<any>(`${environment.JMSApiURL}/journey/JourneySelectDriver?journeyId=${id}`);
     }
 
-    UpdateJourneyStatus(journeyId,status) {
+    UpdateJourneyStatus(journeyId, status) {
 
-        return this.http.post<any>(`${environment.JMSApiURL}/journey/updateJourneyStatus?journeyId=${journeyId}&status=${status}`,{});
+        return this.http.post<any>(`${environment.JMSApiURL}/journey/updateJourneyStatus?journeyId=${journeyId}&status=${status}`, {});
     }
-    AddJourneyUpdate(data){
-        return this.http.post<any>(`${environment.JMSApiURL}/journey/addJourneyUpdate1`,data);
+    AddJourneyUpdate(data) {
+        return this.http.post<any>(`${environment.JMSApiURL}/journey/addJourneyUpdate1`, data);
 
     }
     GetJourneyMontoring(journeyId) {
         return this.http.get<any>(`${environment.JMSApiURL}/journey/GetJourneyMontoring?journeyId=${journeyId}`);
-    } 
+    }
 
 
     getAllJourneyInfo(id) {
         let requestUrl: string = `${environment.JMSApiURL}/journey/getalljourneyinfo/${id}`;
         return this.http.get<JourneyModel>(requestUrl);
+    }
+    UpdateJourneyRiskStatus(journeyId, isNight, status) {
+
+        isNight = isNight == null ? '' : isNight;
+        status = status == null ? '' : status;
+        return this.http.post<any>(`${environment.JMSApiURL}/journey/updateJourneyRiskStatus?journeyId=${journeyId}&isNight=${isNight}&status=${status}`, {});
+    }
+    RejectJourney(journeyId, comment) {
+        return this.http.post<any>(`${environment.JMSApiURL}/journey/rejectJourney?journeyId=${journeyId}&comment=${comment}`, {});
+    }
+    GetCurrentJourney(){
+        return this.http.get<any>(`${environment.JMSApiURL}/journey/getCurrentJourney`);
     }
 }
