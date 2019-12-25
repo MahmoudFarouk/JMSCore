@@ -388,6 +388,22 @@ namespace JMS.API.Controllers
             }
         }
 
+        [Route("closeJourney")]
+        [HttpPost]
+        public IActionResult CloseJourney(int journeyId, string comment)
+        {
+            try
+            {
+                var result = _journeyService.CloseJourney(journeyId, comment);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse { Status = DAL.Common.Enums.ResponseStatus.ServerError });
+
+            }
+        }
         [Route("getCurrentJourney")]
         [HttpGet]
         public IActionResult CurrentJourney()
@@ -405,5 +421,25 @@ namespace JMS.API.Controllers
 
             }
         }
+    
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("getCalendar")]
+        public IActionResult GetCalendar()
+        {
+            try
+            {
+                return Ok(_journeyService.GetCalendar());
+            } 
+            catch (Exception ex)
+            {
+                ex.LogException();
+                return Ok(new ServiceResponse<List<object>> {Data=new List<object>(), Status = DAL.Common.Enums.ResponseStatus.ServerError
+    });
+
+            }
+
+        }
+    
     }
 }

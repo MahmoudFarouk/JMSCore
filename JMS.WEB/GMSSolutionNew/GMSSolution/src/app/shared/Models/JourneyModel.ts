@@ -32,5 +32,6 @@ export interface JourneyModel {
     riskStatus?:number,
     isNight?:boolean,
     driverName?:string,
-    recjectReason?:string
+    recjectReason?:string,
+    closeReason?:string
 }

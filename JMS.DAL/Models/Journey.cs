@@ -35,6 +35,7 @@ namespace JMS.DAL.Models
         public bool? IsNight { get; set; }
         public RiskStatus? RiskStatus { get; set; }
         public string RecjectReason { get; set; }
+        public string CloseReason { get; set; }
         public virtual User User { get; set; }
         [ForeignKey("DispatcherId")]
         [InverseProperty("DispatcherJourneys")]

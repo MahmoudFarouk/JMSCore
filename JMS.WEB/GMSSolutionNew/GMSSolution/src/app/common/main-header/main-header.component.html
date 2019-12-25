@@ -36,7 +36,8 @@
       <img src="assets/images/Jms_assets/ic_plus_black.svg">
       <h3>Initiate Journey</h3>
     </li>
-    <li *ngIf="currentUser.roles[0].name != 'Product Line' && currentUser.roles[0].name != 'JMS Admin'"  routerLinkActive="active" routerLink="/requests">
+    <!-- currentUser.roles[0].name != 'Product Line' &&  -->
+    <li *ngIf="currentUser.roles[0].name != 'JMS Admin'"  routerLinkActive="active" routerLink="/requests">
       <img src="assets/images/Jms_assets/ic_trip_black.svg" >
       <h3>My Requests</h3>
     </li>

@@ -27,7 +27,7 @@ export class ForgetchangepasswordComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    debugger;
+    
     if (this.f.password.value !== this.f.confirmpassword.value)
       return;
     this.loading = true;
@@ -42,10 +42,10 @@ export class ForgetchangepasswordComponent implements OnInit {
         console.log("system error")
         break;
     }
-    debugger;
+    
   }
 showConfirmError(){
-  debugger;
+  
   return this.f.password.value !== this.f.confirmpassword.value
 }
   ngOnInit() {

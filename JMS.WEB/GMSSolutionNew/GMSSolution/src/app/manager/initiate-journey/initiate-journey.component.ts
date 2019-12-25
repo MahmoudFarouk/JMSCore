@@ -202,7 +202,7 @@ export class InitiateJourneyComponent implements OnInit {
   }
 
   getCheckpoints() {
-    debugger;
+    
     if (this.isEditMode) {
       // this.journeyService.getCheckpoints(this.journey.fromLat, this.journey.fromLng, this.journey.toLat, this.journey.toLng).subscribe(result => {
       //   this.journey.checkpoints = result.data;

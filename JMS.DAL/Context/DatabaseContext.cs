@@ -28,8 +28,9 @@ namespace JMS.DAL.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(@"Server=tcp:jmssqlserver.database.windows.net,1433;Initial Catalog=JMSDBNew;Persist Security Info=False;User ID=jmsdbadmin;Password=P@ssw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", b => b.MigrationsAssembly("JMS.API"));
-            optionsBuilder.UseSqlServer(@"Server=.;Initial Catalog=JMSDB;Persist Security Info=False;User ID=sa;Password=P@ssw0rd;MultipleActiveResultSets=False;TrustServerCertificate=True;Connection Timeout=30", b => b.MigrationsAssembly("JMS.API"));
+           // optionsBuilder.UseSqlServer(@"Server=.;Initial Catalog=JMSDB;Persist Security Info=False;User ID=sa;Password=P@ssw0rd;MultipleActiveResultSets=False;TrustServerCertificate=True;Connection Timeout=30", b => b.MigrationsAssembly("JMS.API"));
+            
+            optionsBuilder.UseSqlServer(@"Server=sql5041.site4now.net;Initial Catalog=DB_A37BE4_OBOXJMS;Persist Security Info=False;User ID=DB_A37BE4_OBOXJMS_admin;Password=161984@Mossad;MultipleActiveResultSets=False;TrustServerCertificate=True;Connection Timeout=30", b => b.MigrationsAssembly("JMS.API"));
 
         }
     }

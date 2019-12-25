@@ -40,6 +40,9 @@ namespace JMS.BLL.Services
                 else if (userRole == UserRoles.Driver)
                 {
                     response.Data = GetDriverRequests(userId);
+                }else if(userRole==UserRoles.ProductLine)
+                {
+                    response.Data = GetProductLineRequests(userId);
                 }
 
                 response.Status = ResponseStatus.Success;
@@ -88,13 +91,13 @@ namespace JMS.BLL.Services
 
         private List<RequestModel> GetDispatcherRequests(Guid dispatcherId)
         {
-            return _context.Journey.Where(j => j.Dispatcher.Id == dispatcherId && (
+            return _context.Journey.Where(j => j.Dispatcher.Id == dispatcherId /*&& (
                         j.JourneyStatus == JourneyStatus.PendingOnDispatcherApproval ||
                         j.JourneyStatus == JourneyStatus.PendingOnDriverSelection ||
                         j.JourneyStatus == JourneyStatus.PendingOnDispatcherApproveDriverPostTripAssessment) ||
                         j.JourneyStatus == JourneyStatus.JourneyCompleted ||
                         j.JourneyStatus == JourneyStatus.JourneyPaused ||
-                        j.JourneyStatus == JourneyStatus.JourneyStopped
+                        j.JourneyStatus == JourneyStatus.JourneyStopped*/
             ).Select(j => new RequestModel
             {
                 JourneyId = j.Id,
@@ -110,12 +113,12 @@ namespace JMS.BLL.Services
         private List<RequestModel> GetDriverRequests(Guid driverId)
         {
             return _context.Journey.Include(j => j.JourneyUpdates).Where(j =>
-                         j.JourneyUpdates.Any(u => u.DriverId == driverId) && (
+                         j.JourneyUpdates.Any(u => u.DriverId == driverId) /*&& (
                          j.JourneyStatus == JourneyStatus.PendingOnDriverStartJourney ||
                          j.JourneyStatus == JourneyStatus.DriverStartedJourney ||
                          j.JourneyStatus == JourneyStatus.PendingOnDriverCompletePreTripAssessment ||
                          j.JourneyStatus == JourneyStatus.PendingOnDriverCompletePostTripAssessment ||
-                         j.JourneyStatus == JourneyStatus.PendingOnDriverCompleteCheckpointAssessment))
+                         j.JourneyStatus == JourneyStatus.PendingOnDriverCompleteCheckpointAssessment)*/)
                         .Select(j => new RequestModel
                         {
                             JourneyId = j.Id,
@@ -146,6 +149,26 @@ namespace JMS.BLL.Services
 
 
 
+        }
+        private List<RequestModel> GetProductLineRequests(Guid productLineId)
+        {
+            return _context.Journey.Where(j => j.UserId == productLineId /*&& (
+                        j.JourneyStatus == JourneyStatus.PendingOnDispatcherApproval ||
+                        j.JourneyStatus == JourneyStatus.PendingOnDriverSelection ||
+                        j.JourneyStatus == JourneyStatus.PendingOnDispatcherApproveDriverPostTripAssessment) ||
+                        j.JourneyStatus == JourneyStatus.JourneyCompleted ||
+                        j.JourneyStatus == JourneyStatus.JourneyPaused ||
+                        j.JourneyStatus == JourneyStatus.JourneyStopped*/
+            ).Select(j => new RequestModel
+            {
+                JourneyId = j.Id,
+                JourneyTitle = j.Title,
+                FromDestination = j.FromDestination,
+                ToDestination = j.ToDestination,
+                CreationDate = j.CreationDate,
+                DeliveryDate = j.DeliveryDate,
+                Status = j.JourneyStatus
+            }).OrderByDescending(r => r.CreationDate).ToList();
         }
 
     }

@@ -49,6 +49,8 @@ export class General{
           return "Pending On Dispatcher Approve Driver PostTrip Assessment ";
         case JourneyStatus.JourneyCompleted:
           return "Journey Completed ";
+          case JourneyStatus.JourneyClosed:
+            return "Journey Closed by Driver ";
         default:
           return "";
   

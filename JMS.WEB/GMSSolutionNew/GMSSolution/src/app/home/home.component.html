@@ -7,29 +7,29 @@
         <!-- Start App Dashboard Items -->
         <div class="col-6" *ngIf="currentUser.roles[0].name == 'Product Line'">
           <div id="Init_Jou_0" class="homePageAction initJourney" routerLinkActive="active" routerLink="/initiate-journey" >
-            <img src="assets/images/Jms_assets/ic_plus.svg">
+            <img src="assets/images/Jms_assets/ic_plus.svg" style="width:40px;">
             <h2>Initiate Journey</h2>
           </div>
         </div>
-
-        <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMC' || currentUser.roles[0].name == 'Dispatcher' || currentUser.roles[0].name == 'QHSE' ||currentUser.roles[0].name == 'GBM' || currentUser.roles[0].name == 'Driver'">
-          <div id="dvMyRequests" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/requests" >
-            <img src="assets/images/Jms_assets/ic_trip.svg">
+        <!-- *ngIf="currentUser.roles[0].name == 'JMC' || currentUser.roles[0].name == 'Dispatcher' || currentUser.roles[0].name == 'QHSE' ||currentUser.roles[0].name == 'GBM' || currentUser.roles[0].name == 'Driver'" -->
+        <div class="col-6" >
+          <div id="dvMyRequests" *ngIf="currentUser.roles[0].name != 'JMS Admin'" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/requests" >
+            <img src="assets/images/Jms_assets/ic_trip.svg" style="width:40px;">
             <h2>My Requests</h2>
           </div>
         </div>
 
 
-        <!-- <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMC' || currentUser.roles[0].name == 'QHSE' ||currentUser.roles[0].name == 'GBM'">
-          <div id="dvMyRequests" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/calendar" >
-            <img src="assets/images/Jms_assets/ic_calendar.svg">
+        <div class="col-6" *ngIf="currentUser.roles[0].name == 'JMC' || currentUser.roles[0].name == 'QHSE' ||currentUser.roles[0].name == 'GBM'||currentUser.roles[0].name == 'Operation Manager'">
+          <div id="dvMyRequests" class="homePageAction journeyTrip" routerLinkActive="active" routerLink="/journey-calendar" >
+            <img src="assets/images/Jms_assets/ic_calendar.svg" style="width:40px;">
             <h2>Journey Calendar</h2>
           </div>
-        </div> -->
+        </div>
 
         <div class="col-6" *ngIf="currentUser.roles[0].name == 'Driver'">
           <div id="Pending_Jou_0" class="homePageAction pendingJourney" (click)="CurrentJourny()">
-            <img src="assets/images/Jms_assets/ic_pending.svg">
+            <img src="assets/images/Jms_assets/ic_pending.svg" style="width:40px;">
             <h2>Current Journey</h2>
           </div>
         </div>

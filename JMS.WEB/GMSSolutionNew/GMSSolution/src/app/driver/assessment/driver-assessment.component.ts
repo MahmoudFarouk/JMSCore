@@ -66,7 +66,7 @@ export class DriverAssessmentComponent implements OnInit {
         return this.showPretripAssessment() || this.showPosttripAssessment() || this.showCheckpointAssessment();
     }
     Submit() {
-        debugger;
+        
         var isvalid = this.validate();
         if (isvalid) {
             var data = [];
@@ -178,7 +178,7 @@ export class DriverAssessmentComponent implements OnInit {
                 this.AllAssessments = data.data
                 this.checkpointassessments = this.AllAssessments.filter(x => x.category == QuestionCategory.CheckpointAssessment);
                 this.vechCheckList = this.AllAssessments.filter(x => x.category == QuestionCategory.VehicleChecklist);
-                debugger;
+                
             }, (error) => {
             });
     }

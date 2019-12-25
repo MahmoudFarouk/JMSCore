@@ -79,4 +79,7 @@ export class JourneyService {
     GetCurrentJourney(){
         return this.http.get<any>(`${environment.JMSApiURL}/journey/getCurrentJourney`);
     }
+    CloseJourney(journeyId, comment) {
+        return this.http.post<any>(`${environment.JMSApiURL}/journey/closeJourney?journeyId=${journeyId}&comment=${comment}`, {});
+    }
 }

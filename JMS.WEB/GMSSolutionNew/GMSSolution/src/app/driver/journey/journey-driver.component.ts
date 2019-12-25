@@ -99,7 +99,7 @@ export class JourneyDriverComponent implements OnInit {
     });
   }
   checkin(item) {
-    debugger;
+    
     this.router.navigate(['/driver/assessment'], { queryParams: { journeyId: this.journeyId, checkPointId: item.checkpointId, ju: item.id } });
   }
   private setCurrentLocation() {
@@ -166,6 +166,8 @@ export class JourneyDriverComponent implements OnInit {
       Longitude:this.longitude
     }).toPromise().then((data) => {
       swal.fire("", "Your location sent successfully", "success").then(()=>{
+        var currentDate=new Date();
+        localStorage.setItem('lastCheckin',currentDate.toUTCString())
         $("#closeLoc").click();
 
       });
@@ -219,9 +221,22 @@ export class JourneyDriverComponent implements OnInit {
     swal.fire("", "Your journey paused successfully", "success");
 
   }
+  CloseMessage='';
   CloseJourney() {
-    swal.fire("", "Your journey closed successfully", "success");
 
+    if (this.CloseMessage != '') {
+      this.JourneyService.CloseJourney(this.journeyId,this.CloseMessage).toPromise().then((data) => {
+       
+        swal.fire("", "Your journey closed successfully", "success").then(()=>{
+          $("#closejourneyclose").click();
+          this.router.navigate(['']);
+        });
+      });
+
+    } else {
+      swal.fire("", "Please, Enter your reason", "warning");
+
+    }
   }
 
 }

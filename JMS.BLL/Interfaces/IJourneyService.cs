@@ -47,7 +47,10 @@ namespace JMS.BLL.Interfaces
         public ServiceResponse RejectJourney(int journeyId,string commnent);
 
         public ServiceResponse<Journey> GetDriverCurrentJourney(Guid driverId);
+        public ServiceResponse CloseJourney(int journeyId, string commnent);
 
+        public ServiceResponse<List<CalendarModel>> GetCalendar();
+        
 
 
     }

@@ -1,6 +1,6 @@
 <!--start journeyApproval Section-->
 <div class="mobileContainer journeyApproval">
-    <h2 class="text-center mainHeadSection">Journey Approval</h2>
+    <h2 class="text-center mainHeadSection">Journey</h2>
     <ul class="collapsible expandable">
         <li class="active">
             <div class="collapsible-header">
@@ -37,6 +37,11 @@
                     <img src="assets/images/Jms_assets/ic_driver_black.svg">
                     <h3>Reject Reason: </h3>
                     <p>{{journey.data.recjectReason}}</p>
+                </div>
+                <div class="detail" *ngIf='journey.data.journeyStatus==18'>
+                    <img src="assets/images/Jms_assets/ic_driver_black.svg">
+                    <h3>Driver Close Reason: </h3>
+                    <p>{{journey.data.closeReason}}</p>
                 </div>
 
                 

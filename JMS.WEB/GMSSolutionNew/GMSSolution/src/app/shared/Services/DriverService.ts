@@ -9,7 +9,7 @@ export class DriverService{
        
     }
      GetDrivers(drivername=""){
-         debugger;
+         
         return  this.http.get(`${environment.JMSApiURL}/driver/getdrivers?drivername=${drivername}`);
         
     }

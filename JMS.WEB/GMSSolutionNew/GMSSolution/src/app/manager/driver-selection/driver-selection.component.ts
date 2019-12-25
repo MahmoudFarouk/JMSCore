@@ -40,7 +40,7 @@ export class DriverSelectionComponent implements OnInit {
 
       this.Drivers = data.data;
       this.JourneyService.GetJourneySelectDriver(this.JourneyId).toPromise().then((data: any) => {
-        debugger;
+        
         this.slectedDriver.id = data.data.DriverId
         this.journeyUpdateId = data.data.Id;
 
@@ -75,7 +75,7 @@ export class DriverSelectionComponent implements OnInit {
         VehicleNo: item.VechNo,
         StatusMessage:item.fullName
       }) as any;
-      debugger;
+      
       if (result.status === 1) {
 
         this.journeyUpdateId = result.data;

@@ -53,6 +53,9 @@ export class MyRequestsComponent implements OnInit {
         case JourneyStatus.JourneyStopped:
           this.router.navigate([`/journeyapproval/`], { queryParams: { journeyId: request.journeyId } });
           break;
+        default:
+          this.router.navigate([`/journeyapproval/`], { queryParams: { journeyId: request.journeyId } });
+          break;
       }
 
     if (this.currentUser.roles[0].name == "Dipsatcher")
@@ -64,6 +67,9 @@ export class MyRequestsComponent implements OnInit {
           this.router.navigate([`/driver-selection/`], { queryParams: { journeyId: request.journeyId } });
           break;
         case JourneyStatus.PendingOnDispatcherApproveDriverPostTripAssessment:
+          this.router.navigate([`/journeyapproval/`], { queryParams: { journeyId: request.journeyId } });
+          break;
+        default:
           this.router.navigate([`/journeyapproval/`], { queryParams: { journeyId: request.journeyId } });
           break;
       }
@@ -78,9 +84,15 @@ export class MyRequestsComponent implements OnInit {
         case JourneyStatus.PendingOnDriverStartJourney:
           this.router.navigate([`/driver/journey/`], { queryParams: { journeyId: request.journeyId } });
           break;
+        default:
+          this.router.navigate([`/journeyapproval/`], { queryParams: { journeyId: request.journeyId } });
+          break;
       }
+    if (this.currentUser.roles[0].name == "Product Line")
+      this.router.navigate([`/journeyapproval/`], { queryParams: { journeyId: request.journeyId } });
+
   }
   getStatusName(status: JourneyStatus) {
-  return  General.GetStatusName(status)
+    return General.GetStatusName(status)
   }
 }

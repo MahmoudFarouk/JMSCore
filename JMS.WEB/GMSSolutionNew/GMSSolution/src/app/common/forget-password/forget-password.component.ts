@@ -18,7 +18,7 @@ export class ForgetPasswordComponent implements OnInit {
     return this.loginForm.controls;
   }
   async onSubmit() {
-    debugger;
+    
     this.submitted = true;
 
     // stop here if form is invalid
@@ -54,7 +54,7 @@ export class ForgetPasswordComponent implements OnInit {
       }
     })
     
-    debugger;
+    
   }   
   ngOnInit() {
     this.loginForm = this.formBuilder.group({

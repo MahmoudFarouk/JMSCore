@@ -219,7 +219,8 @@ namespace JMS.BLL.Services
                 journey.RiskStatus,
                 journey.IsNight,
                 DriverName = jupDriver != null ? _context.Users.Find(jupDriver.DriverId).FullName : "",
-                journey.RecjectReason
+                journey.RecjectReason,
+                journey.CloseReason
 
 
 
@@ -421,8 +422,28 @@ namespace JMS.BLL.Services
             return new ServiceResponse<Journey> { Data = journey, Status = ResponseStatus.Success };
         }
 
+        public ServiceResponse CloseJourney(int journeyId, string commnent)
+        {
+            var journey = _context.Journey.Find(journeyId);
+            journey.CloseReason = commnent;
+            journey.JourneyStatus = JourneyStatus.JourneyClosed;
+            _context.SaveChanges();
+            return new ServiceResponse { Status = ResponseStatus.Success };
+        }
 
+        public ServiceResponse<List<CalendarModel>> GetCalendar()
+        {
+            var result = _context.Journey.Where(x => x.JourneyStatus != JourneyStatus.JourneyCompleted && x.JourneyStatus != JourneyStatus.JourneyClosed && x.JourneyStatus != JourneyStatus.JourneyRejected).Select(x=>new CalendarModel {
+            title=x.Title,
+            start=x.CreationDate,
+            end=x.DeliveryDate,
+            url= "/journeyapproval?journeyId="+x.Id
 
+            }
+            
+            ).ToList();
+            return new ServiceResponse<List<CalendarModel>> { Data = result, Status = ResponseStatus.Success };
+        }
 
 
         //public ServiceResponse ApproveJourney(int journeyId)

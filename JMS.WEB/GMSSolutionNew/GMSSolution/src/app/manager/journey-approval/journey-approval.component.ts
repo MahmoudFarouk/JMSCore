@@ -186,7 +186,7 @@ export class JourneyApprovalComponent implements OnInit {
   }
   approveDriver() {
     var status = this.journey.data.journeyStatus;
-    debugger;
+    
     console.log(this.journey.data);
     if (this.journey.data.riskStatus == null && this.journey.data.isNight == null) {
       Swal.fire('', 'Please, Select Risk status or select is night driving ', 'warning');

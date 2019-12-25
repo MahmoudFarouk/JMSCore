@@ -28,4 +28,5 @@ export enum JourneyStatus {
   PendingOnDispatcherApproveDriverPostTripAssessment = 16,
 
   JourneyCompleted = 17,
+  JourneyClosed=18,
 }
