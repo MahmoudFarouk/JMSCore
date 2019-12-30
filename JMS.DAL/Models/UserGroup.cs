@@ -11,6 +11,7 @@ namespace JMS.DAL.Models
         [MaxLength(256)]
         [Required]
         public string Name { get; set; }
+       
         public virtual List<User> Users { get; set; }
     }
 }

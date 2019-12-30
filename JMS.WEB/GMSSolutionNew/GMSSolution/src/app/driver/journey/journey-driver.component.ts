@@ -86,7 +86,7 @@ export class JourneyDriverComponent implements OnInit {
       }
     }, (error) => {
     });
-  }
+  } 
   startJourney() {
     this.JourneyService.UpdateJourneyStatus(this.journeyId, JourneyStatus.PendingOnDriverCompleteCheckpointAssessment).toPromise().then((data: any) => {
 

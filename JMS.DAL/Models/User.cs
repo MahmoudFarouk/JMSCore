@@ -33,7 +33,8 @@ namespace JMS.DAL.Models
         [InverseProperty("Dispatcher")]
         public virtual List<Journey> DispatcherJourneys { get; set; }
         public virtual List<JourneyUpdate> JourneyUpdates { get; set; }
-
+        public bool IsInProgress { get; set; }
+        public DateTime? LastCompletionTrip { get; set; }
 
 
     }

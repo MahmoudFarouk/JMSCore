@@ -27,7 +27,6 @@ namespace JMS.API.Models
         public string CargoType { get; set; }
         public Guid UserId { get; set; }
         public Guid? DispatcherId { get; set; }
-
         public bool IsThirdParty { get; set; }
         public List<Checkpoint> Checkpoints { get; set; }
         public List<AssessmentQuestion> AssessmentQuestion { get; set; }

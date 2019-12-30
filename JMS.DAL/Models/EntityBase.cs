@@ -11,5 +11,6 @@ namespace JMS.DAL.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

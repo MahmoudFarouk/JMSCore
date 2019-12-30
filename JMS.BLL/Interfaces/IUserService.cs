@@ -27,7 +27,7 @@ namespace JMS.BLL.Interfaces
 
 
         public ServiceResponse<List<UserGroup>> GetUserGroups();
-        public ServiceResponse AddUserGroup(UserGroup group);
+        public ServiceResponse<UserGroup> AddUserGroup(UserGroup group);
         public ServiceResponse EditUserGroup(UserGroup group);
         public ServiceResponse DeleteUserGroup(Guid groupId);
         public ServiceResponse<List<UserWorkForce>> GetUserWorkForces();

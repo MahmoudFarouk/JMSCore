@@ -262,15 +262,23 @@ namespace JMS.BLL.Services
         }
 
 
-        public ServiceResponse AddUserGroup(UserGroup group)
+        public ServiceResponse<UserGroup> AddUserGroup(UserGroup group)
         {
-            ServiceResponse response = new ServiceResponse();
+            ServiceResponse<UserGroup> response = new ServiceResponse<UserGroup>();
 
             try
             {
-                _context.UserGroups.Add(group);
+                var groups = _context.UserGroups.Where(x => x.Name.ToLower() == group.Name.ToLower());
+                var groupsCount = groups.Count();
+                if (groupsCount > 0)
+                {
+                    response.Status = ResponseStatus.UsernameNotExsit;
+                    response.Data = groups.FirstOrDefault();
+                    return response;
+                }
+                var _group=_context.UserGroups.Add(group);
                 _context.SaveChanges();
-
+                response.Data = _group.Entity;
                 response.Status = ResponseStatus.Success;
             }
             catch (Exception ex)
@@ -312,7 +320,8 @@ namespace JMS.BLL.Services
 
             try
             {
-                _context.UserGroups.Remove(_context.UserGroups.Find(groupId));
+                var group = _context.UserGroups.Find(groupId);
+                group.IsDeleted = true;
                 _context.SaveChanges();
 
                 response.Status = ResponseStatus.Success;
@@ -399,7 +408,7 @@ namespace JMS.BLL.Services
 
             try
             {
-                response.Data = _context.UserGroups.ToList();
+                response.Data = _context.UserGroups.Where(x => !x.IsDeleted).AsNoTracking().ToList();
 
                 response.Status = ResponseStatus.Success;
             }
@@ -460,7 +469,6 @@ namespace JMS.BLL.Services
             return response;
         }
 
-
-
+        
     }
 }

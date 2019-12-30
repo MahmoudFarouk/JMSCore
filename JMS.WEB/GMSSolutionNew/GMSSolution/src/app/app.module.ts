@@ -16,7 +16,7 @@ import { BlockUIHttpModule } from 'ng-block-ui/http';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { MatSidenavModule, MatRadioModule } from '@angular/material';
+import { MatSidenavModule, MatRadioModule, MatSortModule, MatPaginatorModule } from '@angular/material';
 
 
 //Common
@@ -54,6 +54,14 @@ import { ForgetPasswordComponent } from './common/forget-password/forget-passwor
 import { ForgetchangepasswordComponent } from './common/forgetchangepassword/forgetchangepassword.component';
 import { CompleteJourneyInfoComponent } from './manager/complete-journey-info/complete-journey-info.component';
 
+//angular materail
+import { 
+  MatTableModule, 
+  MatDialogModule, 
+  MatFormFieldModule,
+  MatInputModule,
+  MatButtonModule
+} from '@angular/material';
 
 
 @NgModule({
@@ -114,7 +122,15 @@ import { CompleteJourneyInfoComponent } from './manager/complete-journey-info/co
       tertiaryColour: '#F5A622'
     }),
     BsDatepickerModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSortModule,
+    MatPaginatorModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
@@ -124,6 +140,7 @@ import { CompleteJourneyInfoComponent } from './manager/complete-journey-info/co
     GoogleMapsAPIWrapper
   ],
   bootstrap: [AppComponent],
+  exports:[MatSortModule,MatPaginatorModule]
 })
 export class AppModule { }
 

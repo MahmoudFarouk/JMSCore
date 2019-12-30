@@ -1,1 +1,77 @@
-<p>team-management works!</p>
+<!-- app.component.html -->
+<div class="container text-center">
+    <h2>Teams</h2>
+    <button style="float:left;" mat-button mat-flat-button color="primary" data-toggle="modal"
+        data-target="#exampleModal3">Add Team</button>
+
+    <div fxLayout fxLayoutAlign="center center">
+        <mat-form-field fxFlex="40%">
+            <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="dataSource" #mytable class="my-table mat-elevation-z8" matSort>
+
+        <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID. </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element" class="action-link">
+           
+                <a class="btn btn-danger" (click)="Delete(element)">Delete</a>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSize]="6" [pageSizeOptions]="[2, 4, 6, 10, 20]">
+    </mat-paginator>
+</div>
+<div class="col-4 modalAndBtnCont">
+
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Team</h5>
+                    <button id="bntClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-form-label" for="inputDefault">Group Name</label>
+                            <input type="text" [ngClass]="{'form-control':true,
+                            'is-invalid':(name.trim()==''&&isSubmitted)||(isAlreadyExsit&&isSubmitted)}"  
+                            [(ngModel)]="name"
+                            (ngModelChange)="modelChanged($event)"
+                            placeholder="Group Name" id="inputDefault" />
+                        </div>
+                        <div style="display:block!important;" class="invalid-feedback" *ngIf="name.trim()==''&&isSubmitted">Name is required</div>
+                        <div style="display:block!important;" class="invalid-feedback" *ngIf="isAlreadyExsit">This group name is already exsit</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="sumbitToInitiate" (click)="addRowData()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

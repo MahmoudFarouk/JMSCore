@@ -294,6 +294,7 @@ namespace JMS.API.Controllers
         {
             try
             {
+               
                 var result = _journeyService.UpdateJourneyStatus(journeyId, status);
                 return Ok(result);
             }

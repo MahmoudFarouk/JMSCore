@@ -57,8 +57,8 @@ export class MyRequestsComponent implements OnInit {
           this.router.navigate([`/journeyapproval/`], { queryParams: { journeyId: request.journeyId } });
           break;
       }
-
-    if (this.currentUser.roles[0].name == "Dipsatcher")
+debugger;
+    if (this.currentUser.roles[0].name == "Dispatcher")
       switch (request.status) {
         case JourneyStatus.PendingOnDispatcherApproval:
           this.router.navigate([`/validate-journey/${request.journeyId}`]);

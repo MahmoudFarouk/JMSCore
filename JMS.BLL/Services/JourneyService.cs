@@ -345,6 +345,26 @@ namespace JMS.BLL.Services
 
             if (countjourneyUpdates == 0 && journey.JourneyStatus != JourneyStatus.PendingOnDriverCompletePreTripAssessment)
                 journey.JourneyStatus = JourneyStatus.PendingOnDriverCompletePostTripAssessment;
+
+            if (status == JourneyStatus.PendingOnDriverCompleteCheckpointAssessment)
+            {
+                var jupdates = _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journeyId && x.DriverId != null);
+                if (jupdates != null)
+                {
+                    var driver = _context.Users.Find(jupdates.DriverId);
+                    driver.IsInProgress = true;
+
+
+                }
+
+            }
+            if (status == JourneyStatus.JourneyCompleted)
+            {
+                var jupdates = _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journeyId && x.DriverId != null);
+                var driver = _context.Users.Find(jupdates.DriverId);
+                driver.IsInProgress = false;
+                driver.LastCompletionTrip = DateTime.Now;
+            }
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
@@ -411,13 +431,14 @@ namespace JMS.BLL.Services
             var journey = _context.Journey.Find(journeyId);
             journey.RecjectReason = rejectReason;
             journey.JourneyStatus = JourneyStatus.JourneyRejected;
+
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
 
         public ServiceResponse<Journey> GetDriverCurrentJourney(Guid driverId)
         {
-            var journey = _context.Journey.Where(x => x.JourneyStatus != JourneyStatus.JourneyCompleted && x.JourneyStatus != JourneyStatus.JourneyRejected && x.JourneyStatus != JourneyStatus.JourneyClosed && x.JourneyUpdates.Any(c => c.DriverId == driverId)).OrderBy(x=>x.CreationDate).AsNoTracking().FirstOrDefault();
+            var journey = _context.Journey.Where(x => x.JourneyStatus != JourneyStatus.JourneyCompleted && x.JourneyStatus != JourneyStatus.JourneyRejected && x.JourneyStatus != JourneyStatus.JourneyClosed && x.JourneyUpdates.Any(c => c.DriverId == driverId)).OrderBy(x => x.CreationDate).AsNoTracking().FirstOrDefault();
 
             return new ServiceResponse<Journey> { Data = journey, Status = ResponseStatus.Success };
         }
@@ -427,20 +448,28 @@ namespace JMS.BLL.Services
             var journey = _context.Journey.Find(journeyId);
             journey.CloseReason = commnent;
             journey.JourneyStatus = JourneyStatus.JourneyClosed;
+            var jupdates = _context.JourneyUpdate.FirstOrDefault(x => x.JourneyId == journeyId && x.DriverId != null);
+            if (jupdates != null)
+            {
+                var driver = _context.Users.Find(jupdates.DriverId);
+                driver.IsInProgress = false;
+                driver.LastCompletionTrip = DateTime.Now;
+            }
             _context.SaveChanges();
             return new ServiceResponse { Status = ResponseStatus.Success };
         }
 
         public ServiceResponse<List<CalendarModel>> GetCalendar()
         {
-            var result = _context.Journey.Where(x => x.JourneyStatus != JourneyStatus.JourneyCompleted && x.JourneyStatus != JourneyStatus.JourneyClosed && x.JourneyStatus != JourneyStatus.JourneyRejected).Select(x=>new CalendarModel {
-            title=x.Title,
-            start=x.CreationDate,
-            end=x.DeliveryDate,
-            url= "/journeyapproval?journeyId="+x.Id
+            var result = _context.Journey.Where(x => x.JourneyStatus != JourneyStatus.JourneyCompleted && x.JourneyStatus != JourneyStatus.JourneyClosed && x.JourneyStatus != JourneyStatus.JourneyRejected).Select(x => new CalendarModel
+            {
+                title = x.Title,
+                start = x.CreationDate,
+                end = x.DeliveryDate,
+                url = "/journeyapproval?journeyId=" + x.Id
 
             }
-            
+
             ).ToList();
             return new ServiceResponse<List<CalendarModel>> { Data = result, Status = ResponseStatus.Success };
         }

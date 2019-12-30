@@ -46,6 +46,13 @@ export class AuthenticationService {
         return  await this.http.post<any>(environment.JMSApiURL + `/user/ResetForgetPassword?token=${token}&newPassword=${newpassword}`,{}).toPromise();
 
     }
-    
+
+    async GetTeams(){
+        return await this.http.get(environment.JMSApiURL + `/user/getgroups`).toPromise();
+    }
+    async AddTeam(name){
+        return await this.http.post<any>(environment.JMSApiURL + `/user/addgroup`,{Name:name}).toPromise();
+    }
+  //  asyn 
 
 }
