@@ -5,7 +5,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog, MatTable, MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { AuthenticationService } from 'src/app/shared/Services/AuthenticationService';
 import Swal from 'sweetalert2';
-declare var $:any;
+declare var $: any;
 
 export interface UsersData {
   name: string;
@@ -40,29 +40,33 @@ export class TeamManagementComponent implements OnInit, AfterViewInit {
 
 
   modelChanged(newObj) {
-    this.isSubmitted=false;
-    this.isAlreadyExsit=false;
-}
+    this.isSubmitted = false;
+    this.isAlreadyExsit = false;
+  }
   addRowData() {
     this.isSubmitted = true;
     if (this.name.trim() == '')
       return;
     this.authService.AddTeam(this.name).then((data) => {
-debugger;
+      debugger;
       if (data.status == 1) {
         this.dataSource.data.push({
+          name: this.name,
           id: data.data.id,
-          name: this.name
+          isDeleted: false
+
         });
+        this.dataSource.data = this.dataSource.data.sort();
+        this.table.renderRows();
+        debugger;
         $("#bntClose").click();
-        Swal.fire('','Your group added successfully','success');
+        Swal.fire('', 'Your team added successfully', 'success');
 
       } else if (data.status == 6) {
         this.isAlreadyExsit = true;
       }
     });
-   
-    this.table.renderRows();
+
 
   }
   updateRowData(row_obj) {
@@ -73,25 +77,27 @@ debugger;
     //   return true;
     // });
   }
-  Delete(row_obj)
- {
-  Swal.fire({
-    title: '',
-    text: "Are you sure to delete this team",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
-    if (result.value) {
+  Delete(row_obj) {
+    Swal.fire({
+      title: '',
+      text: "Are you sure to delete this team",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
 
-      this.dataSource.data = this.dataSource.data.filter((value, key) => {
-        return value.id != row_obj.id;
-      });
-    }
-  })
-    
+        this.authService.DeleteTeam(row_obj.id).then(() => {
+          this.dataSource.data = this.dataSource.data.filter((value, key) => {
+            return value.id != row_obj.id;
+          });
+        });
+
+      }
+    });
+
   }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;

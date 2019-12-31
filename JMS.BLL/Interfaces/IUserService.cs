@@ -31,13 +31,13 @@ namespace JMS.BLL.Interfaces
         public ServiceResponse EditUserGroup(UserGroup group);
         public ServiceResponse DeleteUserGroup(Guid groupId);
         public ServiceResponse<List<UserWorkForce>> GetUserWorkForces();
-        public ServiceResponse AddUserWorkForce(UserWorkForce workforce);
+        public ServiceResponse<UserWorkForce> AddUserWorkForce(UserWorkForce workforce);
         public ServiceResponse EditUserWorkForce(UserWorkForce workforce);
         public ServiceResponse DeleteUserWorkForce(Guid workforceId);
 
         public ServiceResponse<List<LookupModel<Guid>>> GetUsersByRole(UserRoles role);
 
-
+        public ServiceResponse<object> GetAllUsers();
 
     }
 }

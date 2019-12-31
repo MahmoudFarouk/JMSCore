@@ -46,13 +46,36 @@ export class AuthenticationService {
         return  await this.http.post<any>(environment.JMSApiURL + `/user/ResetForgetPassword?token=${token}&newPassword=${newpassword}`,{}).toPromise();
 
     }
-
+   //Teaams
     async GetTeams(){
         return await this.http.get(environment.JMSApiURL + `/user/getgroups`).toPromise();
     }
     async AddTeam(name){
         return await this.http.post<any>(environment.JMSApiURL + `/user/addgroup`,{Name:name}).toPromise();
     }
-  //  asyn 
+    async DeleteTeam(groupId){
+        return await this.http.post<any>(environment.JMSApiURL + `/user/deletegroup?groupId=${groupId}`,{}).toPromise();
+    }
+
+    //Workforce
+    
+    async GetWorkFoces(){
+        return await this.http.get(environment.JMSApiURL + `/user/getworkforces`).toPromise();
+    }
+    async AddWorkForce(name){
+        return await this.http.post<any>(environment.JMSApiURL + `/user/addworkforce`,{Name:name}).toPromise();
+    }
+    async DeleteWorkForce(workforceId){
+        return await this.http.post<any>(environment.JMSApiURL + `/user/deleteworkforce?workforceId=${workforceId}`,{}).toPromise();
+    }
+
+    //users
+    async GetAllUsers(){
+        return await this.http.get<any>(environment.JMSApiURL + `/user/getAllUsers`).toPromise();
+    }
+    async Register(data){
+        return await this.http.post<any>(environment.JMSApiURL + `/user/register`,data).toPromise();
+
+    }
 
 }

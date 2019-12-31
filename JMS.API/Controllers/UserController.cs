@@ -281,7 +281,7 @@ namespace JMS.API.Controllers
 
             try
             {
-                return Ok(_userService.ForgetPassword(username, _appSettings.Email, _appSettings.Password,_appSettings.WebUrl));
+                return Ok(_userService.ForgetPassword(username, _appSettings.Email, _appSettings.Password, _appSettings.WebUrl));
             }
             catch (Exception ex)
             {
@@ -368,7 +368,7 @@ namespace JMS.API.Controllers
 
         [HttpPost()]
         [Authorize(Roles = ConstRole.JMSAdmin)]
-        [Route("deletegroup/{groupId}")]
+        [Route("deletegroup")]
         public IActionResult DeleteUserGroup(Guid groupId)
         {
             return Ok(_userService.DeleteUserGroup(groupId));
@@ -376,10 +376,34 @@ namespace JMS.API.Controllers
 
         [HttpPost()]
         [Authorize(Roles = ConstRole.JMSAdmin)]
-        [Route("deleteworkforce/{workforceId}")]
+        [Route("deleteworkforce")]
         public IActionResult DeleteUserWorkForce(Guid workforceId)
         {
             return Ok(_userService.DeleteUserWorkForce(workforceId));
         }
+
+
+        [Authorize(Roles = ConstRole.JMSAdmin)]
+        [HttpGet]
+        [Route("getAllUsers")]
+        public IActionResult GetAllUsers()
+        {
+            try
+            {
+
+                return Ok(_userService.GetAllUsers());
+            }
+            catch (AppException ex)
+            {
+                ex.LogException();
+                // return error message if there was an exception
+                return BadRequest(new ServiceResponse
+                {
+                    Status = DAL.Common.Enums.ResponseStatus.ServerError,
+                    Message = ex.Message
+                });
+            }
+        }
+
     }
 }

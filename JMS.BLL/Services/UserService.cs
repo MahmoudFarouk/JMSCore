@@ -268,7 +268,7 @@ namespace JMS.BLL.Services
 
             try
             {
-                var groups = _context.UserGroups.Where(x => x.Name.ToLower() == group.Name.ToLower());
+                var groups = _context.UserGroups.Where(x => x.Name.ToLower() == group.Name.ToLower() && !x.IsDeleted);
                 var groupsCount = groups.Count();
                 if (groupsCount > 0)
                 {
@@ -276,7 +276,7 @@ namespace JMS.BLL.Services
                     response.Data = groups.FirstOrDefault();
                     return response;
                 }
-                var _group=_context.UserGroups.Add(group);
+                var _group = _context.UserGroups.Add(group);
                 _context.SaveChanges();
                 response.Data = _group.Entity;
                 response.Status = ResponseStatus.Success;
@@ -292,15 +292,23 @@ namespace JMS.BLL.Services
             return response;
         }
 
-        public ServiceResponse AddUserWorkForce(UserWorkForce workforce)
+        public ServiceResponse<UserWorkForce> AddUserWorkForce(UserWorkForce workforce)
         {
-            ServiceResponse response = new ServiceResponse();
+            ServiceResponse<UserWorkForce> response = new ServiceResponse<UserWorkForce>();
 
             try
             {
-                _context.UserWorkForces.Add(workforce);
+                var groups = _context.UserWorkForces.Where(x => x.Name.ToLower() == workforce.Name.ToLower() && !x.IsDeleted);
+                var groupsCount = groups.Count();
+                if (groupsCount > 0)
+                {
+                    response.Status = ResponseStatus.UsernameNotExsit;
+                    response.Data = groups.FirstOrDefault();
+                    return response;
+                }
+                var _group = _context.UserWorkForces.Add(workforce);
                 _context.SaveChanges();
-
+                response.Data = _group.Entity;
                 response.Status = ResponseStatus.Success;
             }
             catch (Exception ex)
@@ -344,9 +352,9 @@ namespace JMS.BLL.Services
 
             try
             {
-                _context.UserWorkForces.Remove(_context.UserWorkForces.Find(workforceId));
+                var group = _context.UserWorkForces.Find(workforceId);
+                group.IsDeleted = true;
                 _context.SaveChanges();
-
                 response.Status = ResponseStatus.Success;
             }
             catch (Exception ex)
@@ -429,7 +437,7 @@ namespace JMS.BLL.Services
 
             try
             {
-                response.Data = _context.UserWorkForces.ToList();
+                response.Data = _context.UserWorkForces.Where(x => !x.IsDeleted).AsNoTracking().ToList();
 
                 response.Status = ResponseStatus.Success;
             }
@@ -469,6 +477,28 @@ namespace JMS.BLL.Services
             return response;
         }
 
-        
+        public ServiceResponse<object> GetAllUsers()
+        {
+            var role = _context.Roles.FirstOrDefault(x => x.Name == "Driver");
+            var data = _context.Users.Include(x => x.UserRoles).ToList().Where(x=>x.UserRoles[0].RoleId==role.Id)
+                //.ToList();
+                .Where(x => !x.IsDeleted).Select(x => new
+                {
+                    x.Id,
+                    RoleName = x.UserRoles != null && x.UserRoles.Count > 0 && x.UserRoles[0].RoleId != null ? _context.Roles.Find(x.UserRoles[0].RoleId).Name : "",
+                    x.FullName,
+                    x.GatePassStatus,
+                    x.IsActive,
+                    x.LicenseExpiryDate,
+                    x.LicenseNo,
+                    x.TrainingDetails,
+                    x.UserWorkForceId,
+                    x.Username,
+                    x.UserGroupId,
+                    WorForceTitle = x.UserWorkForce != null ? x.UserWorkForce.Name : "",
+                    TeamName = x.UserGroup != null ? x.UserGroup.Name : ""
+                });
+            return new ServiceResponse<object> { Data = data, Status = ResponseStatus.Success };
+        }
     }
 }
